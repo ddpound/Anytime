@@ -1,0 +1,9 @@
+diff a/src/main/java/com/anytime/root/HomeController.java b/src/main/java/com/anytime/root/HomeController.java	(rejected hunks)
+@@ -12,6 +12,7 @@
+ 	
+ 	@RequestMapping(value = "/", method = RequestMethod.GET)
+ 	public String home(Locale locale, Model model) {		
++		return "index";
+ 	}
+ 	
+ }

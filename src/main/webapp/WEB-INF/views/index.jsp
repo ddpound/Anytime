@@ -101,5 +101,4 @@ input[type="button"],input[type="submit"],input[type="search"] {
 	</div>
 	</body>
 
-</body>
 </html>
