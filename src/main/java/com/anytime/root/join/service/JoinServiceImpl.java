@@ -1,5 +1,8 @@
 package com.anytime.root.join.service;
 
-public class JoinServiceImpl implements JoinService{
+import org.springframework.stereotype.Service;
 
+@Service
+public class JoinServiceImpl implements JoinService{
+	
 }

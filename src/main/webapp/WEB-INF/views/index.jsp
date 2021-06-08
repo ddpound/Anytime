@@ -80,7 +80,7 @@ input[type="button"],input[type="submit"],input[type="search"] {
 <body>
 <div class="divall">
 	<div class="div1">
-      <p><a href="joinView">회원가입</a></p>
+      <p><a href="selectJoin">회원가입</a></p>
       <p><a href="loginView">로그인</a></p>
       <p><a href="#">Link</a></p>
 	</div>
