@@ -1,52 +1,40 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		setDateBox();
-	});
-	function setDateBox() {
-		var dt = new Date();
-		var year = "";
-		var com_year = dt.getFullYear();
-
-		for (var y = (com_year - 50); y <= (com_year + 1); y++) {
-			$("#year").append(
-					"<option value='" + y + "'>" + y + " 년" + "</option>");
-		}
-	}
-	function handleOnChange(e) {
-		// 선택된 데이터의 텍스트값 가져오기
-		const text = e.options[e.selectedIndex].text;
-
-		console.log(e.options);
-
-		// 선택한 텍스트 출력
-		document.getElementById('resultYear').innerText = text;
-	}
-</script>
+<script src="${pageContext.request.contextPath }/resources/js/JoinView.js"></script>
+<script src="${pageContext.request.contextPath }/resources/js/Join.js"></script>
 <meta charset="UTF-8">
 <title>AnyTime JoinView</title>
 </head>
 <body>
-	<div style="margin-left: 30%" class="joinForm">
-		<h1>애니타임 회원가입</h1>
+	<div style="margin-left: 30%" class="joinForm"  >
+	<form id="joinfrm">
+	<h1>애니타임 회원가입</h1>
 		<br>
 		<h4>언제, 어디서나 학생들과 함께.......</h4>
-		<br> <input name="resultYear" id="resultYear" type="text" readonly="readonly"
-			value="입학년도"><br> <span class="select"> <select
-			id="year" title="년도" onchange="handleOnChange(this)"></select><br>
+		<br> 
+		입학년도 : <input id="enterYear"  name="enterYear"  type="text" readonly="readonly" value="입학년도"><br> 
+		<span class="select"> 
+			<select id="year" title="년도" onchange="handleOnChange(this)"></select><br>
 		</span> <input type="text" readonly="readonly" value="학교 검색하기"><br>
 		<input type="text"><br>
+		
+		이메일 : <input type="text" id="email" name="email" value="${email}"><br>
+		이름 : <input type="text" id="nickname" name="nickname" value="${nickname}"><br>
+		나이 : <input type="text"  id="age"  name="age"  placeholder="나이를 입력해주세요"><br>
+		현재학년 : <input type="text"  id="grade"  name="grade"  placeholder="현재학년"><br>
+		<br>
+		
 		<!--  임시방편 나중에 카카오 로그인 버튼으로 대체할생각 -->
-		<button onclick="">카카오로 회원가입하기</button>
+		<input type="button"  style="width: 300px; height: 80px;" src="${pageContext.request.contextPath }/resources/img/KaKaoJoin.png" onclick="SaveUser()" ><br>
+	</form>
+		
 	</div>
-
-
-
-
+	
 </body>
+
 </html>

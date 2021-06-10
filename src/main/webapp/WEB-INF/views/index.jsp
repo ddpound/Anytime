@@ -78,11 +78,10 @@ input[type="button"],input[type="submit"],input[type="search"] {
 </style>
 </head>
 <body>
-	<jsp:include page="default/header.jsp" />
-	<div class="divall">
+<div class="divall">
 	<div class="div1">
+      <p><a href="selectJoin">회원가입</a></p>
       <p><a href="loginView">로그인</a></p>
-      <p><a href="joinView">회원가입</a></p>
       <p><a href="#">Link</a></p>
 	</div>
 	<div class="div2">
@@ -102,7 +101,4 @@ input[type="button"],input[type="submit"],input[type="search"] {
 	</div>
 	</body>
 
-	<jsp:include page="default/footer.jsp" />
-
-</body>
 </html>

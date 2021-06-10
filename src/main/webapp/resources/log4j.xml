@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.ysj.root">
+	<logger name="com.anytime.root">
 		<level value="info" />
 	</logger>
 	
