@@ -19,26 +19,8 @@ function handleOnChange(e) {
 	console.log(text);
 
 	// 선택한 텍스트 출력
-	document.getElementById("resultYear").value = text;
+	document.getElementById("enterYear").value = text;
 }
 
-// let form serializeArray 사용하려면 내 기억으로 name으로 접근해야하는걸로 기억함
-function SaveUser() {
-	console.log("테스트")
-	let form = {}
 
-	let arr = $("#joinfrm").serializeArray()
-
-	for (i = 0; i < arr.length; i++) {
-		console.log(arr[i].name + " : " + arr[i].value)
-		form[arr[i].name] = arr[i].value
-	}
-	
-	// 여기에 ajax 넣어야함
-	
-	
-	
-	
-	
-}
 

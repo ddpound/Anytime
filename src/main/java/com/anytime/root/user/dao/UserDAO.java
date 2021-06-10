@@ -1,7 +1,7 @@
 package com.anytime.root.user.dao;
 
-public class UserDAO {
-	
-	
-	
+import com.anytime.root.user.dto.UserDTO;
+
+public interface UserDAO {
+	public void insertUser(UserDTO dto);
 }

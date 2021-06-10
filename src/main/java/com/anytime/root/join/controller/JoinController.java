@@ -1,6 +1,7 @@
 package com.anytime.root.join.controller;
 
 import java.io.IOException;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -13,10 +14,13 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.anytime.root.join.service.JoinService;
 import com.anytime.root.kakaoLogin.service.KaKaoLoginService;
 import com.anytime.root.kakaoLogin.service.KakaoLoginInfo;
 import com.anytime.root.user.dto.KakaoProfile;
@@ -31,6 +35,9 @@ public class JoinController {
 	
 	@Autowired
 	KaKaoLoginService kkls;
+	
+	@Autowired
+	JoinService js;
 
 	@RequestMapping("selectJoin")
 	public String joinView() {
@@ -51,11 +58,20 @@ public class JoinController {
 		return "join/joinView";
 	}
 	
-	@PostMapping(value = "save")
-	public String saveUser() {
+	@PostMapping(value = "saveUser", produces = "appication/json;charset=utf-8" )
+	@ResponseBody
+	public String saveUser(@RequestBody Map<String, Object> user ) {
+		
+		int resultNum = js.insertUser(user);
 		
 		
-		return null;
+		
+		
+		
+		
+		
+		
+		return "{\"test\" : true}";
 	}
 
 }
