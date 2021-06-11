@@ -29,6 +29,12 @@ public class JoinServiceImpl implements JoinService{
 		dto.setAge((String)user.get("age"));
 		dto.setEnterYear((String)user.get("enterYear"));
 		dto.setGrade(Integer.parseInt((String)user.get("grade"))); 
+		dto.setAgeGroup("");
+		
+		
+		dto.setAuth("kakao");
+		dto.setPassWord("1234");
+		dto.setRule("user");
 		
 		
 		

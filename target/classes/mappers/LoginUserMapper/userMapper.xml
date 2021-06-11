@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.anytime.root.user.dao.UserDAO">
 
 <insert id="insertUser">
-insert into anyTimeUser values(Autoadd.NEXTVAL,sysdate,#{email},'kakao','1234','user',#{username},#{age},'30~54',#{grade},#{enterYear},'가좌중학교',sysdate)
+insert into anyTimeUser values(Autoadd.NEXTVAL,sysdate,#{email},#{auth},#{passWord},#{rule},#{username},#{age},#{ageGroup},#{grade},#{enterYear},'가좌중학교',sysdate)
 
 
 </insert>
