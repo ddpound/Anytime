@@ -20,7 +20,20 @@
 		입학년도 : <input id="enterYear"  name="enterYear"  type="text" readonly="readonly" value="입학년도"><br> 
 		<span class="select"> 
 			<select id="year" title="년도" onchange="handleOnChange(this)"></select><br>
-		</span> <input type="text" readonly="readonly" value="학교 검색하기"><br>
+		</span> <input type="button" readonly="readonly" onclick="showPopup()" value="학교 검색하기"><br>
+		
+		
+		<script type="text/javascript">
+		function getContextPath() {
+			var hostIndex = location.href.indexOf( location.host ) + location.host.length;
+			return location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
+		}
+		function showPopup() {
+			window.open(getContextPath()+"/SearchSchool", "SearchSchool", "width=900, height=500, left=100, top=50");
+		}
+		
+		</script>
+		
 		<input type="text"><br>
 		
 		이메일 : <input type="text" id="email" name="email" value="${email}"><br>

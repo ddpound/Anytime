@@ -39,7 +39,7 @@ public class KakaoLoginServiceImpl implements KaKaoLoginService {
 		params.add("redirect_uri", KakaoLoginInfo.redirect_uri);
 		// 방금 받은 코드임
 		params.add("code", code);
-
+		
 		// body data와 header값을 가지고있는 하나의 httpEntity가 된다
 		// body값 header값을 둘다 하나로 만든다
 		HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params, headers);
@@ -47,7 +47,7 @@ public class KakaoLoginServiceImpl implements KaKaoLoginService {
 		// http 요청하기 - Post방식으로 - 그리고 response 변수의 응답 받음.
 		ResponseEntity<String> response = rt.exchange(KakaoLoginInfo.OauthToken_request, HttpMethod.POST,
 				kakaoTokenRequest, String.class);
-
+		
 		return response;
 	}
 
@@ -89,8 +89,10 @@ public class KakaoLoginServiceImpl implements KaKaoLoginService {
 		// http 요청하기 - Post방식으로 - 그리고 response 변수의 응답 받음.
 		ResponseEntity<String> response = rt2.exchange(KakaoLoginInfo.UserInfoSelect, HttpMethod.POST,
 				kakaoProfileRequest2, String.class);
-
+		
+		
 		// 회원 정보까지 조회하는게 response2.getbody()
+		
 		return response;
 	}
 

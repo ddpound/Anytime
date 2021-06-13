@@ -23,8 +23,10 @@ import org.springframework.web.client.RestTemplate;
 import com.anytime.root.join.service.JoinService;
 import com.anytime.root.kakaoLogin.service.KaKaoLoginService;
 import com.anytime.root.kakaoLogin.service.KakaoLoginInfo;
+import com.anytime.root.school.service.SchoolService;
 import com.anytime.root.user.dto.KakaoProfile;
 import com.anytime.root.user.dto.OAuthToken;
+import com.anytime.root.user.dto.School;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,6 +37,9 @@ public class JoinController {
 	
 	@Autowired
 	KaKaoLoginService kkls;
+	
+	@Autowired
+	SchoolService schs;
 	
 	@Autowired
 	JoinService js;
@@ -72,6 +77,23 @@ public class JoinController {
 		
 		
 		return "{\"test\" : true}";
+	}
+	
+	@RequestMapping("SearchSchool")
+	public String ShowSearchSchool() {
+		
+		
+		ResponseEntity<String> response = schs.responeSchoolEntity("가좌고");
+		System.out.println("리스폰 겟 바디 : " + response.getBody());
+		
+		School schoolObject = schs.getSchool(response);
+		
+		System.out.println("검색결과 길이"+ schoolObject.getDataSearch().getContent().size() );
+		System.out.println("학교이름 : "+ schoolObject.getDataSearch().getContent().get(0).getSchoolName());
+		
+		//System.out.println("리스트 첫번째 결과 : " + schoolObject.getDataSearch().getContent().get(0).getSchoolName());
+		
+		return "join/SearchSchool";
 	}
 
 }

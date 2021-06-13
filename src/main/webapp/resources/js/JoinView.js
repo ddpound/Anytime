@@ -11,6 +11,8 @@ function setDateBox() {
 			"<option value='" + y + "'>" + y + " 년" + "</option>");
 	}
 }
+
+
 function handleOnChange(e) {
 	// 선택된 데이터의 텍스트값 가져오기
 	const text = e.options[e.selectedIndex].text;
@@ -21,6 +23,12 @@ function handleOnChange(e) {
 	// 선택한 텍스트 출력
 	document.getElementById("enterYear").value = text;
 }
+
+
+
+
+
+
 
 
 

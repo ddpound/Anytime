@@ -20,6 +20,7 @@ function SaveUser() {
 		data : JSON.stringify(form),
 		contentType: "application/json; charset=utf8",
 		success : function(result){
+			
 			alert('회원가입 성공')
 		}
 		

@@ -14,6 +14,10 @@ public class JoinServiceImpl implements JoinService{
 	@Autowired
 	UserDAO mapper;
 	
+	//http 클래스를 이용해서 요청하기
+	// 먼저 json값을 담을 클래스를 작성 -> 카카오로그인처럼 데이터를 담아낸다
+	
+	
 	
 	@Override
 	public int insertUser(Map<String, Object> user) {
