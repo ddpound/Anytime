@@ -13,6 +13,7 @@ public  final class KakaoLoginInfo {
 	public static final String grant_type ="authorization_code";
 	public static final String client_id = "a924c282a86092b8472e6c2885aafe4a";
 	public static final String redirect_uri = "http://localhost:8080/root/auth/kakao/callback"; // 여기도 맞게 변경바람
+	public static final String Loginredirect_uri ="http://localhost:8080/root/auth/kakao/login/callback";// 여기도 맞게 변경바람
 	public static final String OauthToken_request = "https://kauth.kakao.com/oauth/token"; // 인증토큰주소
 	public static final String UserInfoSelect = "https://kapi.kakao.com/v2/user/me"; // 사용자 정보조회에 필요함
 	

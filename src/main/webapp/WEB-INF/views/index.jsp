@@ -83,6 +83,9 @@ input[type="button"],input[type="submit"],input[type="search"] {
       <p><a href="selectJoin">회원가입</a></p>
       <p><a href="loginView">로그인</a></p>
       <p><a href="#">Link</a></p>
+      ${userId}<br>
+      ${userSchool}<br>
+      ${userNickname}<br>
 	</div>
 	<div class="div2">
 		<table>
