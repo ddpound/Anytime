@@ -82,7 +82,7 @@ input[type="button"],input[type="submit"],input[type="search"] {
 	<div class="div1">
       <p><a href="selectJoin">회원가입</a></p>
       <p><a href="loginView">로그인</a></p>
-      <p><a href="#">Link</a></p>
+      <p><a href="https://kauth.kakao.com/oauth/logout?client_id=a924c282a86092b8472e6c2885aafe4a&logout_redirect_uri=http://localhost:8080/root/auth/kakao/logout">로그아웃</a></p>
       ${userId}<br>
       ${userSchool}<br>
       ${userNickname}<br>

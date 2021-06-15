@@ -243,7 +243,7 @@ function searchSchool() {
 		data: JSON.stringify(form),
 		contentType: 'application/json',
 		success: function(SchoolResult) {
-			console.log('일단 잘받아지는지 확인')
+			
 			var temp = SchoolResult
 			console.log("반복문 밖 : " + temp.dataSearch.content[0].adres)
 

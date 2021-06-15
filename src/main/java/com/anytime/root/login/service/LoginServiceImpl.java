@@ -18,18 +18,13 @@ public class LoginServiceImpl implements LoginService {
 		UserDTO dto = new UserDTO();
 
 		dto = mapper.loginUser(email);
-
 		if (dto != null) {
 			if(loginjoin.equals("login")) {
 				session.setAttribute("userSchool", dto.getSchool());
-				return 1;
 			}
-			
 			return 1;
 		}
-
 		return 0;
-
 	}
 
 }

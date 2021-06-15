@@ -26,9 +26,7 @@ public class JoinServiceImpl implements JoinService{
 	@Override
 	public int insertUser(Map<String, Object> user) {
 		UserDTO dto = new UserDTO();
-		
-		
-		
+
 		System.out.println("입학년도 : "+ user.get("enterYear"));
 		System.out.println("현재학년 : "+user.get("grade"));
 
