@@ -270,7 +270,7 @@ function searchSchool() {
 }
 
 function showPopup() {
-	openWin = window.open(getContextPath() + "/SearchSchool", "SearchSchool", "width=900, height=500, left=100, top=50");
+	openWin = window.open(getContextPath() + "/SearchSchool", "SearchSchool", "width=1200, height=900, left=250, top=150");
 }
 
 

@@ -25,7 +25,7 @@
 	</div>
 	<div class="map_wrap">
 		<div id="map"
-			style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
+			style="width: 50%; height: 75%; position: relative; overflow: hidden; border: 3px solid black;"></div>
 
 		<div id="menu_wrap" class="bg_white">
 			<div class="option"></div>
