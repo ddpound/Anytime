@@ -28,7 +28,7 @@
 		</script>
 		<script src="${pageContext.request.contextPath }/resources/js/SearchSchool.js"></script>
 		
-		<input type="text" id="parSchoolName" placeholder="학교이름"><br>
+		<input type="text" id="parSchoolName"  name="parSchoolName"  placeholder="학교이름"><br>
 		<input type="text"  id="parSchooladd"  name="parSchooladd" placeholder="학교주소"><br>
 		 
 		이메일 : <input type="text" id="email" name="email" value="${email}"><br>

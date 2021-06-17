@@ -35,7 +35,7 @@ public class JoinServiceImpl implements JoinService{
 		dto.setAge((String)user.get("age"));
 		dto.setEnterYear((String)user.get("enterYear"));
 		dto.setGrade(Integer.parseInt((String)user.get("grade"))); 
-		dto.setSchool((String)user.get("parSchooladd")); // 여기 주소값이랑 다담겨있음 . 을 구분으로 split하면될듯
+		dto.setSchool((String)user.get("parSchoolName")+" : "+ (String)user.get("parSchooladd")); // 여기 주소값이랑 다담겨있음 . 을 구분으로 split하면될듯
 		dto.setAgeGroup((String)user.get("ageGroup"));
 		
 		

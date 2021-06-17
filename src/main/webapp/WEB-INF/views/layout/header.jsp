@@ -62,7 +62,7 @@ nav ul li {
 
 nav ul li a {
 	text-decoration: none;
-	color: white;
+	color: black;
 }
 
 nav ul li a:hover {
@@ -103,7 +103,7 @@ nav ul li a:hover {
 			<li class="active"><a>게시판</a></li>
 			<li class="timetable"><a>시간표</a></li>
 			<li class="calculator"><a>성적계산기</a></li>
-			<li class="book"><a>책방</a></li>
+			<li class="book"><a href="/root/bookshop">책방</a></li>
 			<li class="active"><a>게시판</a></li>
 			</ul>
 			</nav>
