@@ -16,9 +16,18 @@
 <body>
 	<div class="MainBox">
 		<div class="searchBook">
-			<input type="text" placeholder="찾을 책을 입력해주세요"> 
+		<input type="text" placeholder="찾을 책을 입력해주세요"> 
 			&emsp; <input type="button" value="검색">
+			<c:choose>
+			<c:when test="${userId  != null}">
+			
 			 &emsp; <a class="btn sell" href="bookShop/write">책팔기 </a>
+			</c:when>
+			<c:otherwise>
+			
+			</c:otherwise>
+			</c:choose>
+			
 		</div>
 		<!--  반복문 c태그 넣기 -->
 		<div class="BoardList">

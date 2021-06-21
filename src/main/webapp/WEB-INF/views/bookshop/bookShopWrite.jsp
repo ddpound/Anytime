@@ -10,7 +10,7 @@
 </head>
 <body>
 <input id="SearchCode" type="text"  placeholder="책 제목,isbn,작가를 입력해주세요"><button id="SearchCodeBtn" onclick="GowriteBook()">검색</button><br> <!--  책 검색 API 사용 -->
-<div id="bookList">
+<div id="bookList" >
 
 </div>
 

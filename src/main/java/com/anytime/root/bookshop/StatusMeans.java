@@ -13,11 +13,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class StatusMeans {
 	public enum underline{
-		non, sharpPencil, highliterBolpen
+		non, sharpPencil, highliterBolpen ,all
 	}
 	
 	public enum handwrite{
-		non, sharpPencil, highliterBolpen
+		non, sharpPencil, highliterBolpen, all
 	}
 	
 	public enum cover{
@@ -30,13 +30,13 @@ public class StatusMeans {
 	}
 	
 	public enum Page{
-		non , blank , damage
+		non , blank , damage , all
 		// blank 반색, damage 회손
 	}
 	
 	
 	public enum meansOftransaction{
-		parcelService , directTransaction
+		parcelService , directTransaction , all
 		// 택배 , 직거래
 	}
 	
