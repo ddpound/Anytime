@@ -23,14 +23,16 @@ public class BookShopApiController {
 	BookShopService bs;
 	
 	
-	@GetMapping(value = "bookShop/search/{SearchCode}")
-	public ResponseEntity<String> SearchBook(@PathVariable String SearchCode) {
-		System.out.println("SearchCode : " +SearchCode );
+	@GetMapping(value = "bookShop/search/{SearchCode}" ,produces = "application/json;charset=utf-8")
+	public String SearchBook(@PathVariable String SearchCode) {
+		//System.out.println("SearchCode : " +SearchCode );
 		String result = bs.responseBookSearch(SearchCode).getBody();
-		System.out.println("responseBody : " +result);
+		//System.out.println("responseBody : " +result);
 		
-		return null;
+		
+		return result;
 	}
+	
 	
 	
 	
