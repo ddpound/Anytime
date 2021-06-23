@@ -31,6 +31,26 @@ var KototalSelectList = [Kounderhand, Kounderhand, Kocover, KoNameWrite, KoPage,
 var selectName = [] // 해당값은 user UI를 위한 한글값을 위해 넣은것
 var selectValue = [] // selectValue 데베에 담기위한 영어값
 
+
+function roop() {
+	//check시 넘어가는 걸로
+
+
+
+
+
+
+
+}
+
+function getContextPath() {
+	var hostIndex = location.href.indexOf(location.host) + location.host.length;
+	return location.href.substring(hostIndex, location.href.indexOf('/', hostIndex + 1));
+};
+
+
+
+
 function clickBook(i) {
 	console.log('책 결과값은 : ' + Bookresult.documents[i].title)
 	console.log('책 isbn : ' + Bookresult.documents[i].isbn)
@@ -44,8 +64,8 @@ function clickBook(i) {
 	// 제목 isbn 저장 ( label 형식으로)
 	var BookListDiv = document.getElementById('bookList')
 	BookListDiv.innerHTML += "<div style=\"margin-top: 10px;\">" +
-		"<label id=\"booktitle\">제목 : " + Bookresult.documents[i].title + "</label><br>" +
-		"<label id=\"bookisbn\">isbn : " + Bookresult.documents[i].isbn + "</label><br></div>"
+		"제목 :<label id=\"booktitle\">" + Bookresult.documents[i].title + "</label><br>" +
+		"isbn : <label id=\"bookisbn\">" + Bookresult.documents[i].isbn + "</label><br></div>"
 	document.body.appendChild(BookListDiv);
 
 	// 여기서 새로 다음으로 넘어갈 로직짜야함 함수 생성 요망
@@ -81,6 +101,7 @@ function ResultlistBook(result) {
 	}
 }
 
+// api값을 가져와줌
 function GowriteBook() {
 	// console.log('잘돌아가는지 확인')
 	let SearchCode = $("#SearchCode").val()
@@ -134,19 +155,19 @@ function makeChoiceRadio(choiceName) {
 		for (i = 0; i < totalSelectList[choicenum].length; i++) {
 			BookListDiv.innerHTML += "<div id=\"selRadioDIV\" style=\"margin-top: 10px;\">" +
 				"<label id=\"" + totalSelectList[choicenum][i] + "\">" + KototalSelectList[choicenum][i] + "</label>" +
-				"<input type=\"radio\" onclick=\"makeDecide(\'" + totalSelectList[choicenum][i] + "\' , \'" + choiceName + "\')\" id=\"radiosel\" name=\"radiosel\" value=\"" + totalSelectList[choicenum][i] + "\"><br>" +
+				"<input type=\"radio\" onclick=\"makeDecide(\'" + totalSelectList[choicenum][i] + "\' , \'" + choiceName + "\', \'" + KototalSelectList[choicenum][i] + "\')\" id=\"radiosel\" name=\"radiosel\" value=\"" + totalSelectList[choicenum][i] + "\"><br>" +
 				"</div>"
 		}
 		document.body.appendChild(BookListDiv);
-		
-	} 
+
+	}
 }
 
 //  Decide = > 결정하다, 결정한 값들을 label로 만들어주는 함수
 //값들은 전부 삭제해야함 해당 div값들을 // inchoicName =>아이디삭제
 // inchoiceName 예를 들어 underline
 // 전역변수랑 이름이 같지 않아야한다
-function makeDecide(inselectValue, inchoiceName) {
+function makeDecide(inselectValue, inchoiceName, koreananswer) {
 	// 여기서 재귀가 일어나야함
 
 	console.log(choicenum)
@@ -158,13 +179,15 @@ function makeDecide(inselectValue, inchoiceName) {
 		/*$('#' + inchoiceName).remove();
 		$('#radiosel').remove();*/
 	}
-
-
+	
+	
 	// 여기 생각종 (재귀함수? )
 	// 값을 받아와서 ( label 형식으로)
 	var BookListDiv = document.getElementById('bookList')
 	BookListDiv.innerHTML += "<div style=\"margin-top: 10px;\">" +
-		"<label id=\"" + inselectValue + choicenum + "\" >" + Koaskask[choicenum] + " : " + inselectValue + "</label><br></div>"
+		Koaskask[choicenum] + " : " +
+		"<label>" + koreananswer + "</label><br>" +
+		"<input type=\"hidden\" id=\"Question"+ choicenum + "\" value=\"" + inselectValue + "\"><br></div>"
 	document.body.appendChild(BookListDiv);
 
 	// 여기서 새로 다음으로 넘어갈 로직짜야함 함수 생성 요망
@@ -172,19 +195,98 @@ function makeDecide(inselectValue, inchoiceName) {
 	choicenum += 1
 	if (choicenum < 6) {
 		makeChoiceRadio(totalSelectList[choicenum]) //
-	}else {
-		// 여기에 button하나 만들어서 ajax통신해야함
-		BookListDiv.innerHTML += "<div id=\"finalDiv\" style=\"margin-top: 10px;\">" +
-			"<input type=\"button\" value=\"글작성하기\"><br>" +
-			"</div>"
-		document.body.appendChild(BookListDiv);
+	} else {
+		makePhotoPrice()
+	}
+}
 
+
+
+
+
+// 가격과 사진 부분, 동시에 띄우고 마지막 전송버튼 쓰는게 나을듯
+function makePhotoPrice() {
+	
+	var BookListDiv = document.getElementById('bookList')
+	BookListDiv.innerHTML += "<label>판매 가격 : </label>&ensp;<input type=\"text\" id=\"price\">"
+
+
+
+	BookListDiv.innerHTML += "<div id=\"finalDiv\" style=\"margin-top: 10px;\">" +
+		"<button onclick=\"WriteButton()\">작성</button><br>" +
+		"</div>"
+	document.body.appendChild(BookListDiv);
+	
+	$("#uploadFile").show()
+	$("#preview").show()
+
+	// 이미지 올리는 부분이 위에 생성되는 부분을 임시 해결위해 스크롤 시키도록 만들어놓음 무조건 수정요망
+	var offset = $("#uploadFile").offset();
+    $('html, body').animate({scrollTop : offset.top}, 400);
+
+}
+
+function WriteButton(){
+	//최대 다섯장이니깐 다섯 장 다 받아와지는 지 확인
+	var img =[]
+	var totalPicture = ""
+	for(i=0;i<5;i++){
+		var resultPictureSrc = $('#numPicture'+i).attr("src")
+		
+		if(resultPictureSrc == null){
+			break
+		}else{
+			img[i]= resultPictureSrc
+		}
+	}
+	console.log("이미지 갯수만큼의 길이가 나와야함 : "+img.length)
+	for(i=0 ; i < img.length;i++){
+		console.log("이미지배열의 값인데"+img[i])
+		totalPicture += img[i]
 		
 	}
-
-
-
-
+	
+	console.log("총배열: "+totalPicture)
+	
+	
+	console.log("책질문 : "+$('#booktitle').val())
+	console.log("책 isbn : "+$('#bookisbn').val())
+	console.log("1번질문 : "+$('#Question0').val())
+	console.log("2번질문 : "+$('#Question1').val())
+	console.log("3번질문 : "+$('#Question2').val())
+	console.log("4번질문 : "+$('#Question3').val())
+	console.log("5번질문 : "+$('#Question4').val())
+	console.log("6번질문 : "+$('#Question5').val())
+	console.log("가격번질문 : "+$('#price').val())
+	console.log("사진 : "+totalPicture)
+	
+	fom = {
+		'booktitle' : $('#booktitle').text(),
+		'bookisbn' : $('#bookisbn').text(),
+		'underline' : $('#Question0').val(),
+		'handwrite' : $('#Question1').val(),
+		'cover' : $('#Question2').val(),
+		'nameWrite' : $('#Question3').val(),
+		'page' : $('#Question4').val(),
+		'meansOftransaction' : $('#Question5').val(),
+		'price' :  $('#price').val(),
+		'photo' : totalPicture	
+	}
+	
+	$.ajax({
+		url : "/root/bookShop/write/"+$('#booktitle').text(),
+		type: "POST",
+		dataType: 'json', // 보낼 타입
+		data: JSON.stringify(fom),
+		contentType : "application/json; charset=utf-8",
+		success : function(result){
+			alert('회원가입성공 : '+result.result)
+			location.href = getContextPath()
+		}
+		
+		
+	})
+	
 }
 
 

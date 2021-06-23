@@ -1,10 +1,16 @@
 package com.anytime.root.bookshop.controller;
 
 
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 //일반 컨트롤러는 그냥 일반 컨트롤러
@@ -30,8 +36,33 @@ public class BookShopApiController {
 		//System.out.println("responseBody : " +result);
 		
 		
+		
 		return result;
 	}
+	
+	@PostMapping(value = "bookShop/write/{booktitle}" , produces = "application/json; charset=utf-8")
+	public String WriteBookShope(@PathVariable String booktitle, @RequestBody Map<String, Object>book,
+			HttpSession session) {
+		System.out.println("가져온 책 값 : " + booktitle);
+		System.out.println("가져온 값1 : " +book.get("bookisbn"));
+		System.out.println("가져온 값2 : " +book.get("meansOftransaction"));
+		System.out.println("아래 책 값 ");
+		//System.out.println("가져온 값3 : " +book.get("photo"));
+		//게싯글 등록 시작 해야함
+		
+		try {
+			bs.SaveBookShop(book, session);
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		
+		
+		
+		return "{\"result\" : true}";
+	}
+	
+	
 	
 	
 	

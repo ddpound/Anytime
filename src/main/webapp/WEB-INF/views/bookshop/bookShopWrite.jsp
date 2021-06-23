@@ -5,6 +5,7 @@
 <head>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript"  src="${pageContext.request.contextPath }/resources/BookShopJs/WriteBookShop.js"></script>
+<link href="${pageContext.request.contextPath }/resources/css/WriteBookShop.css" rel="stylesheet" type="text/css">
 <meta charset="UTF-8">
 <title>BookWrite</title>
 </head>
@@ -13,9 +14,10 @@
 <div id="bookList" >
 
 </div>
-
+<input type="file" name="uploadFile"  id="uploadFile"  multiple>
+<div id="preview" ></div>
 
 
 </body>
-
+<script type="text/javascript"  src="${pageContext.request.contextPath }/resources/BookShopJs/WriteBookShopCallBack.js"></script>
 </html>

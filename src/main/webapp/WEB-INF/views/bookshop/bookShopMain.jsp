@@ -29,6 +29,9 @@
 			</c:choose>
 			
 		</div>
+		<label>${Imgsrc }</label> 
+		<img src="${Imgsrc}">
+		
 		<!--  반복문 c태그 넣기 -->
 		<div class="BoardList">
 			<div id="BoardCard" class="BoardCard">
