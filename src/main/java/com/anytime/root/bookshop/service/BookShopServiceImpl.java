@@ -73,7 +73,7 @@ public class BookShopServiceImpl implements BookShopService{
 		dto.setNameWrite((String)map.get("nameWrite"));
 		dto.setPage((String)map.get("page"));
 		dto.setMeansOftransaction((String)map.get("meansOftransaction"));
-		dto.setPrice(Integer.parseInt((String)map.get("price")) );
+		dto.setPrice(Integer.parseInt((String)map.get("price")));
 		dto.setPhoto((String)map.get("photo"));
 		
 		
