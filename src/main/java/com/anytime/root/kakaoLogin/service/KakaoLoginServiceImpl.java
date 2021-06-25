@@ -19,14 +19,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class KakaoLoginServiceImpl implements KaKaoLoginService {
-
+	
 	@Override
-	public ResponseEntity<String> responeKEntity(String code) {
+	public ResponseEntity<String> responeKEntity(String code , String redirect_uri) {
 
 		// httpsURLConnection url ->옛날 방식, 조금 불편
 		// REtrofit2(안드로이드에서쓰는 라이브러리) , OkHttp
 		RestTemplate rt = new RestTemplate();
 
+		
 		// httpHeader 오브젝트 생성
 		HttpHeaders headers = new HttpHeaders();
 		// 현재 http형식이 key-value 형식임을 알린다
@@ -36,10 +37,10 @@ public class KakaoLoginServiceImpl implements KaKaoLoginService {
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("grant_type", KakaoLoginInfo.grant_type);
 		params.add("client_id", KakaoLoginInfo.client_id);
-		params.add("redirect_uri", KakaoLoginInfo.redirect_uri);
+		params.add("redirect_uri", redirect_uri);
 		// 방금 받은 코드임
 		params.add("code", code);
-
+		
 		// body data와 header값을 가지고있는 하나의 httpEntity가 된다
 		// body값 header값을 둘다 하나로 만든다
 		HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params, headers);
@@ -47,7 +48,7 @@ public class KakaoLoginServiceImpl implements KaKaoLoginService {
 		// http 요청하기 - Post방식으로 - 그리고 response 변수의 응답 받음.
 		ResponseEntity<String> response = rt.exchange(KakaoLoginInfo.OauthToken_request, HttpMethod.POST,
 				kakaoTokenRequest, String.class);
-
+		
 		return response;
 	}
 
@@ -89,8 +90,10 @@ public class KakaoLoginServiceImpl implements KaKaoLoginService {
 		// http 요청하기 - Post방식으로 - 그리고 response 변수의 응답 받음.
 		ResponseEntity<String> response = rt2.exchange(KakaoLoginInfo.UserInfoSelect, HttpMethod.POST,
 				kakaoProfileRequest2, String.class);
-
+		
+		
 		// 회원 정보까지 조회하는게 response2.getbody()
+		
 		return response;
 	}
 
@@ -123,11 +126,11 @@ public class KakaoLoginServiceImpl implements KaKaoLoginService {
 	}
 
 	@Override
-	public KakaoProfile intergration(String code) {
+	public KakaoProfile intergration(String code, String redirect_uri) {
 		// responeKEntity : 인증코드를 받아내어 카카오측에 전송
 		// 카카오 측에서 보내준 OAUTHTOKEN을 클래스 오브젝트화 시켜서 받아내는 부분이다
 		// Oauth액세스 토큰
-		OAuthToken oauthToken = ObjectOauth(responeKEntity(code));
+		OAuthToken oauthToken = ObjectOauth(responeKEntity(code, redirect_uri));
 
 		// 인증받은 후 oauthResponse란 해당 회원정보를 모두 body데이터에 json형태로 담아낸 값이다
 		ResponseEntity<String> oauthResponse = responseUserInfo(oauthToken);

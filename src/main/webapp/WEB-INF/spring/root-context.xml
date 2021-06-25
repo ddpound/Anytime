@@ -24,6 +24,7 @@
 	</bean>
 	
 		<mybatis-spring:scan base-package="com.anytime.root.user.dao"/>
+		<mybatis-spring:scan base-package="com.anytime.root.bookshop.dao"/>
 		
 		
 	<!-- 트랜젝션을 사용하기 위해 추가 -->

@@ -12,6 +12,12 @@
 		<put-attribute name="siteBottom" value="/WEB-INF/views/layout/footer.jsp" />
 	</definition>
 	
+	<!--  타일 제외부분 -->
+	<definition name="empty" template ="/WEB-INF/views/layout/tilesempty.jsp">
+		<put-attribute name="content" value="" />
+	</definition>	
+	
+	<!--  타일즈 모두 적용부분 -->
 	<definition name="*" extends="tilesLayout">
 		<put-attribute name="content" value="/WEB-INF/views/{1}.jsp" />
 	</definition>
@@ -19,6 +25,15 @@
 	<definition name="*/*" extends="tilesLayout">
 		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />
 	</definition>
+	
+	
+	<!-- SearchSchool 제외부분 -->
+	<definition name="join/SearchSchool" extends ="empty">
+		<put-attribute name="content" value ="/WEB-INF/views/join/SearchSchool.jsp"/>
+	</definition>
+	
+
+	
 	
 	<!-- tiles 일부 적용 -->
 	<!-- 
