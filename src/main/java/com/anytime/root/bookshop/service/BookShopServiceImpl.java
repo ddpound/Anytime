@@ -86,12 +86,14 @@ public class BookShopServiceImpl implements BookShopService{
 		BookShopDTO dto = new BookShopDTO();
 		
 		// 여기서 사진만 가져오자(올바르게 담긴 값)
-		dto = mapper.selectBook("8967440146 9788967440145");
+		//dto = mapper.selectBook("8967440146 9788967440145");
+		
 		
 		// split으로 data순? 으로 잘라넣어서 미리보기 해야함 (최대 다섯개)
 		
 		
-		return dto;
+		//return dto;
+		return null;
 	}
 	
 	

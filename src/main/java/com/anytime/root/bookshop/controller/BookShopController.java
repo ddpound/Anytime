@@ -23,12 +23,12 @@ public class BookShopController {
 		// 임시로 넣어놓은 이미지 값을 확인을 위해서 넣어놓음
 		BookShopDTO dto = new BookShopDTO();
 		System.out.println("select하기전");
-		dto = Bs.SelectBook(null);
-		String src = dto.getPhoto();
-		System.out.println(dto.getBookisbn());
-		System.out.println("select하기후");
+		//dto = Bs.SelectBook(null);
+		//String src = dto.getPhoto();
+		//System.out.println(dto.getBookisbn());
+		//System.out.println("select하기후");
 		
-		model.addAttribute("Imgsrc", src);
+		//model.addAttribute("Imgsrc", src);
 		
 		return "bookshop/bookShopMain";
 	}
