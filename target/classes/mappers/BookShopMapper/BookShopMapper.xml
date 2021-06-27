@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into anyTimeBoard VALUES
 		(AutoBookShopAdd.NEXTVAL,#{booktitle},#{bookisbn},#{writer},#{school},
 		#{underline},#{handwrite},#{cover},#{nameWrite},
-		#{page},#{meansOftransaction},#{price},#{photo})
+		#{page},#{meansOftransaction},#{price},#{photo},sysdate)
 	</insert>
 
 	<select id="selectBook" resultMap="bookDto">
