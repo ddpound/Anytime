@@ -39,14 +39,18 @@
 		    <div id="BoardCard" class="BoardCard">
 			
 			<img src="${AllBookPhotoList[BoardListDTO.boardId].photo1}" width="200px" height="200px">
-			<a href="">${ BoardListDTO.booktitle}</a><br>
-			<label>${ BoardListDTO.writer} </label><br>
-			<label>${ BoardListDTO.school}</label>
+			<a href="/root/bookshop/${ BoardListDTO.boardId}">${ BoardListDTO.booktitle}</a><br>
+			ISBN : <label>${ BoardListDTO.bookisbn} </label><br>
+			학교 : <label>${ BoardListDTO.school}</label>
 			<!--  중요 반드시 DTO의 변수값을 따지니 대소문자 틀리지않게 하세요 -->
 			</div>
 		
 		</c:forEach>
-			
+		<ul>
+		<c:forEach var="listNum" items="${allPageCount }">
+		<li><a href="">${listNum +1}</a></li>
+		</c:forEach>
+		</ul>
 		</div>
 	</div>
 </body>

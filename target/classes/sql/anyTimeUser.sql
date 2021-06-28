@@ -24,7 +24,7 @@ CREATE SEQUENCE Autoadd
   MAXVALUE 10000
   MINVALUE 1
   NOCYCLE;
-
+drop sequence Autoadd;
 
 select * from anyTimeUser;
 drop table anyTimeUser;
@@ -73,11 +73,12 @@ photo5 clob,
 CONSTRAINT fk_photoID FOREIGN KEY(id)
          REFERENCES ANYTIMEBOARD(BOARDID) ON DELETE CASCADE
 );
-
-drop table ANYTIMEBOARD;
 drop table photoTable;
-select id,* from photoTable;
+drop table ANYTIMEBOARD;
+drop table ANYTIMEUSER;
 
+select id,* from photoTable;
+drop sequence AutoBookShopAdd;
 
 select B.* from(select rownum rn, A.* from(select * from ANYTIMEBOARD order by BOARDID desc)A)B 
 		 where rn between 0 and 5;

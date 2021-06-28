@@ -14,11 +14,11 @@ body {
 	margin-left: 25%;
 	margin-top: 15px;
 	width: 950px;
-	height: 500px;
+	height: 1600px;
 }
 
 .BoardCard {
-	width: 400px;
+	width: 950px;
 	height: 300px;
 	border: 2px solid black;
 }
