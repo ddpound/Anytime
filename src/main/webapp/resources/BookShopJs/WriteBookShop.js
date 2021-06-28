@@ -236,7 +236,7 @@ function WriteButton(){
 		if(resultPictureSrc == null){
 			break
 		}else{
-			img[i]= resultPictureSrc
+			img[i]= resultPictureSrc + '#' //요걸넣어줘야 구분가능함 자바 서버단에서 split할예정
 		}
 	}
 	console.log("이미지 갯수만큼의 길이가 나와야함 : "+img.length)

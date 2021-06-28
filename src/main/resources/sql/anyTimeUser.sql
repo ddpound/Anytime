@@ -1,4 +1,5 @@
 select *from ANYTIMEBOARD;
+select * from photoTable;
 select *from ANYTIMEUSER;
 
 create table ANYTIMEUSER(
@@ -7,14 +8,14 @@ createdate Date default sysdate,
 email varchar2(100) PRIMARY KEY,
 auth varchar2(30),
 Password varchar2(300),
-rule varchar2(30), -- 유저인지, 관리자인지
-username varchar2(100), -- 사용할 닉네임
+rule varchar2(30),
+username varchar2(100),
 age varchar2(30),
-agegroup varchar2(30), --연령대
+agegroup varchar2(30),
 grade number(4,2),
-enteryear varchar2(50), -- 입학년도
+enteryear varchar2(50),
 SCHOOL varchar2(300),
-EXPIRATION_DATE date default sysdate -- 만기일(mapper파일에서 해결함 +3년)
+EXPIRATION_DATE date default sysdate
 );
 
 CREATE SEQUENCE Autoadd
@@ -37,22 +38,50 @@ create table ANYTIMEBOARD(
 BOARDID NUMBER(4,0) PRIMARY KEY,
 BOOKTITLE VARCHAR2(200 BYTE),
 BOOKISBN VARCHAR2(100 BYTE),
-WRITER VARCHAR2(100 BYTE), -- 작성자(email)
-SCHOOL VARCHAR2(300 BYTE), -- 작성자 학교
-UNDERLINE VARCHAR2(50 BYTE), -- 밑줄
-HANDWRITE VARCHAR2(50 BYTE), -- 손글씨 유무
-COVER VARCHAR2(50 BYTE), -- 책표지상태 
-NAMEWRITE VARCHAR2(50 BYTE), -- 이름 쓰기상태
-PAGE VARCHAR2(50 BYTE), -- 페이지 종이상태
-MEANSOFTRANSACTION VARCHAR2(50 BYTE), -- 직거래 확인 유무
+WRITER VARCHAR2(100 BYTE),
+SCHOOL VARCHAR2(300 BYTE),
+UNDERLINE VARCHAR2(50 BYTE),
+HANDWRITE VARCHAR2(50 BYTE),
+COVER VARCHAR2(50 BYTE),
+NAMEWRITE VARCHAR2(50 BYTE),
+PAGE VARCHAR2(50 BYTE),
+MEANSOFTRANSACTION VARCHAR2(50 BYTE),
 PRICE NUMBER,
-PHOTO CLOB,
-createdate Date default sysdate, 
+Sales_status varchar2(50),
+createdate Date default sysdate,
 
 CONSTRAINT fk_bookId FOREIGN KEY(WRITER)
          REFERENCES ANYTIMEUSER(email) ON DELETE CASCADE
 
 );
 
+
+CREATE SEQUENCE AutoBookShopAdd
+  START WITH 1
+  INCREMENT BY 1
+  MAXVALUE 10000
+  MINVALUE 1
+  NOCYCLE;
+
+create table photoTable(
+id NUMBER(4,0) PRIMARY KEY,
+photo1 clob,
+photo2 clob,
+photo3 clob,
+photo4 clob,
+photo5 clob,
+CONSTRAINT fk_photoID FOREIGN KEY(id)
+         REFERENCES ANYTIMEBOARD(BOARDID) ON DELETE CASCADE
+);
+
 drop table ANYTIMEBOARD;
+drop table photoTable;
+select id,* from photoTable;
+
+
+select B.* from(select rownum rn, A.* from(select * from ANYTIMEBOARD order by BOARDID desc)A)B 
+		 where rn between 0 and 5;
+
 commit;
+
+

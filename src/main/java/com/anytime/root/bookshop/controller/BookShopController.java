@@ -1,13 +1,19 @@
 package com.anytime.root.bookshop.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.anytime.root.bookshop.dao.BookShopDAO;
 import com.anytime.root.bookshop.dto.BookShopDTO;
+import com.anytime.root.bookshop.dto.BookShopPhotoDTO;
 import com.anytime.root.bookshop.service.BookShopService;
 
 // REST쪽이 아니니깐 view와 ATTRibute를 반환하자
@@ -19,16 +25,24 @@ public class BookShopController {
 	
 	
 	@GetMapping("bookshop")
-	public String showBookShop(Model model) {
-		// 임시로 넣어놓은 이미지 값을 확인을 위해서 넣어놓음
-		BookShopDTO dto = new BookShopDTO();
-		System.out.println("select하기전");
-		//dto = Bs.SelectBook(null);
-		//String src = dto.getPhoto();
-		//System.out.println(dto.getBookisbn());
-		//System.out.println("select하기후");
+	public String showBookShop(Model model,
+			@RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum ) {
+		System.out.println("페이지 현재 : "+pageNum);
 		
-		//model.addAttribute("Imgsrc", src);
+		ArrayList<BookShopDTO> ResultList = new ArrayList<BookShopDTO>();
+		Map<Integer, BookShopPhotoDTO> AllBookPhotoList =  new HashMap<Integer, BookShopPhotoDTO>();
+		
+		ResultList = Bs.PageselectBookShop(pageNum);
+		AllBookPhotoList = Bs.AllListBookBoardPhoto();
+		
+		for(int i=0;i <ResultList.size() ;i++) {
+			System.out.println("컨트롤단의 북제목확인 : "+ResultList.get(i).getBooktitle());
+		}
+		
+		model.addAttribute("AllBookPhotoList",AllBookPhotoList);
+		model.addAttribute("PageboardList",ResultList);
+		model.addAttribute("allPageCount",Bs.getBoardListCount());
+		
 		
 		return "bookshop/bookShopMain";
 	}

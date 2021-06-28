@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/functions"  prefix="fn"%>
 <!DOCTYPE html>
 <html>
 
@@ -29,14 +30,23 @@
 			</c:choose>
 			
 		</div>
-		<label>${Imgsrc }</label> 
-		<img src="${Imgsrc}">
+		
+		
 		
 		<!--  반복문 c태그 넣기 -->
 		<div class="BoardList">
-			<div id="BoardCard" class="BoardCard">
+		<c:forEach var="BoardListDTO" items="${PageboardList }">
+		    <div id="BoardCard" class="BoardCard">
 			
+			<img src="${AllBookPhotoList[BoardListDTO.boardId].photo1}" width="200px" height="200px">
+			<a href="">${ BoardListDTO.booktitle}</a><br>
+			<label>${ BoardListDTO.writer} </label><br>
+			<label>${ BoardListDTO.school}</label>
+			<!--  중요 반드시 DTO의 변수값을 따지니 대소문자 틀리지않게 하세요 -->
 			</div>
+		
+		</c:forEach>
+			
 		</div>
 	</div>
 </body>

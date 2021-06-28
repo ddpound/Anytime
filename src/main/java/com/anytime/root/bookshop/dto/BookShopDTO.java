@@ -1,5 +1,7 @@
 package com.anytime.root.bookshop.dto;
 
+import java.sql.Date;
+
 public class BookShopDTO {
 	private int boardId;
 	private String booktitle;
@@ -12,8 +14,10 @@ public class BookShopDTO {
 	private String nameWrite;
 	private String page;
 	private String meansOftransaction;
+	private String SalesStatus;
+	private Date createdate;
 	private int price;
-	private String photo;
+	
 	public int getBoardId() {
 		return boardId;
 	}
@@ -86,11 +90,17 @@ public class BookShopDTO {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public String getPhoto() {
-		return photo;
+	public String getSalesStatus() {
+		return SalesStatus;
 	}
-	public void setPhoto(String photo) {
-		this.photo = photo;
+	public void setSalesStatus(String salesStatus) {
+		SalesStatus = salesStatus;
+	}
+	public Date getCreatedate() {
+		return createdate;
+	}
+	public void setCreatedate(Date createdate) {
+		this.createdate = createdate;
 	}
 	
 	
