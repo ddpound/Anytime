@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -51,6 +52,15 @@ public class BookShopController {
 	public String GoWritePage() {
 		
 		return "bookshop/bookShopWrite";
+	}
+	
+	// 게시글 보기
+	@GetMapping(value = "root/bookshop/{boardId}")
+	public String bookShopView(@PathVariable("boardId")int i) {
+		
+		System.out.println("받은값 확인 "+ i);
+		
+		return "bookshop/BookShopView";
 	}
 	
 }

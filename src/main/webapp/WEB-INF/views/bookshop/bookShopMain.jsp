@@ -6,6 +6,8 @@
 <html>
 
 <head>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript"  src="${pageContext.request.contextPath }/resources/BookShopJs/bookShopMain.js"></script>
 <link
 	href="${pageContext.request.contextPath }/resources/css/bookshop.css"
 	rel="stylesheet" type="text/css">
@@ -39,7 +41,7 @@
 		    <div id="BoardCard" class="BoardCard">
 			
 			<img src="${AllBookPhotoList[BoardListDTO.boardId].photo1}" width="200px" height="200px">
-			<a href="/root/bookshop/${ BoardListDTO.boardId}">${ BoardListDTO.booktitle}</a><br>
+			<a href="root/bookshop/${BoardListDTO.boardId }" >${ BoardListDTO.booktitle}</a><br>
 			ISBN : <label>${ BoardListDTO.bookisbn} </label><br>
 			학교 : <label>${ BoardListDTO.school}</label>
 			<!--  중요 반드시 DTO의 변수값을 따지니 대소문자 틀리지않게 하세요 -->
