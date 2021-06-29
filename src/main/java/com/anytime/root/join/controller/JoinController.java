@@ -126,12 +126,21 @@ public class JoinController {
 				
 			}
 			
-			
-			
 		}
 		
 		// 학교 데이터 값
 		return response.getBody();
 	}
+	
+	@GetMapping(value = "generaljoin")
+	public String generalJoinView(Model model) {
+		
+		// 이게 일반회원인지 아닌지 확인시켜주는 값, 이값이 보내지면 일반회원
+		model.addAttribute("UserJoinAuth","general");
+		
+		return "join/joinView";
+	}
+	
+	
 
 }

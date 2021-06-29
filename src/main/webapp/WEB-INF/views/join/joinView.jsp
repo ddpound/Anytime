@@ -6,7 +6,7 @@
 <head>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/JoinView.js"></script>
-<script src="${pageContext.request.contextPath }/resources/js/Join.js?=1"></script>
+<script src="${pageContext.request.contextPath }/resources/js/Join.js"></script>
 <meta charset="UTF-8">
 <title>AnyTime JoinView</title>
 </head>
@@ -39,7 +39,7 @@
 		<br>
 		
 		<!--  임시방편 나중에 카카오 로그인 버튼으로 대체할생각 -->
-		<input type="button"  style="width: 300px; height: 80px;" src="${pageContext.request.contextPath }/resources/img/KaKaoJoin.png" onclick="SaveUser()" ><br>
+		<input type="button"  style="width: 300px; height: 80px;" src="${pageContext.request.contextPath }/resources/img/KaKaoJoin.png" onclick="SaveUser('${UserJoinAuth}')" ><br>
 	</form>
 		
 	</div>

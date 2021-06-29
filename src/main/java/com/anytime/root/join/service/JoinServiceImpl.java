@@ -38,6 +38,7 @@ public class JoinServiceImpl implements JoinService{
 		dto.setSchool((String)user.get("parSchoolName")+" : "+ (String)user.get("parSchooladd")); // 여기 주소값이랑 다담겨있음 . 을 구분으로 split하면될듯
 		dto.setAgeGroup((String)user.get("ageGroup"));
 		
+		System.out.println("잘 받아와지는지 확인"+(String)user.get("joinauth"));
 		
 		dto.setAuth("kakao");
 		dto.setPassWord("1234");
