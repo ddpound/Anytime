@@ -5,15 +5,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>AnyTime</title>
 </head>
 <body>
 	<header id="siteTop">
 		<tiles:insertAttribute name="siteTop"/>
 	</header>
 
-	<div id="content">
-		<tiles:insertAttribute name="content"/>
+	<div id="siteBody">
+		<tiles:insertAttribute name="siteBody"/>
 	</div>
  
 	<footer id="siteBottom">

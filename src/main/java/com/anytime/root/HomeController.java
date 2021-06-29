@@ -15,4 +15,11 @@ public class HomeController {
 		return "index";
 	}
 	
+	@RequestMapping(value = "index")
+	public String home() {
+		return "redirect:/";
+	}
+	
+	
+	
 }
