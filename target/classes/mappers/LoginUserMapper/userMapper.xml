@@ -18,6 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="grade" column="grade" />
 		<result property="enterYear" column="enterYear" />
 		<result property="school" column="school" />
+		<result property="permissions" column="permissions"/>
 		<result property="expirationDate" column="expiration_date" />
 
 	</resultMap>
@@ -27,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insertUser">
 		insert into anyTimeUser
 		values(Autoadd.NEXTVAL,sysdate,#{email},#{auth},#{passWord},#{rule},#{username},#{age},#{ageGroup},#{grade},#{enterYear},#{school},
-		sysdate + (INTERVAL '3' YEAR))
+		#{permissions} , sysdate + (INTERVAL '3' YEAR))
 
 
 	</insert>
@@ -35,5 +36,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="loginUser" resultMap="userDto">
 		select * from anyTimeUser where email = #{email}
 	</select>
+	
+	<select id="AllUserList" resultMap="userDto">
+		select * from anyTimeUser
+	</select>
+	
+	<update id="changePermissionsTure">
+	update anyTimeUser set permissions='true' where email = #{email}
+	</update>
+	
+	<update id="changePermissionsFalse">
+	update anyTimeUser set permissions='false' where email = #{email}
+	</update>
+	
 	
 </mapper>

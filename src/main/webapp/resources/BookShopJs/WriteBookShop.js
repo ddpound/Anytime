@@ -280,7 +280,7 @@ function WriteButton(){
 		data: JSON.stringify(fom),
 		contentType : "application/json; charset=utf-8",
 		success : function(result){
-			alert('회원가입성공 : '+result.result)
+			alert('글쓰기성공 : '+result.result)
 			location.href = getContextPath()
 		}
 		

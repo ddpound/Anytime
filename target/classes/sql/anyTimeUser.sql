@@ -15,9 +15,10 @@ agegroup varchar2(30),
 grade number(4,2),
 enteryear varchar2(50),
 SCHOOL varchar2(300),
+permissions varchar2(30), -- 사용권한
 EXPIRATION_DATE date default sysdate
 );
-
+insert into ANYTIMEUSER VALUES(77,sysdate,'admin@admin.com','admin','1234','admin','admin','20','77~77',2,'7777','adminSchool','true',sysdate);
 CREATE SEQUENCE Autoadd
   START WITH 1
   INCREMENT BY 1

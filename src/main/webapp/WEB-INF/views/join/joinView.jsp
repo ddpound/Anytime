@@ -31,15 +31,22 @@
 		<input type="text" id="parSchoolName"  name="parSchoolName"  placeholder="학교이름"><br>
 		<input type="text"  id="parSchooladd"  name="parSchooladd" placeholder="학교주소"><br>
 		 
-		이메일 : <input type="text" id="email" name="email" value="${email}"><br>
+		이메일 : <input type="email" id="email" name="email" value="${email}"><br>
+		<c:choose>
+		<c:when test="${UserJoinAuth != null}">
+		<!-- 일반회원일때는 비밀번호를 받아야하니깐 -->
+		비밀번호 : <input type="password" id="pwd" name="pwd"  placeholder="password"><br>
+		</c:when>
+		</c:choose>
 		이름 : <input type="text" id="nickname" name="nickname" value="${nickname}"><br>
 		나이 : <input type="text"  id="age"  name="age"  placeholder="나이를 입력해주세요"><br>
 		연령대 : <input type="text"  id="ageGroup"  name="ageGroup"  value="${agerange}" readonly="readonly"><br>
 		현재학년 : <input type="text"  id="grade"  name="grade"  placeholder="현재학년"><br>
+		<input type="text"  id="UserJoinAuth"  name="UserJoinAuth"  value="${UserJoinAuth}" hidden="hidden"><br>
 		<br>
 		
 		<!--  임시방편 나중에 카카오 로그인 버튼으로 대체할생각 -->
-		<input type="button"  style="width: 300px; height: 80px;" src="${pageContext.request.contextPath }/resources/img/KaKaoJoin.png" onclick="SaveUser('${UserJoinAuth}')" ><br>
+		<input type="button"  style="width: 300px; height: 80px;" src="${pageContext.request.contextPath }/resources/img/KaKaoJoin.png" onclick="SaveUser()" ><br>
 	</form>
 		
 	</div>
