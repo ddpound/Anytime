@@ -86,13 +86,13 @@ input[type="button"],input[type="submit"],input[type="search"] {
       <c:when test="${loginuserAuth == 'kakaoUser'}">
        <p><a href="https://kauth.kakao.com/oauth/logout?client_id=a924c282a86092b8472e6c2885aafe4a&logout_redirect_uri=http://localhost:8000/root/auth/kakao/logout">로그아웃</a></p>
       ${userId}<br>
-      ${userSchool}<br>
+      ${userschoolname}<br>
       ${userNickname}<br>
       </c:when>
       <c:when test="${loginuserAuth == 'generalUser'}">
       <p><a href="generalUser/logout">로그아웃</a></p>
       ${userId}<br>
-      ${userSchool}<br>
+      ${userschoolname}<br>
       ${userNickname}<br>
       </c:when>
       <c:when test="${loginuserAuth == 'admin'}">
