@@ -16,6 +16,9 @@
 		select * from timetable where id = #{id} and semester = #{selc}
 	</select>
 	<select id="countById" parameterType="String" resultType="int">
+		select count(*) from timetable where id = #{id}
+	</select>
+	<select id="getItemNo" parameterType="String" resultType="int">
 		select * from 
 		 (select item_no from timetable where id = #{id} order by item_no desc)
 		 where rownum = 1

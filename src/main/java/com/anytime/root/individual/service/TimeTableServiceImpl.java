@@ -29,9 +29,9 @@ public class TimeTableServiceImpl implements TimetableService{
 	
 	@Override
 	public void addTimetable(Timetable timetable) {
-		int count = timetableRepository.getItemNo(timetable.getId());
+		int count = timetableRepository.countById(timetable.getId());
 		if( count > 0) {
-			timetable.setItemNo(count+1);
+			timetable.setItemNo(timetableRepository.getItemNo(timetable.getId())+1);
 		}else {
 			timetable.setItemNo(1);
 		}

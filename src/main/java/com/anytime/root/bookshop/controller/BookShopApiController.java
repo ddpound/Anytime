@@ -40,10 +40,9 @@ public class BookShopApiController {
 		return result;
 	}
 	
-	@PostMapping(value = "bookShop/write/{booktitle}" , produces = "application/json; charset=utf-8")
-	public String WriteBookShope(@PathVariable String booktitle, @RequestBody Map<String, Object>book,
+	@PostMapping(value = "bookShop/write" , produces = "application/json; charset=utf-8")
+	public String WriteBookShope(@RequestBody Map<String, Object>book,
 			HttpSession session) {
-		System.out.println("가져온 책 값 : " + booktitle);
 		System.out.println("가져온 값1 : " +book.get("bookisbn"));
 		System.out.println("가져온 값2 : " +book.get("meansOftransaction"));
 		System.out.println("아래 책 값 ");

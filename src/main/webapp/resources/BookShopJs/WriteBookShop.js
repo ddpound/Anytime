@@ -274,7 +274,7 @@ function WriteButton(){
 	}
 	
 	$.ajax({
-		url : "/root/bookShop/write/"+$('#booktitle').text(),
+		url : "/root/bookShop/write",
 		type: "POST",
 		dataType: 'json', // 보낼 타입
 		data: JSON.stringify(fom),
