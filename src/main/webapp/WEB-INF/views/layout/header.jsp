@@ -96,7 +96,7 @@ nav ul li a:hover {
 		<div class="header">
 			<div id="logo">
 				<a href="${contextPath }/index">
-				<img src="1.JPG">
+				<img src="${pageContext.request.contextPath }/resources/img/logo.jpg" width="30px" height="30px">
 				</a>
 				<p>
 				<span class="name">애니타임</span><br>
