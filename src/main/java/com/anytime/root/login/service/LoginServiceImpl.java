@@ -21,10 +21,18 @@ public class LoginServiceImpl implements LoginService {
 		if (dto != null) {
 			if(loginjoin.equals("login")) {
 				session.setAttribute("userSchool", dto.getSchool());
+				session.setAttribute("userschoolname", splitschoolname(dto.getSchool()));
 			}
 			return 1;
 		}
 		return 0;
+	}
+	
+	public String splitschoolname(String schoolname) {
+		String splitschoolName[] = schoolname.split("고등학교");
+		System.out.println(splitschoolName[0]);
+		
+		return splitschoolName[0];
 	}
 
 }
