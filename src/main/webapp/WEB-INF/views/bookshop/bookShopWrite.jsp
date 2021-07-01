@@ -10,6 +10,7 @@
 <title>BookWrite</title>
 </head>
 <body>
+<div class="MainBox">
 <div class="contentBox">
 <input id="SearchCode" type="text"  placeholder="책 제목,isbn,작가를 입력해주세요"><button id="SearchCodeBtn" onclick="GowriteBook()">검색</button><br> <!--  책 검색 API 사용 -->
 <div id="bookList" >
@@ -18,6 +19,7 @@
 <input type="file" name="uploadFile"  id="uploadFile"  multiple>
 <div id="preview" ></div>
 
+</div>
 </div>
 </body>
 <script type="text/javascript"  src="${pageContext.request.contextPath }/resources/BookShopJs/WriteBookShopCallBack.js"></script>

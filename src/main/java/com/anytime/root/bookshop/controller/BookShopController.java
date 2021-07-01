@@ -23,17 +23,24 @@ import com.anytime.root.bookshop.service.BookShopService;
 public class BookShopController {
 	@Autowired
 	BookShopService Bs;
+	int nowPage;
 	
 	
-	@GetMapping("bookshop")
+	
+	@GetMapping(value = {"bookshop/{pageNum}" , "bookshop"})
 	public String showBookShop(Model model,
-			@RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum ) {
+			@PathVariable(value = "pageNum",required = false)Integer pageNum ) {
+		//  default 값이 1로 하게 만들기위해서
+		if(pageNum==null) {
+			pageNum =1;
+		}
 		System.out.println("페이지 현재 : "+pageNum);
+		nowPage = pageNum;
 		
 		ArrayList<BookShopDTO> ResultList = new ArrayList<BookShopDTO>();
 		Map<Integer, BookShopPhotoDTO> AllBookPhotoList =  new HashMap<Integer, BookShopPhotoDTO>();
 		
-		ResultList = Bs.PageselectBookShop(pageNum);
+		ResultList = Bs.PageselectBookShop(nowPage);
 		AllBookPhotoList = Bs.AllListBookBoardPhoto();
 		
 		for(int i=0;i <ResultList.size() ;i++) {
@@ -42,8 +49,9 @@ public class BookShopController {
 		
 		model.addAttribute("AllBookPhotoList",AllBookPhotoList);
 		model.addAttribute("PageboardList",ResultList);
-		model.addAttribute("allPageCount",Bs.getBoardListCount());
 		
+		model.addAttribute("allPageCount",Bs.getBoardListCount());
+		model.addAttribute("nowPage",nowPage);
 		
 		return "bookshop/bookShopMain";
 	}
@@ -55,10 +63,12 @@ public class BookShopController {
 	}
 	
 	// 게시글 보기
-	@GetMapping(value = "root/bookshop/{boardId}")
-	public String bookShopView(@PathVariable("boardId")int i) {
+	@GetMapping(value =  "bookshop/{nowPage}/{boardId}")
+	public String bookShopView(@PathVariable("boardId")int id, Model model) {
 		
-		System.out.println("받은값 확인 "+ i);
+		System.out.println("받은값 확인 "+ id);
+		// 여기다가 model 값을 추가해주면됨
+		model.addAttribute("BookShop",Bs.SearchbookshopId(id));
 		
 		return "bookshop/BookShopView";
 	}

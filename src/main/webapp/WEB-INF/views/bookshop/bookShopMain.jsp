@@ -24,7 +24,7 @@
 			<c:choose>
 			<c:when test="${userId  != null}">
 			
-			 &emsp; <a class="btn sell" href="bookShop/write">책팔기 </a>
+			 &emsp; <a class="btn sell" href="/root/bookShop/write">책팔기 </a>
 			</c:when>
 			<c:otherwise>
 			
@@ -41,7 +41,7 @@
 		    <div id="BoardCard" class="BoardCard">
 			
 			<img src="${AllBookPhotoList[BoardListDTO.boardId].photo1}" width="200px" height="200px">
-			<a href="root/bookshop/${BoardListDTO.boardId }" >${ BoardListDTO.booktitle}</a><br>
+			<a href="/root/bookshop/${nowPage }/${BoardListDTO.boardId }" >${ BoardListDTO.booktitle}</a><br>
 			ISBN : <label>${ BoardListDTO.bookisbn} </label><br>
 			학교 : <label>${ BoardListDTO.school}</label>
 			<!--  중요 반드시 DTO의 변수값을 따지니 대소문자 틀리지않게 하세요 -->
@@ -50,7 +50,7 @@
 		</c:forEach>
 		<ul>
 		<c:forEach var="listNum" items="${allPageCount }">
-		<li><a href="">${listNum +1}</a></li>
+		<li><a href="/root/bookshop/${listNum +1}">${listNum +1}</a></li>
 		</c:forEach>
 		</ul>
 		</div>

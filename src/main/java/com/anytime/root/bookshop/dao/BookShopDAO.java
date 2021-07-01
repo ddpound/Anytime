@@ -21,6 +21,9 @@ public interface BookShopDAO {
 	// 아이디 값 단 하나만 가져오는것
 	public BookShopPhotoDTO selectBookPhoto(int id);
 	
+	// 책 아이디 검색해  select해오는 쿼리문
+	public BookShopDTO selectBookId(int boardId);
+	
 	// 책과 사진 관련된 글 전부다 select해오는 문 조건없이 다가져옴
 	public ArrayList<BookShopDTO> AllselectBookShop();
 	public ArrayList<BookShopPhotoDTO> AllSelectBookShopPhoto();

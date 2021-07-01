@@ -36,4 +36,7 @@ public interface BookShopService {
 	
 	public BookShopPhotoDTO SearchSelectPhotoBookShop(int id);
 	
+	// 북 샵 글 id로 검색하는 것
+	public BookShopDTO SearchbookshopId(int bookId);
+	
 }

@@ -12,7 +12,13 @@
 <body>
 	<div class="MainBox">
 		<div class="BoardList">
-			<div id="BoardCard" class="BoardCard"></div>
+			<div id="BoardCard" class="BoardCard">
+			제목 : ${ BookShop.booktitle} <br>
+			bookisbn : ${ BookShop.bookisbn} <br>
+			밑줄 : ${ BookShop.underline}<br>
+			
+			
+			</div>
 		</div>
 	</div>
 </body>
