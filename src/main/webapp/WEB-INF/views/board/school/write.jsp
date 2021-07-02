@@ -19,11 +19,29 @@
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		function setBoardName(){
+			var str;
+			if('${section}' === 's'){
+				str = "비밀";
+			}else if('${section}' === 'c'){
+				str = "동아리";
+			}else if('${section}' === 'i'){
+				str = "학교정보";
+			}else if('${section}' === 'f'){
+				str = "진학진로";
+			}
+			str += "게시판";
+			$("#boardName").html(str);
+		}
+		setBoardName();
+	});
+</script>
 </head>
 <body>
 <div class="contentBox">
-login id: ${userId } , nickname: ${userNickname }, section: ${section }
-<h1 style="color:skyblue;">${sectionName} 글 작성</h1><br>
+<h1 id="boardName" style="color:skyblue;"></h1><br>
 	<div class="form-group">
 		<form action="${contextPath }/write_save" method="post">
 			<input type="hidden" name="writerId" value="${userId }">
@@ -32,9 +50,7 @@ login id: ${userId } , nickname: ${userNickname }, section: ${section }
 			<div class="form-group" style="width:600px;">
 				<input type="text" name="subject" class="form-control" placeholder="제목">
 			</div>
-			<input type="hidden" name="section" value="${section}">
-			<!-- <script src="${contextPath }/summernote.js"></script> -->
-			
+			<input type="hidden" name="section" value="${section}">			
 			<script>
 				$(document).ready(function() {
 					$('#summernote').summernote({

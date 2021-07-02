@@ -57,6 +57,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from photoTable
 		where id= #{id}
 	</select>
+	
+	<select id="selectBookId" resultMap="bookDto">
+	select *from anyTimeBoard where BOARDID = #{boardId}
+	
+	</select>
+	
 
 	<select id="AllselectBookShop" resultMap="bookDto">
 		select * from anyTimeBoard
@@ -75,6 +81,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	select count(*) from anyTimeBoard
 	</select>
 	
-
+	<delete id="deleteBookShopBoard">
+	delete from anyTimeBoard where BOARDID=#{boardId}
+	</delete>
+	
 
 </mapper>

@@ -10,9 +10,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<!-- 
-<script src="/js/html2canvas.js"></script>
- -->
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://kit.fontawesome.com/46c1a740db.js" crossorigin="anonymous"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
@@ -35,7 +32,7 @@
 		link.click();
 	}
 	
-	$(function(){
+	$(function(){		
 		$("#add_schedule").click(function(){
 			$("#add_wrap").show();
 		});
@@ -58,29 +55,39 @@
 			$("#mod_itemNo").val("");
 			$("#mod_wrap").hide();
 		});
+		$("#set_close").click(function(){
+			$("#set_wrap").hide();
+		});
 		
 		$("#add_btn").click(function(){
 			var radio = $('input[name="day"]:checked').val();
+			var st = $("#start_time").val();
+			var sm = $("#start_minute").val();
+			var et = $("#end_time").val();
+			var em = $("#end_minute").val();
 			if($("#subject").val()===""){
 				alert("과목명을 입력해주세요.");
-			}else if(radio==null){
+			}else if(radio == null){
 				alert("요일을 골라주세요.");
-			}else if($("#start_time").val()==="시작시간"){
+			}else if(st === "시작시간"){
 				alert("시작시간을 골라주세요.");
-			}else if($("#start_minute").val()==="시작분"){
+			}else if(sm === "시작분"){
 				alert("시작분을 골라주세요.");
-			}else if($("#end_time").val()==="끝 시간"){
+			}else if(et === "끝 시간"){
 				alert("끝시간을 골라주세요.");
-			}else if($("#end_minute").val()==="끝 분"){
+			}else if(em === "끝 분"){
 				alert("끝분을 골라주세요.");
-			//}else if(){	//중복방지	
+			}else if( (st > et) || (st == et) && (sm >= em) ){
+				alert("끝시간이 시작시간보다 빠르거나 같습니다.");
+//			}else if(  ){
+//				alert("시간표가 중복 됩니다.");
 			}else{
 				$.ajax({
 	    			url: "${contextPath}/add",
 	                type: "POST",
 	                data: {
 	                	id : '${userId}',
-	                	semester : '${selc}',
+	                	semester : '${semester}',
 	                	subject : $("#subject").val(),
 	                	day : radio,
 	                	start_time : $("#start_time").val(),
@@ -99,19 +106,26 @@
 		
 		$("#modify_btn").click(function(){
 			var radio = $('input[name="mod_day"]:checked').val();
+			var st = $("#start_time").val();
+			var sm = $("#start_minute").val();
+			var et = $("#end_time").val();
+			var em = $("#end_minute").val();
 			if($("#mod_subject").val()===""){
 				alert("과목명을 입력해주세요.");
 			}else if(radio==null){
 				alert("요일을 골라주세요.");
-			}else if($("#mod_start_time").val()==="시작시간"){
+			}else if(st === "시작시간"){
 				alert("시작시간을 골라주세요.");
-			}else if($("#mod_start_minute").val()==="시작분"){
+			}else if(sm === "시작분"){
 				alert("시작분을 골라주세요.");
-			}else if($("#mod_end_time").val()==="끝 시간"){
+			}else if(et === "끝 시간"){
 				alert("끝시간을 골라주세요.");
-			}else if($("#mod_end_minute").val()==="끝 분"){
+			}else if(em === "끝 분"){
 				alert("끝분을 골라주세요.");
-			//}else if(){	//중복방지	
+			}else if( (st > et) || (st == et) && (sm >= em) ){
+				alert("끝시간이 시작시간보다 빠르거나 같습니다.");
+//			}else if(  ){
+//				alert("시간표가 중복 됩니다.");
 			}else{
 				$.ajax({
 	    			url: "${contextPath}/modify",
@@ -119,7 +133,7 @@
 	                data: {
 	                	itemNo: $("#mod_itemNo").val(),
 	                	id : '${userId}',
-	                	semester : '${selc}',
+	                	semester : '${semester}',
 	                	subject : $("#mod_subject").val(),
 	                	day : radio,
 	                	start_time : $("#mod_start_time").val(),
@@ -136,28 +150,85 @@
 			}
 		});
 		
+		$("#set_btn").click(function(){
+			$.ajax({
+    			url: "${contextPath}/setting",
+                type: "POST",
+                data: {
+                	id: '${userId}',
+                	scope: $('input[name="openScope"]:checked').val(),
+                	main : $("#setMain").is(":checked"),
+                	semester: '${semester}'
+                },
+                success: function () {
+                	alert("저장완료");
+                	$("#set_wrap").hide();
+                	location.reload();
+                },
+    		})
+		});
+
+		$("#reset_btn").click(function(){
+			$.ajax({
+    			url: "${contextPath}/reset",
+                type: "POST",
+                data: {
+                	id: '${userId}',
+                	semester: '${semester}'
+                },
+                success: function () {
+                	alert("초기화 완료");
+                	$("#set_wrap").hide();
+                	location.reload();
+                },
+    		})
+		});
+		
 		function getRandomColor(){
 			return "#" + Math.floor(Math.random() * 16777213 + 1).toString(16); //0x000001이상 0xffffff미만
 		}
 		
+		// 중복 체크
+		function check(){
+			
+		}
+		
 		function showTable(){
+			var setTitle;
+			if('${semester}' === 'sem1'){
+				setTitle = '1학년 1학기';
+			}else if('${semester}' === 'sem2'){
+				setTitle = '1학년 2학기';
+			}else if('${semester}' === 'sem3'){
+				setTitle = '2학년 1학기';
+			}else if('${semester}' === 'sem4'){
+				setTitle = '2학년 2학기';
+			}else if('${semester}' === 'sem5'){
+				setTitle = '3학년 1학기';
+			}else if('${semester}' === 'sem6'){
+				setTitle = '3학년 2학기';
+			}
+			setTitle += '<br>시간표';
+			$("#title").html(setTitle);
+			
 			var json = JSON.parse('${timetableList}');
 			for(var i=0; i<json.length; i++){
 				var day = "#cols_"+json[i].day;
-				var topPosi = 134+(json[i].start_time * 60)+json[i].start_minute;
+				var topPosi = 84+(json[i].start_time * 60)+json[i].start_minute;
 				var heightSize = (json[i].end_time - json[i].start_time)*60 + (json[i].end_minute-json[i].start_minute);
 				var colour = getRandomColor();
 				var str = "<div style='position:absolute;width:123px;height:"+heightSize+"px;top:"+topPosi+"px;";
 				str += "background-color:"+colour+";'>";
 				str += "<strong>"+json[i].subject;
 				str += "</strong>&nbsp;<i class='fas fa-edit' onclick='modifyShow("+JSON.stringify(json[i])+")'></i>&nbsp;";
-				str += "<i class='fas fa-times' onclick='deleteItem("+json[i].itemNo+")'></i></div>";
+				str += "<i class='fas fa-times' onclick='deleteItem("+json[i].itemNo+")'></i><br>";
+				str += "<small>"+(json[i].start_time+8)+":"+json[i].start_minute+"~"+(json[i].end_time+8)+":"+json[i].end_minute+"</small></div>";
 				var setting = $(str).addClass('subject');
 				$(day).append(setting);
 			}
 		}
 		showTable();
-	})
+	});
 	
 	function deleteItem(data){
 		$.ajax({
@@ -180,6 +251,14 @@
 		$("#mod_itemNo").val(data.itemNo);
 		$("#mod_wrap").show();	
 	}
+	
+	function showSet() {
+		$("input:radio[name='openScope']:input[value='${scope}']").attr("checked", true);
+		if('${setMain}' === 'true'){
+			$("input:checkbox[id='setMain']").attr('checked', true);
+		}
+		$("#set_wrap").show();
+	}
 </script>
 <style type="text/css">
 .contentBox{
@@ -189,7 +268,7 @@
 li{
 	display: block;
 }
-#add_wrap{
+#add_wrap, #mod_wrap, #set_wrap{
 	display: none;
 	position: fixed; z-index: 9;
 	margin: 0 auto;
@@ -197,29 +276,11 @@ li{
 	width: 100%; height: 100%;
 	background-color: rgba(0, 0, 0, 0.4);
 }
-#add_table{
+#add_table, #mod_table, #set_table{
 	display: flex;
 	margin: 0 auto;
 	margin-top: 250px;
 	z-index: 10;
-	flex-direction: column;
-	justify-content: flex-start;
-	align-items: center;
-}
-
-#mod_wrap{
-	display: none;
-	position: fixed; z-index: 11;
-	margin: 0 auto;
-	top: 0; left: 0; right: 0;
-	width: 100%; height: 100%;
-	background-color: rgba(0, 0, 0, 0.4);
-}
-#mod_table{
-	display: flex;
-	margin: 0 auto;
-	margin-top: 250px;
-	z-index: 12;
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
@@ -243,21 +304,22 @@ li{
 <div class="contentBox">
 	<aside class="box" style="width:20%;">
 		<div class="title">
-			<h4 style="text-align:center; background-color:beige;">1학년 1학기<br>시간표</h4>
+			<h4 id="title" style="text-align:center; background-color:beige;"></h4>
 			<ol class="button">
 				<li class="save_btn"><a class="w3-button" onclick="PrintDiv();">이미지저장</a></li>
-				<li><input type="button" class="w3-button" onclick="" value="설정"></li>
+				<li><input type="button" class="w3-button" onclick="showSet();" value="설정"></li>
 				<li><a class="w3-button" id="add_schedule">새 수업 추가</a></li>
 			</ol>
+			<hr>
 		</div>
 		<div class="select">
 			<ol>
-				<li><a class="w3-button" href="${contextPath }/1">1학년 1학기</a></li>
-				<li><a class="w3-button" href="${contextPath }/2">1학년 2학기</a></li>
-				<li><a class="w3-button" href="${contextPath }/3">2학년 1학기</a></li>
-				<li><a class="w3-button" href="${contextPath }/4">2학년 2학기</a></li>
-				<li><a class="w3-button" href="${contextPath }/5">3학년 1학기</a></li>
-				<li><a class="w3-button" href="${contextPath }/6">3학년 2학기</a></li>
+				<li><a class="w3-button" href="${contextPath }/sem1">1학년 1학기</a></li>
+				<li><a class="w3-button" href="${contextPath }/sem2">1학년 2학기</a></li>
+				<li><a class="w3-button" href="${contextPath }/sem3">2학년 1학기</a></li>
+				<li><a class="w3-button" href="${contextPath }/sem4">2학년 2학기</a></li>
+				<li><a class="w3-button" href="${contextPath }/sem5">3학년 1학기</a></li>
+				<li><a class="w3-button" href="${contextPath }/sem6">3학년 2학기</a></li>
 			</ol>
 		</div>
 	</aside>
@@ -534,6 +596,47 @@ li{
 				</div>
 				<div class="item3">
 					<i id="mod_close" class="fas fa-times-circle"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="set_wrap">
+		<div id="set_table">
+			<div class="item1" style="height: 250px;">
+				<div class="item2">
+					<b style="color:fuchsia;">시간표 설정</b>
+					<div class="w3-right">
+						<input type="button" class="btn btn-light" id="reset_btn" value="시간표 전체 초기화">
+					</div>
+					<br><hr>
+					<form>
+						<label>공개범위: </label><br>
+						<div class="form-check-inline">
+							<label class="form-check-label">
+								<input type="radio" class="form-check-input" id="public" name="openScope" value="public">전체공개
+							</label>
+						</div>
+						<div class="form-check-inline">
+							<label class="form-check-label">
+								<input type="radio" class="form-check-input" id="secret" name="openScope" value="secret">친구에게만 공개
+							</label>
+						</div>
+						<div class="form-check-inline">
+							<label class="form-check-label">
+								<input type="radio" class="form-check-input" id="private" name="openScope" value="private">비공개
+							</label>
+						</div>
+						<hr>
+						<div class="form-check">
+							<label class="form-check-label">
+								<input type="checkbox" class="form-check-input" id="setMain">기본시간표 설정
+							</label>
+						</div>
+						<input type="button" class="btn btn-primary w3-right" id="set_btn" value="저장">
+					</form>
+				</div>
+				<div class="item3">
+					<i id="set_close" class="fas fa-times-circle"></i>
 				</div>
 			</div>
 		</div>

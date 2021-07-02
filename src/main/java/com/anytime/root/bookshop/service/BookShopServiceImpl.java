@@ -36,6 +36,10 @@ public class BookShopServiceImpl implements BookShopService {
 	@Autowired
 	BookShopDAO mapper;
 
+	int onePageboardCount = 5; // 한페이지에 몇개의 글을 보여줄지 정해주는 부분
+	int allpageNum = 0; // 모든 페이지의 수 총 몇개의 페이지가 있는지 정해줌,
+	
+	
 	@Override
 	public ResponseEntity<String> responseBookSearch(String searchCode) {
 		RestTemplate rt = new RestTemplate();
@@ -190,8 +194,9 @@ public class BookShopServiceImpl implements BookShopService {
 	@Override
 	public ArrayList getBoardListCount() {
 		ArrayList countList = new ArrayList();
-
-		for (int i = 0; i < mapper.countingBookShop(); i++) {
+		
+		
+		for (int i = 0; i < allpageNum; i++) {
 			countList.add(i);
 		}
 
@@ -201,12 +206,12 @@ public class BookShopServiceImpl implements BookShopService {
 	@Override
 	public ArrayList<BookShopDTO> PageselectBookShop(int nowPage) {
 		int totalBoardCount = mapper.countingBookShop(); // 현재 글이 몇개있는지 파악
-		int onePageboardCount = 5; // 한페이지에 몇개의 글을 보여줄지 정해주는 부분
+		
 
 		int lastBoardNum = 1; // 마지막 보드 아이디 넘버
 		int startBoardNum = 0; // 첫번째 보드 아이디 넘버
-		int allpageNum = 0; // 모든 페이지의 수 총 몇개의 페이지가 있는지 정해줌,
-		System.out.println("현재 게시글 총 수 : " + totalBoardCount);
+
+
 		// 1. 먼저 페이지의 수를 구한다 전체 글 /한페지의 게시글 = > 페이지수
 		allpageNum = totalBoardCount / onePageboardCount;
 		lastBoardNum = onePageboardCount; // 즉 한페이지의 해결이니깐 처음엔 무조건 위의 설정한만큼
@@ -214,22 +219,23 @@ public class BookShopServiceImpl implements BookShopService {
 		if (totalBoardCount % onePageboardCount >= 1) {
 			allpageNum += 1;
 		}
-
+		System.out.println("모든 페이지 수 :" + allpageNum);
 		// 첫번째 장이라는 뜻
 		if (nowPage == 1) {
 			// 할께 없음
 		} else if (allpageNum == nowPage) {
 			// 모든 페이지의 넘버와 지금 클릭한 페이지 수가 같다는 것은 즉 마지막 페이지 라는뜻
 
-			startBoardNum = ((nowPage - 1) * onePageboardCount);
+			startBoardNum = ((nowPage - 1) * onePageboardCount)+1;
 			int ramainNum = (nowPage * onePageboardCount) - totalBoardCount;
 
 			lastBoardNum = (nowPage * onePageboardCount) - ramainNum; // 마지막 번호라는뜻은 즉 끝번호는 무조건 총 게시판의 수
 		} else {
-			startBoardNum += ((nowPage - 1) * onePageboardCount);
-			lastBoardNum += (nowPage * onePageboardCount);
+			startBoardNum = ((nowPage - 1) * onePageboardCount)+1;
+			lastBoardNum = (nowPage * onePageboardCount);
 		}
-
+		System.out.println(" 시작 게시판 번호 :" + startBoardNum);
+		System.out.println(" 끝 게시판 번호 :" + lastBoardNum);
 		return mapper.PageSelectBookShop(startBoardNum, lastBoardNum);
 	}
 
@@ -240,5 +246,24 @@ public class BookShopServiceImpl implements BookShopService {
 
 		return dto;
 	}
+
+	@Override
+	public BookShopDTO SearchbookshopId(int bookId) {
+		BookShopDTO dto = new BookShopDTO();
+		
+		// 해당 id만을 검색해 결과를 보내준다
+		dto = mapper.selectBookId(bookId);
+		
+		return dto;
+	}
+	
+	//글 삭제 메소드
+	@Override
+	public void DeleteBookShopDelete(int boarId) {
+		mapper.deleteBookShopBoard(boarId);
+		
+	}
+	
+	
 
 }

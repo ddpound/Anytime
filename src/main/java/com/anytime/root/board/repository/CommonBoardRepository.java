@@ -1,6 +1,7 @@
 package com.anytime.root.board.repository;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -11,12 +12,11 @@ import com.anytime.root.board.dto.Reply;
 
 public interface CommonBoardRepository {
 	public int listCount();
-	public int tagListCount(String keyword);
-	public int searchListCount(@Param("st") String searchType, @Param("kw") String keyword);
-
-	public ArrayList<CommonLikeBoard> getListLike(@Param("start") int start, @Param("end") int end);
-	public ArrayList<CommonLikeBoard> getTagListLike(@Param("start") int start, @Param("end") int end, @Param("kw") String keyword);
-	public ArrayList<CommonLikeBoard> getSearchListLike(@Param("start") int start, @Param("end") int end, @Param("st") String searchType, @Param("kw") String keyword);
+	public int tagListCount(Map<String, Object> map);
+	public int searchListCount(Map<String, Object> map);
+	public ArrayList<CommonLikeBoard> getListLike(Map<String, Object> map);
+	public ArrayList<CommonLikeBoard> getTagListLike(Map<String, Object> map);
+	public ArrayList<CommonLikeBoard> getSearchListLike(Map<String, Object> map);
 	public void writePost(CommonBoard board);
 	public CommonBoard viewPost(int postNo);
 	public void viewsUp(int postNo);
@@ -30,6 +30,7 @@ public interface CommonBoardRepository {
 	public int likeCount(int postNo);
 	public void reply(Reply reply);
 	public void reReply(Reply reply);
+	public int replyCount(int postNo);
 	public ArrayList<Reply> replyList(int postNo);
 	public void modifyReply(Reply reply);
 	public void deleteReply(int no);

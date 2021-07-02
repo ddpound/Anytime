@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath }"/>
+<c:set var="contextPath" value="${pageContext.request.contextPath }/board/common"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,7 +31,7 @@
 <div class="contentBox">
 <h1 style="color:skyblue;">자유게시판</h1><br>
 	<div>
-		<button type="button" onclick="location.href='${contextPath }/board/common/write'" class="btn btn-outline-dark" style="width:960px">글쓰기</button>
+		<button type="button" onclick="location.href='${contextPath }/write'" class="btn btn-outline-dark" style="width:960px">글쓰기</button>
 	</div>
 	<br>
 	<div>
@@ -45,7 +45,7 @@
 			<c:forEach var="list" items="${commonBoardList }">
 				<div class="w3-container w3-border w3-hover-border-red" style="margin: 0px">
 					<span class="w3-xlarge w3-text-indigo w3-hover-text-white"  style="text-align:left;"> 
-					<a href="${contextPath }/board/common/p/${list.postNo}" style="text-decoration: none;">${list.subject }</a>
+					<a href="${contextPath }/p/${list.postNo}" style="text-decoration: none;">${list.subject }</a>
 					</span><br>
 					${list.writeDate}&nbsp; ${list.nickname }&nbsp;<small style="color:gray;">${ list.school }고등학교</small>
 					<div class="w3-right">
@@ -79,29 +79,19 @@
 		</div>
 		<div style="display: flex; justify-content:center;">
 			<ul class="pagination">
-				<!-- 
-				<c:if test="${page == 1 }">
-					<li class="page-item"><a class="page-link" href="" style="color:gray;">Previous</a></li>
-				</c:if>
-				 -->
 				<c:if test="${page != 1 }">
-					<li class="page-item"><a class="page-link" href="${contextPath }/board/common/list?page=${page-1 }">Previous</a></li>
+					<li class="page-item"><a class="page-link" href="${contextPath }/list?page=${page-1 }">Previous</a></li>
 				</c:if>
 				<c:forEach var="num" begin="1" end="${pageCount }" step="1">
 					<c:if test="${num == page }">
 						<li class="page-item active"><a class="page-link" href="">${num }</a></li>
 					</c:if>
 					<c:if test="${num != page }">
-						<li class="page-item"><a class="page-link" href="${contextPath }/board/common/list?page=${num }">${num }</a></li>
+						<li class="page-item"><a class="page-link" href="${contextPath }/list?page=${num }">${num }</a></li>
 					</c:if>
 				</c:forEach>
-				<!-- 
-				<c:if test="${page == pageCount }">
-					<li class="page-item"><a class="page-link" href="" style="color:gray;">Next</a></li>
-				</c:if>
-				 -->
 				<c:if test="${page != pageCount }">
-					<li class="page-item"><a class="page-link" href="${contextPath }/board/common/list?page=${page+1 }">Next</a></li>
+					<li class="page-item"><a class="page-link" href="${contextPath }/list?page=${page+1 }">Next</a></li>
 				</c:if>
 			</ul>
 		</div>

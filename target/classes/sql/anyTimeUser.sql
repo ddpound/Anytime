@@ -1,6 +1,4 @@
-select *from ANYTIMEBOARD;
-select * from photoTable;
-select *from ANYTIMEUSER;
+insert into ANYTIMEUSER VALUES(77,sysdate,'admin@admin.com','admin','1234','admin','admin','20','77~77',2,'7777','adminSchool','true',sysdate);
 
 create table ANYTIMEUSER(
 id Number(4,2),
@@ -15,6 +13,7 @@ agegroup varchar2(30),
 grade number(4,2),
 enteryear varchar2(50),
 SCHOOL varchar2(300),
+permissions varchar2(30), -- 사용권한
 EXPIRATION_DATE date default sysdate
 );
 
@@ -73,15 +72,25 @@ photo5 clob,
 CONSTRAINT fk_photoID FOREIGN KEY(id)
          REFERENCES ANYTIMEBOARD(BOARDID) ON DELETE CASCADE
 );
-drop table photoTable;
-drop table ANYTIMEBOARD;
-drop table ANYTIMEUSER;
+
 
 select id,* from photoTable;
 drop sequence AutoBookShopAdd;
 
+-- 페이징위한 select문
 select B.* from(select rownum rn, A.* from(select * from ANYTIMEBOARD order by BOARDID desc)A)B 
 		 where rn between 0 and 5;
+
+select *from ANYTIMEBOARD;
+select * from photoTable;
+select *from ANYTIMEUSER;
+
+-- 위에서 부터 순서대로
+drop table photoTable;
+drop table ANYTIMEBOARD;
+drop table ANYTIMEUSER;
+
+
 
 commit;
 

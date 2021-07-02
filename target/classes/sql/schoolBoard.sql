@@ -7,7 +7,7 @@ create table school_board(
  content CLOB not null,
  views number default 0,
  write_date varchar2(30) default to_char(sysdate,'yyyy.mm.dd hh24:mi'),
- school varchar2(20) not null
+ school varchar2(300) not null
  );
   
 create sequence school_board_no_seq
@@ -23,7 +23,7 @@ create table reply_school_board(
   nickname varchar2(50) not null,
   reply_content varchar2(1000) not null,
   write_date varchar2(30) default to_char(sysdate,'yyyy.mm.dd hh24:mi'),
-  school varchar2(20) not null,
+  school varchar2(300) not null,
   constraint fk_school_reply foreign key(post_no) references school_board(post_no) on delete cascade
 );
 

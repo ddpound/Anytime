@@ -17,6 +17,25 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200&display=swap" rel="stylesheet">
 <script src="https://kit.fontawesome.com/46c1a740db.js" crossorigin="anonymous"></script>
+<script type="text/javascript">
+	$(function(){
+		function setBoardName(){
+			var str;
+			if('${section}' === 's'){
+				str = "비밀";
+			}else if('${section}' === 'c'){
+				str = "동아리";
+			}else if('${section}' === 'i'){
+				str = "학교정보";
+			}else if('${section}' === 'f'){
+				str = "진학진로";
+			}
+			str += "게시판";
+			$("#boardName").html(str);
+		}
+		setBoardName();
+	});
+</script>
 </head>
 <body>
 <c:set var="page" value="1" />
@@ -24,9 +43,7 @@
 	<c:set var="page" value="${param.page }" />
 </c:if>
 <div class="contentBox">
-<h1 style="color:skyblue;">${sectionName}게시판</h1><br>
-	page = ${page }
-	pageCount = ${pageCount }
+<h1 id="boardName" style="color:skyblue;"></h1><br>
 	<div>
 		<button type="button" onclick="location.href='${contextPath }/write/${section}'" class="btn btn-outline-dark" style="width:960px">글쓰기</button>
 	</div>
@@ -44,14 +61,12 @@
 					<span class="w3-xlarge w3-text-indigo w3-hover-text-white"  style="text-align:left;"> 
 					<a href="${contextPath }/p/${list.section}/${list.postNo}" style="text-decoration: none;">${list.subject }</a>
 					</span><br>
-					${list.writeDate}&nbsp; ${list.nickname }&nbsp;<small style="color:gray;">${ list.school }고등학교</small>
+					${list.writeDate}&nbsp; ${list.nickname }
 					<div class="w3-right">
 						<span><i class="fa fa-eye"></i>&nbsp; ${ list.views }</span>&nbsp; 
 						<span><i class="fa fa-heart"></i></span>&nbsp;
 						<c:if test="${list.like != null }"> ${list.like }</c:if>
 						<c:if test="${list.like == null }"> 0</c:if>
-						&nbsp;
-						<span><i class="far fa-comment-dots"></i>&nbsp; 댓글개수</span>
 					</div>
 				</div>
 			</c:forEach>
@@ -71,19 +86,11 @@
 					<span>
 					<input type="text" name="keyword" class="form-control" placeholder="검색어를 입력하세요." style="width:200px">
 					</span>
-					<!-- 
-					<input type="hidden" name="school" id="school" value="${userSchool}">
-					 -->
 				</form>
 			</div>
 		</div>
 		<div style="display: flex; justify-content:center;">
 			<ul class="pagination">
-				<!-- 
-				<c:if test="${page == 1 }">
-					<li class="page-item"><a class="page-link" href="" style="color:gray;">Previous</a></li>
-				</c:if>
-				 -->
 				<c:if test="${page != 1 }">
 					<li class="page-item"><a class="page-link" href="${contextPath }/list/${section}?page=${page-1 }">Previous</a></li>
 				</c:if>
@@ -95,11 +102,6 @@
 						<li class="page-item"><a class="page-link" href="${contextPath }/list/${section}?page=${num }">${num }</a></li>
 					</c:if>
 				</c:forEach>
-				<!-- 
-				<c:if test="${page == pageCount }">
-					<li class="page-item"><a class="page-link" href="" style="color:gray;">Next</a></li>
-				</c:if>
-				 -->
 				<c:if test="${page != pageCount }">
 					<li class="page-item"><a class="page-link" href="${contextPath }/list/${section}?page=${page+1 }">Next</a></li>
 				</c:if>

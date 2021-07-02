@@ -38,57 +38,56 @@
 		select count(*) from cmn_board
 	</select>
 	<!-- 검색 결과 paging을 위한 게시물 개수 -->
+	<select id="tagListCount" resultType="int">
+		select count(*) from tag_cmn_board where tag = #{keyword}
+	</select>
 	<select id="searchListCount" resultType="int">
 		select count(*) from cmn_board
 		<where>
-			<if test="st=='all'">
-				content like '%' || #{kw} || '%' OR subject like '%' || #{kw} || '%'
+			<if test="searchType=='all'">
+				(content like '%' || #{keyword} || '%' or subject like '%' || #{keyword} || '%')
 			</if>
-			<if test="st=='subject'">
-				subject like '%' || #{kw} || '%'
+			<if test="searchType=='subject'">
+				subject like '%' || #{keyword} || '%'
 			</if>
-			<if test="st=='content'">
-				content like '%' || #{kw} || '%'
+			<if test="searchType=='content'">
+				content like '%' || #{keyword} || '%'
 			</if>
 		</where>
 	</select>
-	<select id="tagListCount" parameterType="String" resultType="int">
-		select count(*) from tag_cmn_board where tag = #{keyword}
-	</select>
-
-	<!-- Like 항목 추가 -->
 	<!-- 게시물 list 얻기 -->
 	<select id="getListLike" resultMap="likeBoard">
 		select B.* from(select rownum rn, A.* from 
 		(select c.*, l.good from cmn_board c left outer join 
-		(select post_no, COUNT(post_no) as good from LIKE_CMN_BOARD GROUP BY post_no) l on(c.POST_NO = l.post_no) 
+		(select post_no, count(post_no) as good from like_cmn_board group by post_no) l on(c.post_no = l.post_no) 
 		order by c.post_no desc)A)B where rn between #{start} and #{end}
 	</select>
 	<!-- 검색 결과 게시물 list 얻기 -->
+	<select id="getTagListLike" resultMap="likeBoard">
+		select B.* from(select rownum rn, A.* from 
+		(select D.*, L.good from(select C.* from cmn_board C, 
+		(select post_no from tag_cmn_board where tag = #{keyword})T where C.post_no = T.post_no)D left outer join 
+		(select post_no, count(post_no) as good from like_cmn_board group by post_no)L 
+		on(D.post_no = L.post_no) order by D.post_no desc)A)B where rn between #{start} and #{end}
+	</select>
 	<select id="getSearchListLike" resultMap="likeBoard">
 		select B.* from(select rownum rn, A.* from (select c.*, l.good 
 		from (select * from cmn_board
 		<where>
-			<if test="st=='all'">
-				content like '%' || #{kw} || '%' OR subject like '%' || #{kw} || '%'
+			<if test="searchType=='all'">
+				content like '%' || #{keyword} || '%' or subject like '%' || #{keyword} || '%'
 			</if>
-			<if test="st=='subject'">
-				subject like '%' || #{kw} || '%'
+			<if test="searchType=='subject'">
+				subject like '%' || #{keyword} || '%'
 			</if>
-			<if test="st=='content'">
-				content like '%' || #{kw} || '%'
+			<if test="searchType=='content'">
+				content like '%' || #{keyword} || '%'
 			</if>
 		</where>
-		 )C left outer join (select post_no, COUNT(post_no) as good from LIKE_CMN_BOARD GROUP BY post_no)l 
+		 )C left outer join (select post_no, count(post_no) as good from like_cmn_board group by post_no)l 
 		 on(c.POST_NO = l.post_no) order by c.post_no desc)A)B where rn between #{start} and #{end}
 	</select>
-	<select id="getTagListLike" resultMap="likeBoard">
-		select B.* from(select rownum rn, A.* from 
-		(select D.*, L.good from(select C.* from cmn_board C, 
-		(select post_no from TAG_CMN_BOARD where tag = #{kw})T where C.post_no = T.post_no)D left outer join 
-		(select post_no, COUNT(post_no) as good from LIKE_CMN_BOARD GROUP BY post_no)L 
-		on(D.POST_NO = L.post_no) order by D.post_no desc)A)B where rn between #{start} and #{end}
-	</select>
+	
 	
 	<insert id="writePost">
 		insert into cmn_board(writer_id, nickname, post_no, subject, content, school)
@@ -133,6 +132,9 @@
 		insert into reply_cmn_board(post_no, reply_no, parent_no, depth, writer_id, nickname, reply_content, school)
 		values(#{postNo}, cmn_reply_no_seq.nextval, #{parentNo}, #{depth}, #{writerId}, #{nickname}, #{replyContent}, #{school})
 	</insert>
+	<select id="replyCount" parameterType="int" resultType="int">
+		select count(*) from reply_cmn_board where post_no = #{postNo}
+	</select>
 	<select id="replyList" parameterType="int" resultMap="reply">
 		select * from reply_cmn_board where post_no = #{postNo} 
 		start with parent_no = 0 connect by prior REPLY_NO = PARENT_NO

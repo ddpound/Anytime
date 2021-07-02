@@ -82,10 +82,6 @@ public class JoinController {
 	
 	@RequestMapping("SearchSchool")
 	public String ShowSearchSchool() {
-		
-		
-		
-		
 		//System.out.println("리스트 첫번째 결과 : " + schoolObject.getDataSearch().getContent().get(0).getSchoolName());
 		
 		return "join/SearchSchool";
@@ -126,12 +122,21 @@ public class JoinController {
 				
 			}
 			
-			
-			
 		}
 		
 		// 학교 데이터 값
 		return response.getBody();
 	}
+	
+	@GetMapping(value = "generaljoin")
+	public String generalJoinView(Model model) {
+		
+		// 이게 일반회원인지 아닌지 확인시켜주는 값, 이값이 보내지면 일반회원
+		model.addAttribute("UserJoinAuth","general");
+		
+		return "join/joinView";
+	}
+	
+	
 
 }

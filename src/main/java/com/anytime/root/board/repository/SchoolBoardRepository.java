@@ -30,6 +30,7 @@ public interface SchoolBoardRepository {
 	public int likeCount(int postNo);
 	public void reply(Reply reply);
 	public void reReply(Reply reply);
+	public int replyCount(int postNo);
 	public ArrayList<Reply> replyList(int postNo);
 	public void modifyReply(Reply reply);
 	public void deleteReply(int no);

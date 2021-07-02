@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath }"/>
+<c:set var="contextPath" value="${pageContext.request.contextPath }/board/common"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,11 +22,8 @@
 </head>
 <body>
 <div class="contentBox">
-${userId }
-${userNickname }
-${userSchool }
 	<div class="form-group">
-		<form action="${contextPath }/board/common/modify_save" method="post">
+		<form action="${contextPath }/modify_save" method="post">
 			<input type="hidden" name="postNo" value="${board.postNo }">
 			<input type="hidden" name="nickname" value="${board.nickname }">
 			<div class="form-group" style="width:600px;">
@@ -78,7 +75,7 @@ ${userSchool }
 				</label>
 			</div>
 			<div class="w3-bar">
-				<button type="button" class="w3-bar-item w3-button w3-border" onclick="location.href='${contextPath}/board/common/list'">
+				<button type="button" class="w3-bar-item w3-button w3-border" onclick="location.href='${contextPath}/list'">
 					<i class="fa fa-bars"></i> 글 목록
 				</button>
 				<button type="submit" class="w3-bar-item w3-button w3-border">

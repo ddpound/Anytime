@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,12 +81,32 @@ input[type="button"],input[type="submit"],input[type="search"] {
 <body>
 	<div class="divall">
 	<div class="div1">
+      
+      <c:choose>
+      <c:when test="${loginuserAuth == 'kakaoUser'}">
+       <p><a href="https://kauth.kakao.com/oauth/logout?client_id=a924c282a86092b8472e6c2885aafe4a&logout_redirect_uri=http://localhost:8000/root/auth/kakao/logout">로그아웃</a></p>
+      ${userId}<br>
+      ${userschoolname}<br>
+      ${userNickname}<br>
+      </c:when>
+      <c:when test="${loginuserAuth == 'generalUser'}">
+      <p><a href="generalUser/logout">로그아웃</a></p>
+      ${userId}<br>
+      ${userschoolname}<br>
+      ${userNickname}<br>
+      </c:when>
+      <c:when test="${loginuserAuth == 'admin'}">
+      <p><a href="MemberManagement">회원관리</a></p>
+      <p><a href="generalUser/logout">어드민로그아웃</a></p>
+      </c:when>
+      <c:otherwise>
       <p><a href="selectJoin">회원가입</a></p>
       <p><a href="loginView">로그인</a></p>
-      <p><a href="https://kauth.kakao.com/oauth/logout?client_id=a924c282a86092b8472e6c2885aafe4a&logout_redirect_uri=http://localhost:8000/root/auth/kakao/logout">로그아웃</a></p>
-      ${userId}<br>
-      ${userSchool}<br>
-      ${userNickname}<br>
+      </c:otherwise>
+      </c:choose>
+      
+     
+      
 	</div>
 	<div class="div2">
 		<table>
