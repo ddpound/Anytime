@@ -11,6 +11,7 @@
 <title>AnyTime JoinView</title>
 </head>
 <body>
+
 	<div style="margin-left: 30%" class="joinForm"  >
 	<form id="joinfrm" >
 	<h1>애니타임 회원가입</h1>

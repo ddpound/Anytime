@@ -281,7 +281,7 @@ function WriteButton(){
 		contentType : "application/json; charset=utf-8",
 		success : function(result){
 			alert('글쓰기성공 : '+result.result)
-			location.href = getContextPath()
+			location.href = getContextPath()+"/bookshop"
 		}
 		
 		

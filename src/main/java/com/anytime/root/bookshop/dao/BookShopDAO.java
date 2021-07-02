@@ -28,7 +28,8 @@ public interface BookShopDAO {
 	public ArrayList<BookShopDTO> AllselectBookShop();
 	public ArrayList<BookShopPhotoDTO> AllSelectBookShopPhoto();
 	
-	
+	// 책 게시글 삭제 쿼리문
+	public void deleteBookShopBoard(int boardId);
 	
 	// PageSelectBookShop();
 	public ArrayList<BookShopDTO> PageSelectBookShop(@Param("strBoardNum") int strBoardNum,

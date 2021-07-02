@@ -43,7 +43,8 @@
 			<img src="${AllBookPhotoList[BoardListDTO.boardId].photo1}" width="200px" height="200px">
 			<a href="/root/bookshop/${nowPage }/${BoardListDTO.boardId }" >${ BoardListDTO.booktitle}</a><br>
 			ISBN : <label>${ BoardListDTO.bookisbn} </label><br>
-			학교 : <label>${ BoardListDTO.school}</label>
+			학교와 위치 : <label>${ BoardListDTO.school}</label><br>
+			가격 : <label>${ BoardListDTO.price}</label>
 			<!--  중요 반드시 DTO의 변수값을 따지니 대소문자 틀리지않게 하세요 -->
 			</div>
 		

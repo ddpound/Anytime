@@ -257,6 +257,13 @@ public class BookShopServiceImpl implements BookShopService {
 		return dto;
 	}
 	
+	//글 삭제 메소드
+	@Override
+	public void DeleteBookShopDelete(int boarId) {
+		mapper.deleteBookShopBoard(boarId);
+		
+	}
+	
 	
 
 }

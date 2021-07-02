@@ -14,19 +14,22 @@ import org.springframework.stereotype.Component;
 public class StatusMeans {
 	public enum underline{
 		non, sharpPencil, highliterBolpen ,all
+		// 없음, 샤프볼펜, 형광펜, 전부다
 	}
 	
 	public enum handwrite{
 		non, sharpPencil, highliterBolpen, all
+		// 없음, 샤프볼펜, 형광펜, 전부다
 	}
 	
 	public enum cover{
 		clean , dirty
+		// 깨끗함, 더러움
 	}
 	
 	public enum nameWrite{
 		non , wrote
-		
+		// 없음, 이름썼다
 	}
 	
 	public enum Page{
