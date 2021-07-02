@@ -138,6 +138,9 @@
 		insert into reply_school_board(post_no, reply_no, parent_no, depth, writer_id, nickname, reply_content, school)
 		values(#{postNo}, school_reply_no_seq.nextval, #{parentNo}, #{depth}, #{writerId}, #{nickname}, #{replyContent}, #{school})
 	</insert>
+	<select id="replyCount" parameterType="int" resultType="int">
+		select count(*) from reply_school_board where post_no = #{postNo}
+	</select>
 	<select id="replyList" parameterType="int" resultMap="reply">
 		select * from reply_school_board where post_no = #{postNo} 
 		start with parent_no = 0 connect by prior REPLY_NO = PARENT_NO

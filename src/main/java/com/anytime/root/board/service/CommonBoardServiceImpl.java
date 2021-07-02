@@ -1,6 +1,8 @@
 package com.anytime.root.board.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.anytime.root.board.dto.CommonBoard;
+import com.anytime.root.board.dto.CommonLikeBoard;
 import com.anytime.root.board.dto.LikePost;
 import com.anytime.root.board.dto.Reply;
 import com.anytime.root.board.repository.CommonBoardRepository;
@@ -17,7 +20,6 @@ public class CommonBoardServiceImpl implements CommonBoardService{
 	
 	private StringTokenizer st;
 	private final CommonBoardRepository boardRepository;
-	private final int pageSize = 10;
 
 	@Autowired
 	public CommonBoardServiceImpl(CommonBoardRepository boardRepository) {
@@ -26,25 +28,36 @@ public class CommonBoardServiceImpl implements CommonBoardService{
 
 	@Override
 	public void getListAndLike(Model model, int page, String searchType, String keyword) {
+		int pageSize = 10;
+		ArrayList<CommonLikeBoard> list; 
+		Map<String, Object> map = new HashMap();
+		map.put("keyword", keyword);
+		map.put("searchType", searchType);
 		int allCount = 1;
 		if(keyword == null) {
 			allCount = boardRepository.listCount();
 		}else if(keyword.equals("tag")){
-			allCount = boardRepository.tagListCount(keyword);	//아직 안함
+			allCount = boardRepository.tagListCount(map);
 		}else {
-			allCount = boardRepository.searchListCount(searchType, keyword);
+			allCount = boardRepository.searchListCount(map);
 		}
-		int pageCount = (allCount%pageSize != 0) ? (allCount/pageSize)+1: (allCount/pageSize);
+		int pageCount = allCount/pageSize;
+		if(allCount%pageSize != 0 || pageCount == 0) {
+			pageCount += 1;
+		}
+		model.addAttribute("pageCount", pageCount);
 		int end = page * pageSize;
 		int start = end + 1 - pageSize;
-		model.addAttribute("pageCount", pageCount);
+		map.put("start", start);
+		map.put("end", end);
 		if(keyword == null) {
-			model.addAttribute("commonBoardList", boardRepository.getListLike(start, end));
+			list = boardRepository.getListLike(map);
 		}else if(keyword.equals("tag")){
-			model.addAttribute("commonBoardList", boardRepository.getTagListLike(start, end, keyword));	//아직 안함
+			list = boardRepository.getTagListLike(map);
 		}else {
-			model.addAttribute("commonBoardList", boardRepository.getSearchListLike(start, end, searchType, keyword));
+			list = boardRepository.getSearchListLike(map);
 		}
+		model.addAttribute("commonBoardList", list);
 	}
 
 	@Override
@@ -64,8 +77,9 @@ public class CommonBoardServiceImpl implements CommonBoardService{
 		return postNo;
 	}
 	
+	//modify post 데이터용
 	@Override
-	public void viewPost(Model model, int postNo) {
+	public void getViewPost(Model model, int postNo) {
 		model.addAttribute("board", boardRepository.viewPost(postNo));
 		model.addAttribute("replyList", boardRepository.replyList(postNo));
 		ArrayList<String> tagList = boardRepository.tagList(postNo);
@@ -78,6 +92,7 @@ public class CommonBoardServiceImpl implements CommonBoardService{
 		}
 	}
 	
+	//veiwPost용
 	@Override
 	public void viewPost(Model model, int postNo, String login) {
 		CommonBoard board = boardRepository.viewPost(postNo);
@@ -87,6 +102,7 @@ public class CommonBoardServiceImpl implements CommonBoardService{
 		model.addAttribute("board", boardRepository.viewPost(postNo));
 		model.addAttribute("replyList", boardRepository.replyList(postNo));
 		model.addAttribute("tagList", boardRepository.tagList(postNo));
+		model.addAttribute("replyCount", boardRepository.replyCount(postNo));
 	}
 	
 	@Override

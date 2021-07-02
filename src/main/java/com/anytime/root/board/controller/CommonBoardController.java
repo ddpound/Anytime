@@ -39,7 +39,6 @@ public class CommonBoardController {
 			@RequestParam(value="page", required = false, defaultValue = "1") int page,
 			@RequestParam(value="search_type", required = false) String searchType,
 			@RequestParam(value="keyword", required = false) String keyword) {
-		//boardService.getList(model, page, searchType, keyword);
 		boardService.getListAndLike(model, page, searchType, keyword);
 		return "board/common/list";
 	}
@@ -68,7 +67,7 @@ public class CommonBoardController {
 	@RequestMapping("modify")
 	public String modify(Model model,
 			@RequestParam(value="no") String postNo) {
-		boardService.viewPost(model, Integer.parseInt(postNo));
+		boardService.getViewPost(model, Integer.parseInt(postNo));
 		return "board/common/modify";
 	}
 	

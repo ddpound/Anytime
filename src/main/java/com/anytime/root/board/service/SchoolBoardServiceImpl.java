@@ -25,19 +25,6 @@ public class SchoolBoardServiceImpl implements SchoolBoardService{
 	public SchoolBoardServiceImpl(SchoolBoardRepository boardRepository) {
 		this.boardRepository = boardRepository;
 	}
-	
-	@Override
-	public void setSectionName(Model model, String section) {
-		if(section.equals("s")) {
-			model.addAttribute("sectionName", "비밀");
-		}else if(section.equals("c")) {
-			model.addAttribute("sectionName", "동아리");
-		}else if(section.equals("i")) {
-			model.addAttribute("sectionName", "학교정보");
-		}else if(section.equals("f")) {
-			model.addAttribute("sectionName", "진학진로");
-		}
-	}
 
 	@Override
 	public void getListAndLike(String school, String section, Model model, int page, String searchType, String keyword) {
@@ -48,7 +35,6 @@ public class SchoolBoardServiceImpl implements SchoolBoardService{
 		map.put("school", school);
 		map.put("keyword", keyword);
 		map.put("searchType", searchType);
-		setSectionName(model, section);
 		int allCount = 1;
 		if(keyword == null) {
 			allCount = boardRepository.listCount(map);
@@ -94,8 +80,9 @@ public class SchoolBoardServiceImpl implements SchoolBoardService{
 		return postNo;
 	}
 	
+	//modify post 데이터용
 	@Override
-	public void viewPost(Model model, int postNo) {
+	public void getViewPost(Model model, int postNo) {
 		SchoolBoard board = boardRepository.viewPost(postNo);
 		model.addAttribute("board", board);
 		model.addAttribute("replyList", boardRepository.replyList(postNo));
@@ -107,9 +94,9 @@ public class SchoolBoardServiceImpl implements SchoolBoardService{
 			}
 			model.addAttribute("tagList", tags);
 		}
-		setSectionName(model, board.getSection());
 	}
 	
+	//veiwPost용
 	@Override
 	public void viewPost(Model model, int postNo, String login) {
 		SchoolBoard board = boardRepository.viewPost(postNo);
@@ -119,6 +106,7 @@ public class SchoolBoardServiceImpl implements SchoolBoardService{
 		model.addAttribute("board", boardRepository.viewPost(postNo));
 		model.addAttribute("replyList", boardRepository.replyList(postNo));
 		model.addAttribute("tagList", boardRepository.tagList(postNo));
+		model.addAttribute("replyCount", boardRepository.replyCount(postNo));
 	}
 	
 	@Override

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath }"/>
+<c:set var="contextPath" value="${pageContext.request.contextPath }/board/common"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +22,7 @@ $(function(){
 		// 추천버튼 클릭시(추천 추가 또는 추천 제거)
 		$("#like_update").click(function(){
 			$.ajax({
-				url: "${contextPath}/board/common/likeUpdate",
+				url: "${contextPath}/likeUpdate",
 	            type: "POST",
 	            data: {
 	                no: ${board.postNo},
@@ -37,7 +37,7 @@ $(function(){
 		// 게시글 추천수
 	    function likeCount() {
 			$.ajax({
-				url: "${contextPath}/board/common/likeCount",
+				url: "${contextPath}/likeCount",
 	            type: "POST",
 	            data: {
 	                no: ${board.postNo}
@@ -62,7 +62,7 @@ $(function(){
 	    			nick = $("#nickname").val();
 	    		}
 	    		$.ajax({
-	    			url: "${contextPath}/board/common/reply",
+	    			url: "${contextPath}/reply",
 	                type: "POST",
 	                data: {
 	                	postNo : $("#postNo").val(),
@@ -75,7 +75,6 @@ $(function(){
 	                	alert("댓글 등록 완료");
 	                	$("#replyContent").val("");
 	                	location.reload();
-	                	//getReply();
 	                },
 	    		})
 	    	}
@@ -87,62 +86,6 @@ $(function(){
   		});
   		$("#replyForm").hide();
   		
-  		/*
-		// 대댓글 입력
-	 	$(document).on("click", "#reReply_btn",function(){
-	    	if($("#reReplyContent").val().trim() === ""){
-	    		alert("댓글을 입력하세요.");
-	    		$("#reReplyContent").val("").focus();
-	    	}else{
-	    		var check = $('input:checkbox[id="unknown"]').is(':checked');
-	    		$.ajax({
-	    			url: "${contextPath}/board/common/reReply",
-	                type: "POST",
-	                data: {
-	                	postNo : $("#postNo").val(),
-	                	writerId : $("#writerId").val(),
-	                	nickname : $("#nickname").val(),
-	                	school : $("#school").val(),
-	                    replyContent : $("#reReplyContent").val(),
-	                    unknown: check,
-	                    parentNo : $("#parentNo").val()
-	                },
-	                success: function () {
-	                	alert("댓글 등록 완료");
-	                	getReply();
-	                },
-	    		})
-	    	}
-	    });
-  		
-	 	// 댓글 리스트
-	    function getReply(){
-	    	$.ajax({
-    			url: "${contextPath}/board/common/replyList", // 요청 url
-                type: "POST", // post 방식
-                data: {
-                	postNo : ${ board.postNo } // board_no의 값을 넘겨줌
-                },
-                success: function (data) { // 성공하였을 경우
-                	$("#replyList").text("");
-                	var output = ""; // 댓글 목록을 누적하여 보여주기 위한 변수
-                	for (var i = 0; i < data.count; i++) { // 반복문을 통해 output에 누적
-						output += "<div class='w3-border w3-padding'>";
-						output += "<i class='fa fa-user'></i>&nbsp;&nbsp;" + data.item[i].nickname + "&nbsp;&nbsp;";
-						output += "&nbsp;&nbsp;<i class='fa fa-calendar'></i>" + data.item[i].writeDate;
-						output += "<div class='w3-right'><input type='button' class='w3-button' id='showReReply' name='"+data.item[i].replyNo+"' value='댓글'></div>";
-						output += "<pre>" + data.item[i].replyContent+ "</pre><div id='reReplyForm'></div></div>";
-    	        	};
-   	              	$("#replyList").html(output); // replyList 영역에 output 출력
-   	              	$(".reply_count").html(data.count);
-                }
-                
-                
-	    	})
-	    	
-	    }
-	    //getReply(); // 해당 페이지 실행 시 해당 함수 호출
-	    */  
 	});
 	
 	// 대댓글 쓰기
@@ -157,7 +100,7 @@ $(function(){
 	    	make += "<input type='hidden' name='postNo' id='postNo' value='${board.postNo }'>";
 	    	make += "<input type='hidden' name='writerId' id='writerId' value='${userId }'>";
 	    	make += "<input type='hidden' name='nickname' id='nickname' value='${userNickname }'>";
-	    	make += "<input type='hidden' name='school' id='school' value='${userSchool }'>";
+	    	make += "<input type='hidden' name='school' id='school' value='${userschoolname }'>";
 	    	make += "<input type='hidden' id='replyNo' value='"+data1+"'>";
 			make += "<input type='hidden' id='parentNo' value='"+data2+"'>";
 			make += "<input type='hidden' id='depth' value='"+data3+"'>";
@@ -167,7 +110,6 @@ $(function(){
 		}else{
 			$(id).html("");
 		}
-		//$(now).slideToggle(100);
 	}
 	
 	function reReReply_btn(){
@@ -182,7 +124,7 @@ $(function(){
     			nick = $("#nickname").val();
     		}
     		$.ajax({
-    			url: "${contextPath}/board/common/reReply",
+    			url: "${contextPath}/reReply",
                 type: "POST",
                 data: {
                 	postNo : $("#postNo").val(),
@@ -240,7 +182,7 @@ $(function(){
     			nick = $("#nickname").val();
     		}
     		$.ajax({
-    			url: "${contextPath}/board/common/modifyReply",
+    			url: "${contextPath}/modifyReply",
                 type: "POST",
                 data: {
                 	replyNo : $("#replyNo").val(),
@@ -259,7 +201,7 @@ $(function(){
 	// 댓글 삭제
 	function deleteReply(data1, data2){
 		$.ajax({
-			url: "${contextPath}/board/common/deleteReply",
+			url: "${contextPath}/deleteReply",
             type: "GET",
             data: {
             	replyNo : data1,
@@ -275,25 +217,24 @@ $(function(){
 </head>
 <body>
 <div class="contentBox">
-writer: ${board.writerId } , login id: ${userId }
 <h1 style="color:skyblue;">자유게시판 글 보기</h1><br>
 	<div class="w3-main w3-margin-bottom">
 		<div class="w3-bar">
-			<button type="button" class="w3-bar-item w3-button w3-border" onclick="location.href='${contextPath }/board/common/list'">
+			<button type="button" class="w3-bar-item w3-button w3-border" onclick="location.href='${contextPath }/list'">
 				<i class="fa fa-bars"></i> 글 목록
 			</button>
 			<!-- 로그인 하였을때 -->
 			<c:if test="${ userId != null }">
-				<button type="button" class="w3-bar-item w3-button w3-border" onClick="location.href='${contextPath }/board/common/write'">
+				<button type="button" class="w3-bar-item w3-button w3-border" onClick="location.href='${contextPath }/write'">
 					<i class="fa fa-pencil-square-o"></i> 새 글 쓰기
 				</button>
 			</c:if>
 			<!--작성자 일때  -->
 			<c:if test="${ board.writerId == userId }">
-				<button type="button" class="w3-bar-item w3-button w3-border" onClick="location.href='${contextPath }/board/common/modify?no=${board.postNo}'">
+				<button type="button" class="w3-bar-item w3-button w3-border" onClick="location.href='${contextPath }/modify?no=${board.postNo}'">
 					<i class="fa fa-exchange"></i> 글 수정
 				</button>
-				<button type="button" class="w3-bar-item w3-button w3-border" onClick="location.href='${contextPath }/board/common/delete?no=${board.postNo}'">
+				<button type="button" class="w3-bar-item w3-button w3-border" onClick="location.href='${contextPath }/delete?no=${board.postNo}'">
 					<i class="fa fa-remove"></i> 글 삭제
 				</button>
 			</c:if>
@@ -326,7 +267,7 @@ writer: ${board.writerId } , login id: ${userId }
 				<i class="fa fa-calendar"></i>&nbsp;${board.writeDate }
 				<div class="w3-right">
 					<span><i class="fa fa-eye"></i>&nbsp;${ board.views }</span>&nbsp;&nbsp;
-					<span><i class="far fa-comment-dots"></i></span>&nbsp;<span class="reply_count"></span>
+					<span><i class="far fa-comment-dots"></i>&nbsp;${replyCount }</span>&nbsp;
 				</div>
 			</div>
 			<article class="w3-border w3-large w3-padding" style="height:500px;">${ board.content }</article>
@@ -387,7 +328,7 @@ writer: ${board.writerId } , login id: ${userId }
 				<input type="hidden" name="postNo" id="postNo" value="${board.postNo }"> 
 				<input type="hidden" name="writerId" id="writerId" value="${userId }">
 				<input type="hidden" name="nickname" id="nickname" value="${userNickname }"> 
-				<input type="hidden" name="school" id="school" value="${userSchool }">
+				<input type="hidden" name="school" id="school" value="${userschoolname }">
 				<textarea rows="5" cols="20" class="w3-input w3-border" placeholder="댓글 작성" name="replyContent" id="replyContent"></textarea>
 				<input type="button" class="w3-button w3-border" id="reply_btn" value="댓글 등록">
 			</form>

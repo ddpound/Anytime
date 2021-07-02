@@ -10,8 +10,8 @@ import com.anytime.root.board.dto.Reply;
 public interface CommonBoardService {
 	public void getListAndLike(Model model, int page, String searchType, String keyword);
 	public int writePost(CommonBoard board, String tag, String unknown);
+	public void getViewPost(Model model, int postNo);
 	public void viewPost(Model model, int postNo, String login);
-	public void viewPost(Model model, int postNo);
 	public void modifyPost(CommonBoard board, String tag, String unknown);
 	public void deletePost(int postNo);
 	public void likeUpdate(int postNo, String id);
