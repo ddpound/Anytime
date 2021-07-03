@@ -42,4 +42,11 @@ public interface BookShopService {
 	// 북샵 글 삭제
 	public void DeleteBookShopDelete(int boarId);
 	
+	// 글수정
+	public int ModifyBookShop(Map<String, Object> map);
+	
+	// 글의 사진 수정
+	public int ModifyBookShopPhoto(ArrayList<String> photoList , int boardId);
+	
+	
 }

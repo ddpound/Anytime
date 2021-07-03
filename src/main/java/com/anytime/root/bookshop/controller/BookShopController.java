@@ -13,8 +13,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.anytime.root.bookshop.dao.BookShopDAO;
 import com.anytime.root.bookshop.dto.BookShopDTO;
@@ -71,6 +74,7 @@ public class BookShopController {
 		System.out.println("받은값 확인 " + id);
 		// 여기다가 model 값을 추가해주면됨
 		model.addAttribute("BookShop", Bs.SearchbookshopId(id));
+		model.addAttribute("BookShopPhoto",Bs.SearchSelectPhotoBookShop(id));
 
 		return "bookshop/BookShopView";
 	}
@@ -83,14 +87,28 @@ public class BookShopController {
 	}
 	
 	
-	// 게시글 수정
+	// 게시글 수정 하는 글을 보는 메소드
 	@GetMapping(value = "bookshop/modifyView/{boardId}")
 	public String modifyView(@PathVariable("boardId") int boardId,Model model) {
 		
 		model.addAttribute("BookShop", Bs.SearchbookshopId(boardId));
+		model.addAttribute("BookShopPhoto",Bs.SearchSelectPhotoBookShop(boardId));
 		
 		
-		return "";
+		return "bookshop/BookShopModifyView";
 	}
+	// 게시글 수정 하는 메소드
+	// 본래는 위 api컨트롤 쪽으로 가는게 맞는방향인거같다
+	@PutMapping(value = "bookShop/modify/{bookId}", produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String modify(@PathVariable("bookId") int boardId,@RequestBody Map<String, Object>Modifybook) {
+		
+		
+		Bs.ModifyBookShop(Modifybook);
+		
+		return "{\"result\" : true}";
+	}
+	
+	
 
 }

@@ -9,11 +9,12 @@
 <title>Insert title here</title>
 </head>
 <body>
+<div class="contentBox">
 <form action="GeneralLogin" method="get">
 이메일 : <input type="email" id="email" name="email" placeholder="email"><br>
 비밀번호 : <input type="password" id="pwd"  name="pwd" placeholder="password"><br>
 <input type="submit" value="로그인">
 </form>
-
+</div>
 </body>
 </html>

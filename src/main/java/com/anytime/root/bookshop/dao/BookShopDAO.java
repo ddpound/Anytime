@@ -38,5 +38,10 @@ public interface BookShopDAO {
 	// 페이징을 위한 카운티 메소드
 	public int countingBookShop();
 	
+	// 북 본글 수정
+	public void modifyBookShop(BookShopDTO dto);
+	
+	// 북 포토 테이블 수정
+	public void modifyBookShopPhoto(BookShopPhotoDTO dto);
 	
 }

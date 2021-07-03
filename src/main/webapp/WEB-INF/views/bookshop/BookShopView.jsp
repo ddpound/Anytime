@@ -20,20 +20,110 @@
 			<input type="hidden" id="bookId" value="${ BookShop.boardId}">
 			제목 : ${ BookShop.booktitle} <br>
 			bookisbn : ${ BookShop.bookisbn} <br>
-			밑줄 : ${ BookShop.underline}<br>
-			필기 : ${ BookShop.handwrite}<br>
-			책표지 상태 : ${BookShop.cover }<br>
-			이름 표기 유무 : ${BookShop.nameWrite }<br>
-			페이지 상태  : ${BookShop.page }<br>
-			거래 형태 : ${BookShop.meansOftransaction }<br>
 			
+			
+			<c:choose>
+			<c:when test="${ BookShop.underline == 'non'}">
+			밑줄 : 없음<br>
+			</c:when>
+			<c:when test="${ BookShop.underline == 'sharpPencil'}">
+			밑줄 : 샤프, 펜슬<br>
+			</c:when>
+			<c:when test="${ BookShop.underline == 'highliterBolpen'}">
+			밑줄 : 볼펜<br>
+			</c:when>
+			<c:otherwise>
+			밑줄 : 샤프,펜슬,볼펜<br>
+			</c:otherwise>
+			</c:choose>
+			
+			<c:choose>
+			<c:when test="${ BookShop.handwrite == 'non'}">
+			필기 : 없음<br>
+			</c:when>
+			<c:when test="${ BookShop.handwrite == 'sharpPencil'}">
+			필기 : 샤프, 펜슬<br>
+			</c:when>
+			<c:when test="${BookShop.handwrite == 'highliterBolpen'}">
+			필기 : 볼펜<br>
+			</c:when>
+			<c:otherwise>
+			필기 : 샤프,펜슬,볼펜<br>
+			</c:otherwise>
+			</c:choose>
+			
+			<c:choose>
+			<c:when test="${ BookShop.cover == 'clean'}">
+			책표지 상태 : 깨끗함<br>
+			</c:when>
+			<c:otherwise>
+			책표지 상태 : 더러움<br>
+			</c:otherwise>
+			</c:choose>
+			
+			<c:choose>
+			<c:when test="${ BookShop.nameWrite == 'non'}">
+			이름 표기 유무 : 없음<br>
+			</c:when>
+			<c:otherwise>
+			이름 표기 유무 : 썼다<br>
+			</c:otherwise>
+			</c:choose>
+			
+			<c:choose>
+			<c:when test="${ BookShop.page == 'non'}">
+			페이지 상태 : 없음<br>
+			</c:when>
+			<c:when test="${ BookShop.page == 'blank'}">
+			페이지 상태 : 반색<br>
+			</c:when>
+			<c:when test="${ BookShop.page == 'damage'}">
+			페이지 상태 : 훼손<br>
+			</c:when>
+			<c:otherwise>
+			페이지 상태 : 반색과 회손<br>
+			</c:otherwise>
+			</c:choose>
+			
+			<c:choose>
+			<c:when test="${ BookShop.meansOftransaction == 'parcelService'}">
+			거래 형태 : 택배만<br>
+			</c:when>
+			<c:when test="${BookShop.meansOftransaction == 'directTransaction'}">
+			거래 형태 : 직거래만<br>
+			</c:when>
+			<c:otherwise>
+			거래 형태 : 택배와 직거래 둘다가능<br>
+			</c:otherwise>
+			</c:choose>
+			<br>
 			
 			학교와 위치 : <label>${ BookShop.school}</label><br>
-			가격 :  ${BookShop.price} <br>
 			
 			
+			
+			가격 :  ${BookShop.price}원<br><br><br>
+			
+			<c:if test="${BookShopPhoto.photo1 != 'null'}">
+			<img src="${BookShopPhoto.photo1 }" id="numPicture0" width="300px" height="200px">
+			</c:if>
+			<c:if test="${BookShopPhoto.photo2 != 'null'}">
+			<img src="${BookShopPhoto.photo2 }" id="numPicture1" width="300px" height="200px">
+			</c:if>
+			<c:if test="${BookShopPhoto.photo3 != 'null'}">
+			<img src="${BookShopPhoto.photo3 }" id="numPicture2" width="300px" height="200px">
+			</c:if>
+			<c:if test="${BookShopPhoto.photo4 != 'null'}">
+			<img src="${BookShopPhoto.photo4 }" id="numPicture3" width="300px" height="200px">
+			</c:if>
+			<c:if test="${BookShopPhoto.photo5 != 'null'}">
+			<img src="${BookShopPhoto.photo5 }" id="numPicture4" width="300px" height="200px">
+			</c:if>
+			
+			
+			<br>
 			<c:if test="${BookShop.writer ==  userId}">
-			<a href="#">수정하기</a>
+			<a href="/root/bookshop/modifyView/${ BookShop.boardId}">수정하기</a>
 			<button onclick="salesCompleted()">판매완료</button>
 			</c:if>
 			<c:if test="${BookShop.writer !=  userId}">
@@ -43,5 +133,10 @@
 			</div>
 		</div>
 	</div>
+
+	
 </body>
+
+
+
 </html>

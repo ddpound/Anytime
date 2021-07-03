@@ -1,10 +1,5 @@
 Manifest-Version: 1.0
-<<<<<<< HEAD
 Built-By: dpoun
 Build-Jdk: 12.0.2
-=======
-Built-By: nsnos
-Build-Jdk: 11.0.9
->>>>>>> e6f82a983e02a0b2100220d88b65c2f17dbfc1b1
 Created-By: Maven Integration for Eclipse
 
