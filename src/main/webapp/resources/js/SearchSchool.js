@@ -95,34 +95,46 @@ function displayPlaces(places) {
 		// 마커를 생성하고 지도에 표시합니다
 		var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
 			marker = addMarker(placePosition, i),
+			// 요부분을 수정하면 될듯
+
 			itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
-		// 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-		// LatLngBounds 객체에 좌표를 추가합니다
-		bounds.extend(placePosition);
+		if (itemEl == null) {
 
-		// 마커와 검색결과 항목에 mouseover 했을때
-		// 해당 장소에 인포윈도우에 장소명을 표시합니다
-		// mouseout 했을 때는 인포윈도우를 닫습니다
-		(function(marker, title) {
-			kakao.maps.event.addListener(marker, 'mouseover', function() {
-				displayInfowindow(marker, title);
-			});
+		} else {
+			// 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+			// LatLngBounds 객체에 좌표를 추가합니다
+			bounds.extend(placePosition);
 
-			kakao.maps.event.addListener(marker, 'mouseout', function() {
-				infowindow.close();
-			});
 
-			itemEl.onmouseover = function() {
-				displayInfowindow(marker, title);
-			};
 
-			itemEl.onmouseout = function() {
-				infowindow.close();
-			};
-		})(marker, places[i].place_name);
+			// 마커와 검색결과 항목에 mouseover 했을때
+			// 해당 장소에 인포윈도우에 장소명을 표시합니다
+			// mouseout 했을 때는 인포윈도우를 닫습니다
+			(function(marker, title) {
+				kakao.maps.event.addListener(marker, 'mouseover', function() {
+					displayInfowindow(marker, title);
+				});
 
-		fragment.appendChild(itemEl);
+				kakao.maps.event.addListener(marker, 'mouseout', function() {
+					infowindow.close();
+				});
+
+				itemEl.onmouseover = function() {
+					displayInfowindow(marker, title);
+				};
+
+				itemEl.onmouseout = function() {
+					infowindow.close();
+				};
+			})(marker, places[i].place_name);
+
+			fragment.appendChild(itemEl);
+
+
+
+		}
+
 	}
 
 	// 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
@@ -135,26 +147,33 @@ function displayPlaces(places) {
 
 // 검색결과 항목을 Element로 반환하는 함수입니다
 function getListItem(index, places) {
+	substring = "고등학교";
+	if (places.place_name.indexOf(substring) !== -1) {
+		var el = document.createElement('li'),
+			itemStr = '<span class="markerbg marker_' + (index + 1) + '"></span>' +
+				'<div class="info">' +
+				'   <h5>' + places.place_name + '</h5>';
 
-	var el = document.createElement('li'),
-		itemStr = '<span class="markerbg marker_' + (index + 1) + '"></span>' +
-			'<div class="info">' +
-			'   <h5>' + places.place_name + '</h5>';
+		if (places.road_address_name) {
+			itemStr += '    <span>' + places.road_address_name + '</span>' +
+				'   <span class="jibun gray">' + places.address_name + '</span>';
+		} else {
+			itemStr += '    <span>' + places.address_name + '</span>';
+		}
 
-	if (places.road_address_name) {
-		itemStr += '    <span>' + places.road_address_name + '</span>' +
-			'   <span class="jibun gray">' + places.address_name + '</span>';
-	} else {
-		itemStr += '    <span>' + places.address_name + '</span>';
+		itemStr += '  <span class="tel">' + places.phone + '</span>' +
+			'</div>';
+
+		el.innerHTML = itemStr;
+		el.className = 'item';
+		return el;
+		}
+		
+	  else {
+		return null;
 	}
 
-	itemStr += '  <span class="tel">' + places.phone + '</span>' +
-		'</div>';
 
-	el.innerHTML = itemStr;
-	el.className = 'item';
-
-	return el;
 }
 
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
@@ -243,7 +262,7 @@ function searchSchool() {
 		data: JSON.stringify(form),
 		contentType: 'application/json',
 		success: function(SchoolResult) {
-			
+
 			var temp = SchoolResult
 			console.log("반복문 밖 : " + temp.dataSearch.content[0].adres)
 
@@ -256,7 +275,7 @@ function searchSchool() {
 				console.log(temp.dataSearch.content[idx].adres)
 				// <input type="button" onclick="" value="">
 
-				searchList.innerHTML += "<input type=\"button\" id=\"SschoolName\" onclick=\"windowsCloseValue(\'Sadres"+idx+"\')\" value=\"" + temp.dataSearch.content[idx].schoolName + "\"><br><h3><input type=\"text\" id=\"Sadres"+idx+"\" value=\"" + temp.dataSearch.content[idx].adres +"\"></h3><br>"
+				searchList.innerHTML += "<input type=\"button\" id=\"SschoolName\" onclick=\"windowsCloseValue(\'Sadres" + idx + "\')\" value=\"" + temp.dataSearch.content[idx].schoolName + "\"><br><h3><input type=\"text\" id=\"Sadres" + idx + "\" value=\"" + temp.dataSearch.content[idx].adres + "\"></h3><br>"
 			}
 
 			searchPlaces()
@@ -277,7 +296,7 @@ function showPopup() {
 function windowsCloseValue(Sadres) {
 	//여거를 실행
 	opener.document.getElementById("parSchoolName").value = document.getElementById("SschoolName").value;
-	opener.document.getElementById("parSchooladd").value= document.getElementById(Sadres).value;
+	opener.document.getElementById("parSchooladd").value = document.getElementById(Sadres).value;
 	self.close();
 }
 

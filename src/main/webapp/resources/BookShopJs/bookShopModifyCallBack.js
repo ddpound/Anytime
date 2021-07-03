@@ -14,10 +14,7 @@ $(document).ready(function(e) {
 				return false;
 			}
 		}
-
 		preview(arr);
-
-
 	});//file change
 
 	function checkExtension(fileName, fileSize) {
