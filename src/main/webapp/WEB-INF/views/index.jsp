@@ -98,8 +98,8 @@ input[type="button"],input[type="submit"],input[type="search"] {
       <p><a href="generalUser/logout">어드민로그아웃</a></p>
       </c:when>
       <c:otherwise>
-      <p><a href="selectJoin">회원가입</a></p>
-      <p><a href="loginView">로그인</a></p>
+      <p><a href="/root/selectJoin">회원가입</a></p>
+      <p><a href="/root">로그인</a></p>
       </c:otherwise>
       </c:choose>
 </div>
