@@ -53,8 +53,6 @@
 						<span><i class="fa fa-heart"></i></span>&nbsp;
 						<c:if test="${list.like != null }"> ${list.like }</c:if>
 						<c:if test="${list.like == null }"> 0</c:if>
-						&nbsp;
-						<span><i class="far fa-comment-dots"></i>&nbsp; 댓글개수</span>
 					</div>
 				</div>
 			</c:forEach>

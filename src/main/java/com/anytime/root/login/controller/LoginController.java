@@ -45,7 +45,7 @@ public class LoginController {
 			session.setAttribute("userNickname", nickName);
 
 			// 로그인 성공, 메인으로 보내는것은 똑같음
-			ScriptUtils.alertAndMovePage(response, "로그인 완료했습니다.", "/root");
+			ScriptUtils.alertAndMovePage(response, "로그인 완료했습니다.", "/root/board/index");
 		}
 
 		// 로그인 안됐을때 (alret 창 나중에 띄어주기)
@@ -92,7 +92,7 @@ public class LoginController {
 			
 
 			// 로그인 성공, 메인으로 보내는것은 똑같음
-			ScriptUtils.alertAndMovePage(response, "로그인 완료했습니다.", "/root");
+			ScriptUtils.alertAndMovePage(response, "로그인 완료했습니다.", "/root/board/index");
 		}else if (resultNum == -1) {
 			ScriptUtils.alertAndMovePage(response, "비밀번호가 틀렸습니다.", "/root/loginView");
 		}else if(resultNum == 7) {

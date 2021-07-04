@@ -95,7 +95,7 @@ nav ul li a:hover {
 		<c:set var="contextPath" value="<%=request.getContextPath()%>" />
 		<div class="header">
 			<div id="logo">
-				<a href="${contextPath }/index">
+				<a href="${contextPath }/board/index">
 				<img src="${pageContext.request.contextPath }/resources/img/logo.jpg" width="30px" height="30px">
 				</a>
 				<p>

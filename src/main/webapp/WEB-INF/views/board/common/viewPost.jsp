@@ -245,10 +245,11 @@ $(function(){
 				No.${ board.postNo }&nbsp;&nbsp;<span class="w3-center w3-xlarge w3-text-blue">${ board.subject }</span>
 				<div class="w3-right">
 					<c:if test="${board.writerId != userId}">
+						<button class="w3-button">쪽지</button>
 						<button class="w3-button" id="like_update">
 							<i class="fa fa-heart" style="font-size:16px;color:red"></i>
 							&nbsp;<span class="like_count"></span>
-						</button> 
+						</button>
 					</c:if>
 					<c:if test="${board.writerId == userId}">
 							<i class="fa fa-heart" style="font-size:16px;color:red"></i>
@@ -289,7 +290,7 @@ $(function(){
 							<input type="button" class="w3-button" onclick="deleteReply(${list.replyNo}, ${list.depth})" value="삭제">
 						</c:if>
 						<c:if test="${list.writerId != userId }">
-							&nbsp;&nbsp;쪽지&nbsp;&nbsp;신고
+							&nbsp;&nbsp;<button class="w3-button">쪽지</button>
 						</c:if>
 					</div>
 					<pre id="replyContent_${list.replyNo}">${list.replyContent}</pre> 
@@ -308,7 +309,7 @@ $(function(){
 								<input type="button" class="w3-button" onclick="deleteReply(${list.replyNo}, ${list.depth})" value="삭제">
 							</c:if>
 							<c:if test="${list.writerId != userId }">
-								&nbsp;&nbsp;쪽지&nbsp;&nbsp;신고
+								&nbsp;&nbsp;<button class="w3-button">쪽지</button>
 							</c:if>
 						</div>
 						<pre>${list.replyContent}</pre>

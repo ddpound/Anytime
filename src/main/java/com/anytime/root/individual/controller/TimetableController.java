@@ -28,7 +28,8 @@ public class TimetableController {
 	public String timetableMain(HttpSession session) {
 		String id = (String)session.getAttribute(SessionName.ID);
 		String semester = timetableService.getMainTimetable(id);
-		return "redirect:/timetable/"+semester;
+		if(semester == null) return "redirect:/timetable/sem1";
+		else return "redirect:/timetable/"+semester;
 	}
 	
 	@RequestMapping("timetable/{semester}")

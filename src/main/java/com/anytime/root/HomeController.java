@@ -12,14 +12,7 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {		
-		return "index";
+		return "login/loginView";
 	}
-	
-	@RequestMapping(value = "index")
-	public String home() {
-		return "redirect:/";
-	}
-	
-	
 	
 }
