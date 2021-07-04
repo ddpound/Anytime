@@ -246,6 +246,8 @@ public class BookShopServiceImpl implements BookShopService {
 
 		return dto;
 	}
+	//분류해주는 메소드
+	
 
 	@Override
 	public BookShopDTO SearchbookshopId(int bookId) {
@@ -263,6 +265,86 @@ public class BookShopServiceImpl implements BookShopService {
 		mapper.deleteBookShopBoard(boarId);
 		
 	}
+
+	@Override
+	public int ModifyBookShop(Map<String, Object> map) {
+		BookShopDTO dto = new BookShopDTO();
+		int price = Integer.parseInt((String)map.get("price"));
+		int boardId = Integer.parseInt((String)map.get("bookId"));
+		
+		dto.setUnderline((String)map.get("underline"));
+		dto.setHandwrite((String)map.get("handwrite"));
+		dto.setCover((String)map.get("cover"));
+		dto.setNameWrite((String)map.get("nameWrite"));
+		dto.setPage((String)map.get("page"));
+		dto.setMeansOftransaction((String)map.get("meansOftransaction"));
+		dto.setPrice(price);
+		
+		dto.setBoardId(boardId);
+		
+		// 수정부분
+		mapper.modifyBookShop(dto);
+		
+		// 사진을 수정하는 부분, 해당 보드의 아이디를 받아야함
+		ModifyBookShopPhoto(BookShopPhtoSplit((String)map.get("photo")), boardId);
+		
+		return 1;
+	}
+	
+	// 사진 수정은 아이디가 필요하니 넣었습니다
+	@Override
+	public int ModifyBookShopPhoto(ArrayList<String> photoList , int boardId) {
+		BookShopPhotoDTO dto = new BookShopPhotoDTO();
+		int ListSize = photoList.size();
+
+		// 낙수효과처럼 스위치문은 해당 조건을 만족하는순간 break문이 없다면 계속 실행된다, 그걸 이용함
+		switch (ListSize) {
+		case 5:
+
+			dto.setPhoto5(photoList.get(4));
+		case 4:
+
+			dto.setPhoto4(photoList.get(3));
+		case 3:
+
+			dto.setPhoto3(photoList.get(2));
+		case 2:
+
+			dto.setPhoto2(photoList.get(1));
+		case 1:
+			// 저장공간에 가져올때 "" 자바스크립트 문에서 빈값 가져와서 일단 무조건 길이 1임 그래서 아래 예외처리조치함
+			if (photoList.get(0) != null) {
+				dto.setPhoto1(photoList.get(0));
+			}
+			// 좀더 깔끔한 방법 구상중
+
+		default:
+			if (dto.getPhoto1() == null) {
+				dto.setPhoto1("null");
+			}
+			if (dto.getPhoto2() == null) {
+				dto.setPhoto2("null");
+			}
+			if (dto.getPhoto3() == null) {
+				dto.setPhoto3("null");
+			}
+			if (dto.getPhoto4() == null) {
+				dto.setPhoto4("null");
+			}
+			if (dto.getPhoto5() == null) {
+				dto.setPhoto5("null");
+			}
+		}
+		dto.setId(boardId);
+		
+		mapper.modifyBookShopPhoto(dto);
+		
+		
+		
+		return 1;
+	}
+	
+	
 	
 	
 

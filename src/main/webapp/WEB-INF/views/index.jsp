@@ -79,9 +79,7 @@ input[type="button"],input[type="submit"],input[type="search"] {
 </style>
 </head>
 <body>
-	<div class="divall">
-	<div class="div1">
-      
+<div class="contentBox">
       <c:choose>
       <c:when test="${loginuserAuth == 'kakaoUser'}">
        <p><a href="https://kauth.kakao.com/oauth/logout?client_id=a924c282a86092b8472e6c2885aafe4a&logout_redirect_uri=http://localhost:8000/root/auth/kakao/logout">로그아웃</a></p>
@@ -104,25 +102,6 @@ input[type="button"],input[type="submit"],input[type="search"] {
       <p><a href="loginView">로그인</a></p>
       </c:otherwise>
       </c:choose>
-      
-     
-      
-	</div>
-	<div class="div2">
-		<table>
-		<tr><td>자유게시판</td></tr>
-		<tr><td>최신글1</td></tr>
-		<tr><td>최신글2</td></tr>
-		<tr><td>최신글3</td></tr>
-		<tr><td>최신글4</td></tr>
-		</table>
-		</div>
-	<div class="div3">
-		<form class="serch">
-		<input type="search" name="keyword" class="text" placeholder="검색하세요">
-		</form>
-		</div>
-	</div>
+</div>
 	</body>
-
 </html>

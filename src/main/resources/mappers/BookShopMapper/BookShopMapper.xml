@@ -85,5 +85,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	delete from anyTimeBoard where BOARDID=#{boardId}
 	</delete>
 	
+	
+	<update id="modifyBookShop">
+	UPDATE anyTimeBoard SET 
+	UNDERLINE =#{underline},
+	HANDWRITE =#{handwrite},
+	COVER =#{cover},
+	NAMEWRITE = #{nameWrite},
+	PAGE = #{page},
+	MEANSOFTRANSACTION = #{meansOftransaction},
+	PRICE = #{price}
+	WHERE BOARDID = #{boardId}
+	
+	</update>
+	
+	<update id="modifyBookShopPhoto">
+	UPDATE photoTable SET 
+	photo1 =#{photo1},
+	photo2 =#{photo2},
+	photo3 =#{photo3},
+	photo4 = #{photo4},
+	photo5 = #{photo5}
+	WHERE id = #{id}
+	
+	</update>
+	
 
 </mapper>

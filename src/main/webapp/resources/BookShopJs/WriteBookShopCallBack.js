@@ -1,8 +1,19 @@
 $(document).ready(function(e) {
+	
+	
 	$("#uploadFile").hide()
 	$("#preview").hide()
-	
-	console.log('아아아')
+
+
+    $("#underlineDetails").hide();
+    $("#handwriteDetails").hide();
+    $("#coverDetails").hide();
+    $("#namewriteDetails").hide();
+    $("#pageDetails").hide();
+    $("#meansOftransactionDetails").hide();
+
+
+
 	$("input[type='file']").change(function(e) {
 
 		//div 내용 비워주기

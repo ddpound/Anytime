@@ -77,10 +77,12 @@
 				alert("끝시간을 골라주세요.");
 			}else if(em === "끝 분"){
 				alert("끝분을 골라주세요.");
-			}else if( (st > et) || (st == et) && (sm >= em) ){
+			}else if( (st > et) || ((st == et) && (sm >= em)) ){			//입력시간 체크
+				console.log("st: "+st+", sm: "+sm);
+				console.log("et: "+et+", em: "+em);
 				alert("끝시간이 시작시간보다 빠르거나 같습니다.");
-//			}else if(  ){
-//				alert("시간표가 중복 됩니다.");
+			}else if( checkOverlap(st, sm, et, em, radio) == false ){	//중복확인
+				alert("시간표가 중복 됩니다.");
 			}else{
 				$.ajax({
 	    			url: "${contextPath}/add",
@@ -106,10 +108,10 @@
 		
 		$("#modify_btn").click(function(){
 			var radio = $('input[name="mod_day"]:checked').val();
-			var st = $("#start_time").val();
-			var sm = $("#start_minute").val();
-			var et = $("#end_time").val();
-			var em = $("#end_minute").val();
+			var st = $("#mod_start_time").val();
+			var sm = $("#mod_start_minute").val();
+			var et = $("#mod_end_time").val();
+			var em = $("#mod_end_minute").val();
 			if($("#mod_subject").val()===""){
 				alert("과목명을 입력해주세요.");
 			}else if(radio==null){
@@ -122,10 +124,10 @@
 				alert("끝시간을 골라주세요.");
 			}else if(em === "끝 분"){
 				alert("끝분을 골라주세요.");
-			}else if( (st > et) || (st == et) && (sm >= em) ){
+			}else if( (st > et) || ((st == et) && (sm >= em)) ){			//입력시간 체크
 				alert("끝시간이 시작시간보다 빠르거나 같습니다.");
-//			}else if(  ){
-//				alert("시간표가 중복 됩니다.");
+			}else if( checkOverlap(st, sm, et, em, radio) == false ){	//중복확인
+				alert("시간표가 중복 됩니다.");
 			}else{
 				$.ajax({
 	    			url: "${contextPath}/modify",
@@ -188,9 +190,23 @@
 			return "#" + Math.floor(Math.random() * 16777213 + 1).toString(16); //0x000001이상 0xffffff미만
 		}
 		
-		// 중복 체크
-		function check(){
-			
+		// 시간표 중복 체크
+		function checkOverlap(st, sm, et, em, day){
+			var flag = true;
+			var list = JSON.parse('${timetableList}');
+			for(var i=0; i<list.length; i++){
+				if(day == list[i].day){
+					var stm = st*60+sm*1;
+					var etm = et*60+em*1;
+					var e_stm = list[i].start_time*60 + list[i].start_minute;
+					var e_etm = list[i].end_time*60 + list[i].end_minute;
+					if( (stm>e_stm && stm<e_etm) || (etm>e_stm && etm<e_etm) ){
+						flag = false;
+						return flag;
+					}
+				}
+			}
+			return flag;			
 		}
 		
 		function showTable(){
@@ -211,18 +227,18 @@
 			setTitle += '<br>시간표';
 			$("#title").html(setTitle);
 			
-			var json = JSON.parse('${timetableList}');
-			for(var i=0; i<json.length; i++){
-				var day = "#cols_"+json[i].day;
-				var topPosi = 84+(json[i].start_time * 60)+json[i].start_minute;
-				var heightSize = (json[i].end_time - json[i].start_time)*60 + (json[i].end_minute-json[i].start_minute);
+			var list = JSON.parse('${timetableList}');
+			for(var i=0; i<list.length; i++){
+				var day = "#cols_"+list[i].day;
+				var topPosi = 84+(list[i].start_time * 60)+list[i].start_minute;
+				var heightSize = (list[i].end_time - list[i].start_time)*60 + (list[i].end_minute-list[i].start_minute);
 				var colour = getRandomColor();
 				var str = "<div style='position:absolute;width:123px;height:"+heightSize+"px;top:"+topPosi+"px;";
 				str += "background-color:"+colour+";'>";
-				str += "<strong>"+json[i].subject;
-				str += "</strong>&nbsp;<i class='fas fa-edit' onclick='modifyShow("+JSON.stringify(json[i])+")'></i>&nbsp;";
-				str += "<i class='fas fa-times' onclick='deleteItem("+json[i].itemNo+")'></i><br>";
-				str += "<small>"+(json[i].start_time+8)+":"+json[i].start_minute+"~"+(json[i].end_time+8)+":"+json[i].end_minute+"</small></div>";
+				str += "<strong>"+list[i].subject;
+				str += "</strong>&nbsp;<i class='fas fa-edit' onclick='modifyShow("+JSON.stringify(list[i])+")'></i>&nbsp;";
+				str += "<i class='fas fa-times' onclick='deleteItem("+list[i].itemNo+")'></i><br>";
+				str += "<small>"+(list[i].start_time+8)+":"+list[i].start_minute+"~"+(list[i].end_time+8)+":"+list[i].end_minute+"</small></div>";
 				var setting = $(str).addClass('subject');
 				$(day).append(setting);
 			}
@@ -523,7 +539,7 @@ li{
 						<hr>
 						<label>시간:</label><br>
 						<select id="mod_start_time" class="custom-select" style="width:100px;">
-							<option selected>시작시간</option>
+							<option value="시작시간">시작시간</option>
 							<option value="0">오전8시</option>
 							<option value="1">오전9시</option>
 							<option value="2">오전10시</option>
@@ -541,7 +557,7 @@ li{
 							<option value="14">오후10시</option>
 						</select>
 						<select id="mod_start_minute" class="custom-select" style="width:90px;">
-							<option selected>시작분</option>
+							<option value="시작분">시작분</option>
 							<option value="0">0분</option>
 							<option value="5">5분</option>
 							<option value="10">10분</option>
@@ -557,7 +573,7 @@ li{
 						</select>
 						<b> ~ </b>
 						<select id="mod_end_time" class="custom-select" style="width:100px;">
-							<option selected>끝 시간</option>
+							<option value="끝 시간">끝 시간</option>
 							<option value="0">오전8시</option>
 							<option value="1">오전9시</option>
 							<option value="2">오전10시</option>
@@ -575,7 +591,7 @@ li{
 							<option value="14">오후10시</option>
 						</select>
 						<select id="mod_end_minute" class="custom-select" style="width:90px;">
-							<option selected>끝 분</option>
+							<option value="끝 분">끝 분</option>
 							<option value="0">0분</option>
 							<option value="5">5분</option>
 							<option value="10">10분</option>

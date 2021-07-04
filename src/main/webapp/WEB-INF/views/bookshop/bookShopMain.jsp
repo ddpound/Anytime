@@ -20,11 +20,11 @@
 	<div class="MainBox">
 		<div class="searchBook">
 		<input type="text" placeholder="찾을 책을 입력해주세요"> 
-			&emsp; <input type="button" value="검색">
+			&emsp; <input type="button" value="검색"><br><br>
 			<c:choose>
 			<c:when test="${userId  != null}">
 			
-			 &emsp; <a class="btn sell" href="/root/bookShop/write">책팔기 </a>
+			<a class="btn sell" href="/root/bookShop/write"><label>책팔기</label> </a>
 			</c:when>
 			<c:otherwise>
 			
@@ -38,20 +38,25 @@
 		<!--  반복문 c태그 넣기 -->
 		<div class="BoardList">
 		<c:forEach var="BoardListDTO" items="${PageboardList }">
+		<a href="/root/bookshop/${nowPage }/${BoardListDTO.boardId }" >
+		    <div class="BoardCardSet">
+		    <div class="BoardCardImg">
+		    <img src="${AllBookPhotoList[BoardListDTO.boardId].photo1}" width="200px" height="200px">
+		    </div>
 		    <div id="BoardCard" class="BoardCard">
-			
-			<img src="${AllBookPhotoList[BoardListDTO.boardId].photo1}" width="200px" height="200px">
-			<a href="/root/bookshop/${nowPage }/${BoardListDTO.boardId }" >${ BoardListDTO.booktitle}</a><br>
+			${ BoardListDTO.booktitle}<br>
 			ISBN : <label>${ BoardListDTO.bookisbn} </label><br>
 			학교와 위치 : <label>${ BoardListDTO.school}</label><br>
-			가격 : <label>${ BoardListDTO.price}</label>
+			<label class="priceLabel">${ BoardListDTO.price}원</label>
 			<!--  중요 반드시 DTO의 변수값을 따지니 대소문자 틀리지않게 하세요 -->
 			</div>
-		
+		    </div>
+		    </a>
 		</c:forEach>
+		<br><br>
 		<ul>
 		<c:forEach var="listNum" items="${allPageCount }">
-		<li><a href="/root/bookshop/${listNum +1}">${listNum +1}</a></li>
+		<li><a href="/root/bookshop/${listNum +1}"><label>${listNum +1}</label>&nbsp;&nbsp; </a></li>
 		</c:forEach>
 		</ul>
 		</div>

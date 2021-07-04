@@ -4,9 +4,36 @@ body {
 	background-color: gray;
 }
 
+a {
+	text-decoration: none;
+	color: black;
+	transition: all 1s;
+}
+
+a:link {
+	color: red;
+	text-decoration: none;
+}
+
+a:visited {
+	color: black;
+	text-decoration: none;
+}
+
+a :hover {
+	color: #C62917;
+	text-decoration: none;
+}
+
+
 .searchBook {
-	margin-left: 40%;
+	margin-left: 25%;
 	margin-top: 10%;
+	width: 950px;
+}
+.searchBook input{
+	width: 950px;
+	border-radius: 15px;
 }
 
 .BoardList {
@@ -17,22 +44,42 @@ body {
 	height: 1600px;
 }
 
-.BoardCard {
+.BoardCardSet{
 	width: 950px;
 	height: 300px;
 	border: 2px solid black;
+	transition : all 1s;
+	
+}
+
+.BoardCardSet:hover{
+	background-color: #e9e9e9;
+}
+
+.BoardCard {
+	margin-top: 100px;
+	width: 746px;
+	float: right;
+}
+
+.BoardCardImg{
+	margin-top: 60px;
+	float: left;
 }
 
 .btn {
+	width: 950px;
+	height : 35px;
 	text-decoration: none;
-	font-size: 20px;
+	font-size: 15px;
 	color: white;
-	padding: 10px 20px 10px 20px;
-	margin: 20px;
 	display: inline-block;
 	border-radius: 10px;
 	transition: all 0.1s;
-	text-shadow: 0px -2px rgba(0, 0, 0, 0.44);
+}
+
+.btn.sell.label{
+	font-weight: bold;
 }
 
 .btn:active {
@@ -46,4 +93,28 @@ body {
 
 .btn.sell:active {
 	border-bottom: 2px solid #165195;
+}
+
+
+
+.priceLabel {
+	font-weight: bold;
+	font-size: 25px;
+	color: #C62917;
+}
+
+ul li{
+	list-style-type: none;
+	float: left;
+}
+
+ul li label {
+	border: solid 2px;
+	font-size: 20px;
+	transition:all 0.7s;
+}
+
+ul li label:hover{
+	border-color: #165195;
+	color: #165195;
 }
