@@ -7,20 +7,25 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/JoinView.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/Join.js"></script>
+<link
+	href="${pageContext.request.contextPath }/resources/css/JoinView.css"
+	rel="stylesheet" type="text/css">
 <meta charset="UTF-8">
 <title>AnyTime JoinView</title>
 </head>
 <body>
+
 	<div style="margin-left: 30%" class="joinForm"  >
 	<form id="joinfrm" >
 	<h1>애니타임 회원가입</h1>
 		<br>
 		<h4>언제, 어디서나 학생들과 함께.......</h4>
 		<br> 
-		입학년도 : <input id="enterYear"  name="enterYear"  type="text" readonly="readonly" value="입학년도"><br> 
 		<span class="select"> 
 			<select id="year" title="년도" onchange="handleOnChange(this)"></select><br>
-		</span> <input type="button" readonly="readonly" onclick="showPopup()" value="학교 검색하기"><br>
+		</span> <br>
+		<label> 입학년도 : </label> <input id="enterYear"  name="enterYear"  type="text" readonly="readonly" value="입학년도"><br><br> 
+		<input type="button" readonly="readonly" onclick="showPopup()" value="학교 검색하기"><br>
 		
 		
 		<script type="text/javascript">
@@ -29,17 +34,32 @@
 		<script src="${pageContext.request.contextPath }/resources/js/SearchSchool.js"></script>
 		
 		<input type="text" id="parSchoolName"  name="parSchoolName"  placeholder="학교이름"><br>
-		<input type="text"  id="parSchooladd"  name="parSchooladd" placeholder="학교주소"><br>
+		<input type="text"  id="parSchooladd"  name="parSchooladd" placeholder="학교주소"><br><br>
 		 
-		이메일 : <input type="text" id="email" name="email" value="${email}"><br>
-		이름 : <input type="text" id="nickname" name="nickname" value="${nickname}"><br>
-		나이 : <input type="text"  id="age"  name="age"  placeholder="나이를 입력해주세요"><br>
-		연령대 : <input type="text"  id="ageGroup"  name="ageGroup"  value="${agerange}" readonly="readonly"><br>
-		현재학년 : <input type="text"  id="grade"  name="grade"  placeholder="현재학년"><br>
+		<label>이메일 : </label> <input type="email" id="email" name="email" value="${email}"><br>
+		<c:choose>
+		<c:when test="${UserJoinAuth != null}">
+		<input type="button" value="이메일인증"><br><br>
+		<!-- 일반회원일때는 비밀번호를 받아야하니깐 -->
+		<label> 비밀번호 : </label> <input type="password" id="pwd" name="pwd"  placeholder="password"><br>
+		</c:when>
+		</c:choose>
+		<label>이름 : </label> <input type="text" id="nickname" name="nickname" value="${nickname}"><br>
+		<label>나이 : </label> <input type="text"  id="age"  name="age"  placeholder="나이를 입력해주세요"><br>
+		<c:choose>
+		<c:when test="${UserJoinAuth != null}">
+		<label>연령대 :</label>  <input type="text"  id="ageGroup"  name="ageGroup"  value="${agerange}" ><br>
+		</c:when>
+		<c:otherwise>
+		<label>연령대 :</label>  <input type="text"  id="ageGroup"  name="ageGroup"  value="${agerange}"  readonly="readonly"><br>
+		</c:otherwise>
+		</c:choose>
+		<label>현재학년 :</label> <input type="text"  id="grade"  name="grade"  placeholder="현재학년"><br>
+		<input type="text"  id="UserJoinAuth"  name="UserJoinAuth"  value="${UserJoinAuth}" hidden="hidden"><br>
 		<br>
 		
 		<!--  임시방편 나중에 카카오 로그인 버튼으로 대체할생각 -->
-		<input type="button"  style="width: 300px; height: 80px;" src="${pageContext.request.contextPath }/resources/img/KaKaoJoin.png" onclick="SaveUser('${UserJoinAuth}')" ><br>
+		<input type="button"  style="width: 300px; height: 80px;" value="회원가입하기" onclick="SaveUser()" ><br>
 	</form>
 		
 	</div>

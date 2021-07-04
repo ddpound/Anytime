@@ -35,21 +35,12 @@ var selectValue = [] // selectValue 데베에 담기위한 영어값
 function roop() {
 	//check시 넘어가는 걸로
 
-
-
-
-
-
-
 }
 
 function getContextPath() {
 	var hostIndex = location.href.indexOf(location.host) + location.host.length;
 	return location.href.substring(hostIndex, location.href.indexOf('/', hostIndex + 1));
 };
-
-
-
 
 function clickBook(i) {
 	console.log('책 결과값은 : ' + Bookresult.documents[i].title)
@@ -62,39 +53,54 @@ function clickBook(i) {
 	//bookList 는 꼭 남겨놓기
 
 	// 제목 isbn 저장 ( label 형식으로)
-	var BookListDiv = document.getElementById('bookList')
+	var BookListDiv = document.getElementById('bookSearchResultTableBox')
 	BookListDiv.innerHTML += "<div style=\"margin-top: 10px;\">" +
 		"제목 :<label id=\"booktitle\">" + Bookresult.documents[i].title + "</label><br>" +
 		"isbn : <label id=\"bookisbn\">" + Bookresult.documents[i].isbn + "</label><br></div>"
-	document.body.appendChild(BookListDiv);
+	//BookListDiv.appendChild(BookListDiv);
 
 	// 여기서 새로 다음으로 넘어갈 로직짜야함 함수 생성 요망
 
 	makeChoiceRadio(totalSelectList[choicenum]) //
 }
 
-
-
 function ResultlistBook(result) {
-	allDelElement()
+	//allDelElement()
 
 	// 얘 무조건 10개씩 준다
 	if (result.documents[0] != null) {
-
-
-		//console.log('ajax통신확인' + result.documents[0].authors)
-		// 반복문으로 모두 출력
-		console.log(result.documents.length)
+		var my_tbody = document.getElementById('my-book-tbody');
+		// var row = my_tbody.insertRow(0); // 상단에 추가
+		
 		for (i = 0; i < result.documents.length; i++) {
-			var BookListDiv = document.getElementById('bookList')
+			// 책 검색 api의 전체 결과값을 담아내는 변수 두개로 꼭 넣어놔야함
 			Bookresult = result
 			resultLength = result.documents.length
-			BookListDiv.removeChild(BookListDiv.firstChild)
-			BookListDiv.innerHTML += "<div name=\"BookDiv\" id=\"BookDiv\"> <img src=\"" + result.documents[i].thumbnail + "\"><br>" +
-				"<label>제목 : " + result.documents[i].title + "</label><br>" + "<label>isbn : " + result.documents[i].isbn + "</label><br>" + "<label>작가 : " + result.documents[i].authors + "</label><br>"
-				+ "<input type=\"radio\" onclick=\"clickBook(" + i + ")\" id=\"book\" name=\"book\" value=\"" + result.documents[i].title + "\">" + "</div><br>"
-			document.body.appendChild(BookListDiv);
+			
+			var row = my_tbody.insertRow(my_tbody.rows.length); // 하단에 추가
+		    var cell1 = row.insertCell(0);
+		    var cell2 = row.insertCell(1);
+		    var cell3 = row.insertCell(2);
+		    var cell4 = row.insertCell(3);
+			
+			cell1.innerHTML = "<img src=\"" + result.documents[i].thumbnail + "\">"
+		    cell2.innerHTML = "<button onclick = \"clickBook( "+i+")\"style=\"border:none;  outline :none; background-color:white;\">" + result.documents[i].title + "</button>"
+			cell3.innerHTML = "<label> " + result.documents[i].isbn + "</label>"
+			cell4.innerHTML =  "<label> " + result.documents[i].authors + "</label>"
 		}
+		//console.log('ajax통신확인' + result.documents[0].authors)
+		// 반복문으로 모두 출력
+		/*	console.log(result.documents.length)
+			for (i = 0; i < result.documents.length; i++) {
+				var BookListDiv = document.getElementById('bookList')
+				Bookresult = result
+				resultLength = result.documents.length
+				BookListDiv.removeChild(BookListDiv.firstChild)
+				BookListDiv.innerHTML += "<div name=\"BookDiv\" id=\"BookDiv\"> <img src=\"" + result.documents[i].thumbnail + "\"><br>" +
+					"<label>제목 : " + result.documents[i].title + "</label><br>" + "<label>isbn : " + result.documents[i].isbn + "</label><br>" + "<label>작가 : " + result.documents[i].authors + "</label><br>"
+					+ "<input type=\"radio\" onclick=\"clickBook(" + i + ")\" id=\"book\" name=\"book\" value=\"" + result.documents[i].title + "\">" + "</div><br>"
+				document.body.appendChild(BookListDiv);
+			}*/
 		// 자바스크립트로 페이징 처리해야함 현재 10개씩만 받아오게 해놓음
 	} else {
 		alert('검색된 책이 없습니다.')
@@ -123,7 +129,8 @@ function GowriteBook() {
 }
 // 모든 element를 삭제해주는 함수
 function allDelElement(elemid1, elemid2) {
-	$('label').remove();
+	$('table').remove();
+	/*$('label').remove();
 	$('img').remove();
 	$('input[type=radio][name=book]').remove();
 	$('#' + elemid1).remove();
@@ -133,7 +140,7 @@ function allDelElement(elemid1, elemid2) {
 		$('#BookDiv').remove();
 		// 반복문으로 넣어줘야함, BookDiv 아이디가 하나만 삭제하는 거같음
 
-	}
+	}*/
 }
 
 // 총 3개 , 선택지 갯수
@@ -145,8 +152,6 @@ function allDelElement(elemid1, elemid2) {
 // choiceName = > 총 선택한 ID값 (나중에 지우기위해둔건데 꼭 반복문으로 갯수만큼 삭제해야함)
 function makeChoiceRadio(choiceName) {
 	var BookListDiv = document.getElementById('bookList')
-
-
 	// 아래처럼 접근이 가능함
 	/*console.log(totalSelectList[0][3])
 	console.log(KototalSelectList[2][1])*/
@@ -158,7 +163,7 @@ function makeChoiceRadio(choiceName) {
 				"<input type=\"radio\" onclick=\"makeDecide(\'" + totalSelectList[choicenum][i] + "\' , \'" + choiceName + "\', \'" + KototalSelectList[choicenum][i] + "\')\" id=\"radiosel\" name=\"radiosel\" value=\"" + totalSelectList[choicenum][i] + "\"><br>" +
 				"</div>"
 		}
-		document.body.appendChild(BookListDiv);
+		//document.body.appendChild(BookListDiv);
 
 	}
 }
@@ -179,17 +184,15 @@ function makeDecide(inselectValue, inchoiceName, koreananswer) {
 		/*$('#' + inchoiceName).remove();
 		$('#radiosel').remove();*/
 	}
-	
-	
+
 	// 여기 생각종 (재귀함수? )
 	// 값을 받아와서 ( label 형식으로)
 	var BookListDiv = document.getElementById('bookList')
 	BookListDiv.innerHTML += "<div style=\"margin-top: 10px;\">" +
 		Koaskask[choicenum] + " : " +
 		"<label>" + koreananswer + "</label><br>" +
-		"<input type=\"hidden\" id=\"Question"+ choicenum + "\" value=\"" + inselectValue + "\"><br></div>"
-	document.body.appendChild(BookListDiv);
-
+		"<input type=\"hidden\" id=\"Question" + choicenum + "\" value=\"" + inselectValue + "\"><br></div>"
+	//document.body.appendChild(BookListDiv);
 	// 여기서 새로 다음으로 넘어갈 로직짜야함 함수 생성 요망
 	// 전역 리스트 하나를 두고 그냥 다 담아놓자 그리고 수가 4번 반복이 완료되면 멈추도록
 	choicenum += 1
@@ -200,95 +203,64 @@ function makeDecide(inselectValue, inchoiceName, koreananswer) {
 	}
 }
 
-
-
-
-
 // 가격과 사진 부분, 동시에 띄우고 마지막 전송버튼 쓰는게 나을듯
 function makePhotoPrice() {
-	
 	var BookListDiv = document.getElementById('bookList')
 	BookListDiv.innerHTML += "<label>판매 가격 : </label>&ensp;<input type=\"text\" id=\"price\">"
-
-
 
 	BookListDiv.innerHTML += "<div id=\"finalDiv\" style=\"margin-top: 10px;\">" +
 		"<button onclick=\"WriteButton()\">작성</button><br>" +
 		"</div>"
-	document.body.appendChild(BookListDiv);
-	
+	//document.body.appendChild(BookListDiv);
+
 	$("#uploadFile").show()
 	$("#preview").show()
 
 	// 이미지 올리는 부분이 위에 생성되는 부분을 임시 해결위해 스크롤 시키도록 만들어놓음 무조건 수정요망
 	var offset = $("#uploadFile").offset();
-    $('html, body').animate({scrollTop : offset.top}, 400);
-
+	$('html, body').animate({ scrollTop: offset.top }, 400);
 }
 
-function WriteButton(){
+function WriteButton() {
 	//최대 다섯장이니깐 다섯 장 다 받아와지는 지 확인
-	var img =[]
+	var img = []
 	var totalPicture = ""
-	for(i=0;i<5;i++){
-		var resultPictureSrc = $('#numPicture'+i).attr("src")
-		
-		if(resultPictureSrc == null){
+	for (i = 0; i < 5; i++) {
+		var resultPictureSrc = $('#numPicture' + i).attr("src")
+
+		if (resultPictureSrc == null) {
 			break
-		}else{
-			img[i]= resultPictureSrc + '#' //요걸넣어줘야 구분가능함 자바 서버단에서 split할예정
+		} else {
+			img[i] = resultPictureSrc + '#' //요걸넣어줘야 구분가능함 자바 서버단에서 split할예정
 		}
 	}
-	console.log("이미지 갯수만큼의 길이가 나와야함 : "+img.length)
-	for(i=0 ; i < img.length;i++){
-		console.log("이미지배열의 값인데"+img[i])
+	console.log("이미지 갯수만큼의 길이가 나와야함 : " + img.length)
+	for (i = 0; i < img.length; i++) {
+		console.log("이미지배열의 값인데" + img[i])
 		totalPicture += img[i]
-		
 	}
-	
-	console.log("총배열: "+totalPicture)
-	
-	
-	console.log("책질문 : "+$('#booktitle').val())
-	console.log("책 isbn : "+$('#bookisbn').val())
-	console.log("1번질문 : "+$('#Question0').val())
-	console.log("2번질문 : "+$('#Question1').val())
-	console.log("3번질문 : "+$('#Question2').val())
-	console.log("4번질문 : "+$('#Question3').val())
-	console.log("5번질문 : "+$('#Question4').val())
-	console.log("6번질문 : "+$('#Question5').val())
-	console.log("가격번질문 : "+$('#price').val())
-	console.log("사진 : "+totalPicture)
-	
+
 	fom = {
-		'booktitle' : $('#booktitle').text(),
-		'bookisbn' : $('#bookisbn').text(),
-		'underline' : $('#Question0').val(),
-		'handwrite' : $('#Question1').val(),
-		'cover' : $('#Question2').val(),
-		'nameWrite' : $('#Question3').val(),
-		'page' : $('#Question4').val(),
-		'meansOftransaction' : $('#Question5').val(),
-		'price' :  $('#price').val(),
-		'photo' : totalPicture	
+		'booktitle': $('#booktitle').text(),
+		'bookisbn': $('#bookisbn').text(),
+		'underline': $('#Question0').val(),
+		'handwrite': $('#Question1').val(),
+		'cover': $('#Question2').val(),
+		'nameWrite': $('#Question3').val(),
+		'page': $('#Question4').val(),
+		'meansOftransaction': $('#Question5').val(),
+		'price': $('#price').val(),
+		'photo': totalPicture
 	}
-	
 	$.ajax({
-		url : "/root/bookShop/write",
+		url: "/root/bookShop/write",
 		type: "POST",
 		dataType: 'json', // 보낼 타입
 		data: JSON.stringify(fom),
-		contentType : "application/json; charset=utf-8",
-		success : function(result){
-			alert('회원가입성공 : '+result.result)
-			location.href = getContextPath()
+		contentType: "application/json; charset=utf-8",
+		success: function(result) {
+			alert('글쓰기성공 : ' + result.result)
+			location.href = getContextPath() + "/bookshop"
 		}
-		
-		
 	})
-	
 }
-
-
-
-

@@ -3,7 +3,7 @@ package com.anytime.root.individual.dto;
 public class Timetable {
 	private int itemNo;
 	private String id;
-	private int semester;
+	private String semester;
 	private String subject;
 	private String day;
 	private int start_time;
@@ -22,10 +22,10 @@ public class Timetable {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public int getSemester() {
+	public String getSemester() {
 		return semester;
 	}
-	public void setSemester(int semester) {
+	public void setSemester(String semester) {
 		this.semester = semester;
 	}
 	public String getSubject() {

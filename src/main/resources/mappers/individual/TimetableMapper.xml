@@ -12,8 +12,14 @@
 		<result property="end_time" column="end_time"/>
 		<result property="end_minute" column="end_minute"/>
 	</resultMap>
+	<select id="checkUser" parameterType="String" resultType="int">
+		select count(*) from timetable_setting where id = #{id}
+	</select>
+	<insert id="makeSetDefault" parameterType="String">
+		insert into timetable_setting (id) values(#{id})
+	</insert>
 	<select id="getTimetable" resultMap="tt">
-		select * from timetable where id = #{id} and semester = #{selc}
+		select * from timetable where id = #{id} and semester = #{semester}
 	</select>
 	<select id="countById" parameterType="String" resultType="int">
 		select count(*) from timetable where id = #{id}
@@ -35,5 +41,20 @@
 	</update>
 	<delete id="delete">
 		delete from timetable where id = #{id} and item_no = #{itemNo}
+	</delete>
+	<select id="getMainTimetable" parameterType="String" resultType="String">
+		select main from timetable_setting where id = #{id}
+	</select>
+	<select id="getSetting" resultType="hashmap">
+		select ${semester}, main from timetable_setting where id = #{id}
+	</select>
+	<update id="setMain">
+		update timetable_setting set main = #{main} where id = #{id}
+	</update>
+	<update id="setScope">
+		update timetable_setting set ${semester} = #{scope} where id = #{id}
+	</update>
+	<delete id="reset">
+		delete from timetable where id = #{id} and semester = #{semester}
 	</delete>
 </mapper>

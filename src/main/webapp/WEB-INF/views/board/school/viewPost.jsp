@@ -75,7 +75,6 @@ $(function(){
 	                	alert("댓글 등록 완료");
 	                	$("#replyContent").val("");
 	                	location.reload();
-	                	//getReply();
 	                },
 	    		})
 	    	}
@@ -86,6 +85,22 @@ $(function(){
   			$("#replyForm").slideToggle(100);
   		});
   		$("#replyForm").hide();
+  		
+  		function setBoardName(){
+			var str;
+			if('${section}' === 's'){
+				str = "비밀";
+			}else if('${section}' === 'c'){
+				str = "동아리";
+			}else if('${section}' === 'i'){
+				str = "학교정보";
+			}else if('${section}' === 'f'){
+				str = "진학진로";
+			}
+			str += "게시판";
+			$("#boardName").html(str);
+		}
+		setBoardName();
   		
 	});
 	
@@ -111,7 +126,6 @@ $(function(){
 		}else{
 			$(id).html("");
 		}
-		//$(now).slideToggle(100);
 	}
 	
 	function reReReply_btn(){
@@ -219,8 +233,7 @@ $(function(){
 </head>
 <body>
 <div class="contentBox">
-writer: ${board.writerId } , login id: ${userId }
-<h1 style="color:skyblue;">${sectionName}게시판 글 보기</h1><br>
+<h1 id="boardName" style="color:skyblue;"></h1><br>
 	<div class="w3-main w3-margin-bottom">
 		<div class="w3-bar">
 			<button type="button" class="w3-bar-item w3-button w3-border" onclick="location.href='${contextPath }/list/${section}'">
@@ -248,6 +261,7 @@ writer: ${board.writerId } , login id: ${userId }
 				No.${ board.postNo }&nbsp;&nbsp;<span class="w3-center w3-xlarge w3-text-blue">${ board.subject }</span>
 				<div class="w3-right">
 					<c:if test="${board.writerId != userId}">
+						<button class="w3-button">쪽지</button>
 						<button class="w3-button" id="like_update">
 							<i class="fa fa-heart" style="font-size:16px;color:red"></i>
 							&nbsp;<span class="like_count"></span>
@@ -266,11 +280,10 @@ writer: ${board.writerId } , login id: ${userId }
 			</div>
 			<div class="w3-border w3-padding">
 				<i class="fa fa-user"></i>&nbsp;<strong>${board.nickname }</strong>&nbsp;&nbsp;
-				<i class="fas fa-school"></i>&nbsp;<i>${board.school }고등학교</i>&nbsp;&nbsp;
 				<i class="fa fa-calendar"></i>&nbsp;${board.writeDate }
 				<div class="w3-right">
 					<span><i class="fa fa-eye"></i>&nbsp;${ board.views }</span>&nbsp;&nbsp;
-					<span><i class="far fa-comment-dots"></i></span>&nbsp;<span class="reply_count"></span>
+					<span><i class="far fa-comment-dots"></i>&nbsp;${replyCount }</span>&nbsp;
 				</div>
 			</div>
 			<article class="w3-border w3-large w3-padding" style="height:500px;">${ board.content }</article>
@@ -292,7 +305,7 @@ writer: ${board.writerId } , login id: ${userId }
 							<input type="button" class="w3-button" onclick="deleteReply(${list.replyNo}, ${list.depth})" value="삭제">
 						</c:if>
 						<c:if test="${list.writerId != userId }">
-							&nbsp;&nbsp;쪽지&nbsp;&nbsp;신고
+							&nbsp;&nbsp;<button class="w3-button">쪽지</button>
 						</c:if>
 					</div>
 					<pre id="replyContent_${list.replyNo}">${list.replyContent}</pre> 
@@ -311,7 +324,7 @@ writer: ${board.writerId } , login id: ${userId }
 								<input type="button" class="w3-button" onclick="deleteReply(${list.replyNo}, ${list.depth})" value="삭제">
 							</c:if>
 							<c:if test="${list.writerId != userId }">
-								&nbsp;&nbsp;쪽지&nbsp;&nbsp;신고
+								&nbsp;&nbsp;<button class="w3-button">쪽지</button>
 							</c:if>
 						</div>
 						<pre>${list.replyContent}</pre>

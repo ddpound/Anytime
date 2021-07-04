@@ -8,10 +8,8 @@ function SaveUser(general) {
 	let form = {}
 	let arr = $("#joinfrm").serializeArray()
 	
-	console.log("테스트 : "+general)
-	if(general != null){
-		arr.push("{name:'joinauth', value:'general'}")
-	}
+	
+	
 	
 	
 	for (i = 0; i < arr.length; i++) {

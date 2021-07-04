@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.anytime.root.board.repository.MainBoardRepository">
+	<resultMap type="com.anytime.root.board.dto.CommonLikeBoard" id="likecmnBoard">
+		<id property="postNo" column="post_no"/>
+		<result property="writerId" column="writer_id"/>
+		<result property="nickname" column="nickname"/>
+		<result property="subject" column="subject"/>
+		<result property="content" column="content"/>
+		<result property="views" column="views"/>
+		<result property="writeDate" column="write_date"/>
+		<result property="school" column="school"/>
+		<result property="like" column="good"/>
+	</resultMap>
+	<resultMap type="com.anytime.root.board.dto.SchoolLikeBoard" id="likeschoolBoard">
+		<id property="postNo" column="post_no"/>
+		<result property="writerId" column="writer_id"/>
+		<result property="nickname" column="nickname"/>
+		<result property="section" column="section"/>
+		<result property="subject" column="subject"/>
+		<result property="content" column="content"/>
+		<result property="views" column="views"/>
+		<result property="writeDate" column="write_date"/>
+		<result property="school" column="school"/>
+		<result property="like" column="good"/>
+	</resultMap>
+	<resultMap type="com.anytime.root.board.dto.Reply" id="reply">
+		<result property="replyNo" column="reply_no"/>
+		<result property="postNo" column="post_no"/>
+		<result property="parentNo" column="parent_no"/>
+		<result property="depth" column="depth"/>
+		<result property="writerId" column="writer_id"/>
+		<result property="nickname" column="nickname"/>
+		<result property="replyContent" column="reply_content"/>
+		<result property="writeDate" column="write_date"/>
+		<result property="school" column="school"/>
+	</resultMap>
+	<select id="getCmnBoardByDate" resultMap="likecmnBoard">
+	<![CDATA[
+		select B.* from
+		(select A.* from 
+		(select c.*, l.good from cmn_board c left outer join 
+		(select post_no, count(post_no) as good from like_cmn_board group by post_no) l 
+		on(c.post_no = l.post_no) order by write_date desc)A where rownum < 5)B
+	]]>
+	</select>
+	<select id="getSchoolBoardByDate" resultMap="likeschoolBoard">
+	<![CDATA[
+		select B.* from
+		(select A.* from 
+		(select c.*, l.good from school_board c left outer join 
+		(select post_no, count(post_no) as good from like_school_board group by post_no) l
+		 on(c.post_no = l.post_no) order by write_date desc)A
+		 where section = #{section} and school = #{school})B where rownum < 5
+	]]>
+	</select>
+	<select id="getCmnBoardByLike" resultMap="likecmnBoard">
+	<![CDATA[
+		select B.* from
+		(select A.* from
+		(select c.*, NVL(l.lik, 0) as good from cmn_board c
+		 left outer join (select post_no, count(post_no) as lik
+		 from like_cmn_board group by post_no)l
+		 on(c.post_no = l.post_no)
+		 order by good desc, c.views desc, c.write_date desc)A
+		 where rownum <5)B
+	]]>
+	</select>
+	<select id="getSchoolBoardByLike" resultMap="likeschoolBoard">
+	<![CDATA[
+		select B.* from
+		(select A.* from 
+		(select c.*, NVL(l.lik, 0) as good from school_board c 
+		left outer join (select post_no, count(post_no) as lik 
+		from like_school_board group by post_no) l on(c.post_no = l.post_no) 
+		order by good desc, c.views desc, c.write_date desc)A 
+		where section = #{section} and school = #{school})B where rownum <5
+	]]>
+	</select>
+	<select id="getMyCmnBoard" parameterType="String" resultMap="likecmnBoard">
+	<![CDATA[
+		select B.* from
+		(select A.* from 
+		(select c.*, l.good from cmn_board c 
+		 left outer join 
+		 (select post_no, count(post_no) as good from like_cmn_board group by post_no) l
+		 on(c.post_no = l.post_no))A where writer_id = #{id})B
+	]]>
+	</select>
+	<select id="getMySchoolBoard" parameterType="String" resultMap="likeschoolBoard">
+	<![CDATA[
+		select B.* from
+		(select A.* from 
+		(select c.*, l.good from school_board c left outer join 
+		(select post_no, count(post_no) as good from like_school_board group by post_no) l
+		 on(c.post_no = l.post_no))A where writer_id = #{id})B
+	]]>
+	</select>
+	<select id="getMyreplyList" parameterType="String" resultMap="reply">
+	<![CDATA[
+		select * from reply_school_board where writer_id = #{id} union
+		select * from reply_cmn_board where writer_id = #{id}
+	]]>
+	</select>
+<!-- 
+	<select id="getCmnBoardForAdmin">
+	<![CDATA[
+	
+	]]>
+	</select>
+	<select id="getSchoolBoardForAdmin" parameterType="String">
+	<![CDATA[
+	
+	]]>
+	</select>
+ -->
+</mapper>

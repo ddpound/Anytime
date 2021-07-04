@@ -95,14 +95,14 @@ nav ul li a:hover {
 		<c:set var="contextPath" value="<%=request.getContextPath()%>" />
 		<div class="header">
 			<div id="logo">
-				<a href="${contextPath }/index">
+				<a href="${contextPath }/board/index">
 				<img src="${pageContext.request.contextPath }/resources/img/logo.jpg" width="30px" height="30px">
 				</a>
 				<p>
 				<span class="name">애니타임</span><br>
 				<span class="subname">
-					<c:if test="${userSchool != null}">
-						${userSchool}고
+					<c:if test="${userschoolname != null}">
+						${userschoolname}고
 					</c:if>
 				</span>
 				</p>

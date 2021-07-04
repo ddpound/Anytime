@@ -36,6 +36,10 @@ public class BookShopServiceImpl implements BookShopService {
 	@Autowired
 	BookShopDAO mapper;
 
+	int onePageboardCount = 5; // 한페이지에 몇개의 글을 보여줄지 정해주는 부분
+	int allpageNum = 0; // 모든 페이지의 수 총 몇개의 페이지가 있는지 정해줌,
+	
+	
 	@Override
 	public ResponseEntity<String> responseBookSearch(String searchCode) {
 		RestTemplate rt = new RestTemplate();
@@ -190,8 +194,9 @@ public class BookShopServiceImpl implements BookShopService {
 	@Override
 	public ArrayList getBoardListCount() {
 		ArrayList countList = new ArrayList();
-
-		for (int i = 0; i < mapper.countingBookShop(); i++) {
+		
+		
+		for (int i = 0; i < allpageNum; i++) {
 			countList.add(i);
 		}
 
@@ -201,12 +206,12 @@ public class BookShopServiceImpl implements BookShopService {
 	@Override
 	public ArrayList<BookShopDTO> PageselectBookShop(int nowPage) {
 		int totalBoardCount = mapper.countingBookShop(); // 현재 글이 몇개있는지 파악
-		int onePageboardCount = 5; // 한페이지에 몇개의 글을 보여줄지 정해주는 부분
+		
 
 		int lastBoardNum = 1; // 마지막 보드 아이디 넘버
 		int startBoardNum = 0; // 첫번째 보드 아이디 넘버
-		int allpageNum = 0; // 모든 페이지의 수 총 몇개의 페이지가 있는지 정해줌,
-		System.out.println("현재 게시글 총 수 : " + totalBoardCount);
+
+
 		// 1. 먼저 페이지의 수를 구한다 전체 글 /한페지의 게시글 = > 페이지수
 		allpageNum = totalBoardCount / onePageboardCount;
 		lastBoardNum = onePageboardCount; // 즉 한페이지의 해결이니깐 처음엔 무조건 위의 설정한만큼
@@ -214,22 +219,23 @@ public class BookShopServiceImpl implements BookShopService {
 		if (totalBoardCount % onePageboardCount >= 1) {
 			allpageNum += 1;
 		}
-
+		System.out.println("모든 페이지 수 :" + allpageNum);
 		// 첫번째 장이라는 뜻
 		if (nowPage == 1) {
 			// 할께 없음
 		} else if (allpageNum == nowPage) {
 			// 모든 페이지의 넘버와 지금 클릭한 페이지 수가 같다는 것은 즉 마지막 페이지 라는뜻
 
-			startBoardNum = ((nowPage - 1) * onePageboardCount);
+			startBoardNum = ((nowPage - 1) * onePageboardCount)+1;
 			int ramainNum = (nowPage * onePageboardCount) - totalBoardCount;
 
 			lastBoardNum = (nowPage * onePageboardCount) - ramainNum; // 마지막 번호라는뜻은 즉 끝번호는 무조건 총 게시판의 수
 		} else {
-			startBoardNum += ((nowPage - 1) * onePageboardCount);
-			lastBoardNum += (nowPage * onePageboardCount);
+			startBoardNum = ((nowPage - 1) * onePageboardCount)+1;
+			lastBoardNum = (nowPage * onePageboardCount);
 		}
-
+		System.out.println(" 시작 게시판 번호 :" + startBoardNum);
+		System.out.println(" 끝 게시판 번호 :" + lastBoardNum);
 		return mapper.PageSelectBookShop(startBoardNum, lastBoardNum);
 	}
 
@@ -240,5 +246,106 @@ public class BookShopServiceImpl implements BookShopService {
 
 		return dto;
 	}
+	//분류해주는 메소드
+	
+
+	@Override
+	public BookShopDTO SearchbookshopId(int bookId) {
+		BookShopDTO dto = new BookShopDTO();
+		
+		// 해당 id만을 검색해 결과를 보내준다
+		dto = mapper.selectBookId(bookId);
+		
+		return dto;
+	}
+	
+	//글 삭제 메소드
+	@Override
+	public void DeleteBookShopDelete(int boarId) {
+		mapper.deleteBookShopBoard(boarId);
+		
+	}
+
+	@Override
+	public int ModifyBookShop(Map<String, Object> map) {
+		BookShopDTO dto = new BookShopDTO();
+		int price = Integer.parseInt((String)map.get("price"));
+		int boardId = Integer.parseInt((String)map.get("bookId"));
+		
+		dto.setUnderline((String)map.get("underline"));
+		dto.setHandwrite((String)map.get("handwrite"));
+		dto.setCover((String)map.get("cover"));
+		dto.setNameWrite((String)map.get("nameWrite"));
+		dto.setPage((String)map.get("page"));
+		dto.setMeansOftransaction((String)map.get("meansOftransaction"));
+		dto.setPrice(price);
+		
+		dto.setBoardId(boardId);
+		
+		// 수정부분
+		mapper.modifyBookShop(dto);
+		
+		// 사진을 수정하는 부분, 해당 보드의 아이디를 받아야함
+		ModifyBookShopPhoto(BookShopPhtoSplit((String)map.get("photo")), boardId);
+		
+		return 1;
+	}
+	
+	// 사진 수정은 아이디가 필요하니 넣었습니다
+	@Override
+	public int ModifyBookShopPhoto(ArrayList<String> photoList , int boardId) {
+		BookShopPhotoDTO dto = new BookShopPhotoDTO();
+		int ListSize = photoList.size();
+
+		// 낙수효과처럼 스위치문은 해당 조건을 만족하는순간 break문이 없다면 계속 실행된다, 그걸 이용함
+		switch (ListSize) {
+		case 5:
+
+			dto.setPhoto5(photoList.get(4));
+		case 4:
+
+			dto.setPhoto4(photoList.get(3));
+		case 3:
+
+			dto.setPhoto3(photoList.get(2));
+		case 2:
+
+			dto.setPhoto2(photoList.get(1));
+		case 1:
+			// 저장공간에 가져올때 "" 자바스크립트 문에서 빈값 가져와서 일단 무조건 길이 1임 그래서 아래 예외처리조치함
+			if (photoList.get(0) != null) {
+				dto.setPhoto1(photoList.get(0));
+			}
+			// 좀더 깔끔한 방법 구상중
+
+		default:
+			if (dto.getPhoto1() == null) {
+				dto.setPhoto1("null");
+			}
+			if (dto.getPhoto2() == null) {
+				dto.setPhoto2("null");
+			}
+			if (dto.getPhoto3() == null) {
+				dto.setPhoto3("null");
+			}
+			if (dto.getPhoto4() == null) {
+				dto.setPhoto4("null");
+			}
+			if (dto.getPhoto5() == null) {
+				dto.setPhoto5("null");
+			}
+		}
+		dto.setId(boardId);
+		
+		mapper.modifyBookShopPhoto(dto);
+		
+		
+		
+		return 1;
+	}
+	
+	
+	
+	
 
 }

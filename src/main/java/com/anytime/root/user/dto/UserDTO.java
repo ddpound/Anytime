@@ -15,6 +15,7 @@ public class UserDTO {
 	private int grade;
 	private String enterYear;
 	private String school;
+	private String permissions; // 권한생성
 	private String expirationDate; // 만기일
 	
 	public String getExpirationDate() {
@@ -95,6 +96,12 @@ public class UserDTO {
 	}
 	public void setSchool(String school) {
 		this.school = school;
+	}
+	public String getPermissions() {
+		return permissions;
+	}
+	public void setPermissions(String permissions) {
+		this.permissions = permissions;
 	}
 	
 	

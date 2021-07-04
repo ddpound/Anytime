@@ -49,13 +49,11 @@ public class SchoolBoardController {
 			@PathVariable String section, @PathVariable String postNo) {
 		String login = (String)session.getAttribute(SessionName.ID);
 		boardService.viewPost(model, Integer.parseInt(postNo), login);
-		boardService.setSectionName(model, section);
 		return "board/school/viewPost";
 	}
 	
 	@RequestMapping("write/{section}")
 	public String write(Model model, @PathVariable String section) {
-		boardService.setSectionName(model, section);
 		return "board/school/write";
 	}
 
@@ -70,7 +68,7 @@ public class SchoolBoardController {
 	@RequestMapping("modify")
 	public String modify(Model model,
 			@RequestParam(value="no") String postNo) {
-		boardService.viewPost(model, Integer.parseInt(postNo));
+		boardService.getViewPost(model, Integer.parseInt(postNo));
 		return "board/school/modify";
 	}
 	

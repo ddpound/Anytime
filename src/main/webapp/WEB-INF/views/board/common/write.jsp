@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath }"/>
+<c:set var="contextPath" value="${pageContext.request.contextPath }/board/common"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,18 +22,15 @@
 </head>
 <body>
 <div class="contentBox">
-login id: ${userId } , nickname: ${userNickname }
 <h1 style="color:skyblue;">자유게시판 글 작성</h1><br>
 	<div class="form-group">
-		<form action="${contextPath }/board/common/write_save" method="post">
+		<form action="${contextPath }/write_save" method="post">
 			<input type="hidden" name="writerId" value="${userId }">
 			<input type="hidden" name="nickname" value="${userNickname }">
-			<input type="hidden" name="school" value="${userSchool }">
+			<input type="hidden" name="school" value="${userschoolname }">
 			<div class="form-group" style="width:600px;">
 				<input type="text" name="subject" class="form-control" placeholder="제목">
 			</div>
-			<!-- <script src="${contextPath }/summernote.js"></script> -->
-			
 			<script>
 				$(document).ready(function() {
 					$('#summernote').summernote({
@@ -60,8 +57,7 @@ login id: ${userId } , nickname: ${userNickname }
 				     });		
 				});
 	    	</script>
-			<textarea id="summernote" name="content">
-			</textarea>
+			<textarea id="summernote" name="content"></textarea>
 			<div class="form-group" style="width:600px;">
 				<input type="text" name="tag" class="form-control" placeholder="#태그를 입력하세요. #으로 구분하여 입력.(최대 5개)">
 			</div>
@@ -71,7 +67,7 @@ login id: ${userId } , nickname: ${userNickname }
 				</label>
 			</div>
 			<div class="w3-bar">
-				<button type="button" class="w3-bar-item w3-button w3-border" onclick="location.href='${contextPath}/board/common/list'">
+				<button type="button" class="w3-bar-item w3-button w3-border" onclick="location.href='${contextPath}/list'">
 					<i class="fa fa-bars"></i> 글 목록
 				</button>
 				<button type="submit" class="w3-bar-item w3-button w3-border">
