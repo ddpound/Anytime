@@ -210,17 +210,19 @@ input[type="button"],input[type="submit"],input[type="search"] {
         <p class="school">${userId}</p>
         <p class="school">${userschoolname}고</p>
         <ul class="buttons">
-        <li><a href="/my">내 정보</a></li>
+       
         <li>
 	<c:choose>
       	<c:when test="${loginuserAuth == 'kakaoUser'}">
+      	<li><a href="${contextPath}/myinfo/${userId}">내 정보</a></li>
        	<p><a href="https://kauth.kakao.com/oauth/logout?client_id=a924c282a86092b8472e6c2885aafe4a&logout_redirect_uri=http://localhost:8000/root/auth/kakao/logout">로그아웃</a></p>
       	</c:when>
       	<c:when test="${loginuserAuth == 'generalUser'}">
+      	<li><a href="${contextPath}/myinfo/${userId}">내 정보</a></li>
       	<p><a href="${contextPath}/generalUser/logout">로그아웃</a></p>
       	</c:when>
       	<c:when test="${loginuserAuth == 'admin'}">
-      	<p><a href="MemberManagement">회원관리</a></p>
+      	<p><a href="/root/MemberManagement">회원관리</a></p>
       	<p><a href="${contextPath}/generalUser/logout">어드민로그아웃</a></p>
       	</c:when>
       	<c:otherwise>

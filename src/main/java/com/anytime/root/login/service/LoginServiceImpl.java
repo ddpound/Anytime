@@ -20,7 +20,7 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public int loginCheckIdDto(String email, String pwd, HttpSession session, String loginjoin) {
 		UserDTO dto = new UserDTO();
-
+		
 		dto = mapper.loginUser(email);
 		if (dto != null) {
 			if (dto.getEmail().equals(AdminInfo.AdminId)) {
@@ -66,6 +66,23 @@ public class LoginServiceImpl implements LoginService {
 		System.out.println(splitschoolName[0]);
 
 		return splitschoolName[0];
+	}
+
+	@Override
+	public UserDTO MyUserInfo(String email) {
+		System.out.println("서비스단의 이메일 : " + email);
+		UserDTO dto = new UserDTO();
+		dto = mapper.SelectUserInfoCheck(email);
+		
+		if(dto != null) {
+			System.out.println("왜 값 안나옴?"+dto.getEmail()); 
+		}else {
+			System.out.println("검색결과가 없습니다");
+		}
+		
+		
+		
+		return dto;
 	}
 
 }

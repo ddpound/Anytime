@@ -11,6 +11,7 @@ public interface UserDAO {
 	public UserDTO loginUser(String email);
 	public ArrayList<UserDTO> AllUserList();
 	public void changePermissionsTure(@Param("email") String email);	
-	public void changePermissionsFalse(@Param("email") String email);	
+	public void changePermissionsFalse(@Param("email") String email);
+	public UserDTO SelectUserInfoCheck(String email);
 	
 }
