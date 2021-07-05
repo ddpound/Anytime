@@ -95,7 +95,12 @@ nav ul li a:hover {
 		<c:set var="contextPath" value="<%=request.getContextPath()%>" />
 		<div class="header">
 			<div id="logo">
-				<a href="${contextPath }/board/index">
+				<c:if test="${loginuserAuth == 'admin' }">
+					<a href="${contextPath }/MemberManagement">
+				</c:if>
+				<c:if test="${loginuserAuth != 'admin' }">
+					<a href="${contextPath }/index">
+				</c:if>
 				<img src="${pageContext.request.contextPath }/resources/img/logo.jpg" width="30px" height="30px">
 				</a>
 				<p>
@@ -110,8 +115,10 @@ nav ul li a:hover {
 			<nav style= "list-style:none; 5px;">
 			<ul style="display:flex;">
 			<li class="active"><a id="board" href="${contextPath}/board/common/list">게시판</a></li>
-			<li class="timetable"><a href="${contextPath}/timetable">시간표</a></li>
-			<li class="calculator"><a href="${contextPath}/score">성적계산기</a></li>
+			<c:if test="${loginuserAuth != 'admin' }">
+				<li class="timetable"><a href="${contextPath}/timetable">시간표</a></li>
+				<li class="calculator"><a href="${contextPath}/score">성적계산기</a></li>
+			</c:if>
 			<li class="book"><a href="/root/bookshop">책방</a></li>
 			</ul>
 			</nav>

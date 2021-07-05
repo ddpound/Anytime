@@ -26,7 +26,8 @@
 			<ul style="display:flex;" >
 			<li><a href="${contextPath }/rule/servicerule">이용약관</a></li>
 			<li><a href="${contextPath }/rule/servicerule2">개인정보처리방침</a></li>
-			<li><a href="${contextPath }/rule/servicerule3">커뮤니티이용규칙</a></li>											
+			<li><a href="${contextPath }/rule/servicerule3">커뮤니티이용규칙</a></li>	
+			<li><a href="mailto:imj1363@naver.com" title="문의메일보내기">문의하기</a></li>									
 			<li>Copyright &copy; 애니타임</li>
 			</ul>
 			</nav>

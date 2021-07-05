@@ -5,4 +5,5 @@ public interface SessionName {
 	static final String NICKNAME = "userNickname";
 	static final String SCHOOL = "userSchool";
 	static final String SCHOOL_NAME = "userschoolname";
+	static final String AUTH = "userAuth";
 }

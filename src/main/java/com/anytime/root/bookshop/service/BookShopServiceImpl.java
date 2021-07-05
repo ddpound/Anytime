@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import com.anytime.root.board.repository.MainBoardRepository;
 import com.anytime.root.bookshop.StatusMeans;
 import com.anytime.root.bookshop.StatusMeans.handwrite;
 import com.anytime.root.bookshop.StatusMeans.underline;
@@ -35,6 +36,10 @@ public class BookShopServiceImpl implements BookShopService {
 
 	@Autowired
 	BookShopDAO mapper;
+	
+	// 메인화면에 미리보기를 위한 매퍼 가져왔습니다.
+	@Autowired
+	MainBoardRepository previewMapper;
 
 	int onePageboardCount = 5; // 한페이지에 몇개의 글을 보여줄지 정해주는 부분
 	int allpageNum = 0; // 모든 페이지의 수 총 몇개의 페이지가 있는지 정해줌,
@@ -342,6 +347,24 @@ public class BookShopServiceImpl implements BookShopService {
 		
 		
 		return 1;
+	}
+
+	@Override
+	public ArrayList<BookShopDTO> preViewBookShop() {
+		ArrayList<BookShopDTO> listDto = new ArrayList<BookShopDTO>();
+		listDto = previewMapper.PreViewBookShop(); // 1번부터 4번까지 값 가져옴
+		
+		return listDto;
+	}
+
+	@Override
+	public ArrayList<BookShopPhotoDTO> preViewBookShopPhoto() {
+		ArrayList<BookShopPhotoDTO> listdto = new ArrayList<BookShopPhotoDTO>();
+		
+		listdto = previewMapper.PreViewBookShopPhoto();
+		
+		
+		return listdto;
 	}
 	
 	

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -17,6 +18,7 @@ import com.anytime.root.kakaoLogin.service.KakaoLoginInfo;
 import com.anytime.root.login.service.LoginService;
 import com.anytime.root.script.ScriptUtils;
 import com.anytime.root.user.dto.KakaoProfile;
+import com.anytime.root.user.dto.UserDTO;
 
 @Controller
 public class LoginController {
@@ -45,7 +47,7 @@ public class LoginController {
 			session.setAttribute("userNickname", nickName);
 
 			// 로그인 성공, 메인으로 보내는것은 똑같음
-			ScriptUtils.alertAndMovePage(response, "로그인 완료했습니다.", "/root/board/index");
+			ScriptUtils.alertAndMovePage(response, "로그인 완료했습니다.", "/root/index");
 		}
 
 		// 로그인 안됐을때 (alret 창 나중에 띄어주기)
@@ -92,15 +94,27 @@ public class LoginController {
 			
 
 			// 로그인 성공, 메인으로 보내는것은 똑같음
-			ScriptUtils.alertAndMovePage(response, "로그인 완료했습니다.", "/root/board/index");
+			ScriptUtils.alertAndMovePage(response, "로그인 완료했습니다.", "/root/index");
 		}else if (resultNum == -1) {
 			ScriptUtils.alertAndMovePage(response, "비밀번호가 틀렸습니다.", "/root/loginView");
 		}else if(resultNum == 7) {
-			ScriptUtils.alertAndMovePage(response, "안녕하세요 관리자님.", "/root");
+			ScriptUtils.alertAndMovePage(response, "안녕하세요 관리자님.", "/root/MemberManagement");
 		}
 
 		// 로그인 안됐을때 (alret 창 나중에 띄어주기)
 		ScriptUtils.alertAndMovePage(response, "없는 아이디입니다 회원가입시도해주세요.", "/root/loginView");
 	}
+	
+	//로그인단에 유저정보확인두는건 별로 좋지않지만 일단 넣음
+	
+	@GetMapping(value = "myinfo/{userId}")
+	public String MyUserInfoView(@PathVariable("userId")String email, Model model) {
+		
+		// 유저 select
+		model.addAttribute("userDto", ls.MyUserInfo(email));
+		
+		return "UserView/MyUserInfo";
+	}
+	
 
 }

@@ -18,10 +18,12 @@
 	$(".navdiv").hide();
 	
 	function PrintDiv(){
+		$(".fas").hide();
 		html2canvas(document.getElementById("my_table")).then(function(canvas){
 			var myImage = canvas.toDataURL();
 			downloadURI(myImage, "애니타임_시간표.png") 
 		});
+		$(".fas").show();
 	}
 	
 	function downloadURI(uri, name){
@@ -65,6 +67,8 @@
 			var sm = $("#start_minute").val();
 			var et = $("#end_time").val();
 			var em = $("#end_minute").val();
+			var stm = st*60+sm*1;
+			var etm = et*60+em*1;
 			if($("#subject").val()===""){
 				alert("과목명을 입력해주세요.");
 			}else if(radio == null){
@@ -77,9 +81,7 @@
 				alert("끝시간을 골라주세요.");
 			}else if(em === "끝 분"){
 				alert("끝분을 골라주세요.");
-			}else if( (st > et) || ((st == et) && (sm >= em)) ){			//입력시간 체크
-				console.log("st: "+st+", sm: "+sm);
-				console.log("et: "+et+", em: "+em);
+			}else if( stm >= etm ){			//입력시간 체크
 				alert("끝시간이 시작시간보다 빠르거나 같습니다.");
 			}else if( checkOverlap(st, sm, et, em, radio) == false ){	//중복확인
 				alert("시간표가 중복 됩니다.");
@@ -112,6 +114,8 @@
 			var sm = $("#mod_start_minute").val();
 			var et = $("#mod_end_time").val();
 			var em = $("#mod_end_minute").val();
+			var stm = st*60+sm*1;
+			var etm = et*60+em*1;
 			if($("#mod_subject").val()===""){
 				alert("과목명을 입력해주세요.");
 			}else if(radio==null){
@@ -124,7 +128,7 @@
 				alert("끝시간을 골라주세요.");
 			}else if(em === "끝 분"){
 				alert("끝분을 골라주세요.");
-			}else if( (st > et) || ((st == et) && (sm >= em)) ){			//입력시간 체크
+			}else if( stm >= etm ){			//입력시간 체크
 				alert("끝시간이 시작시간보다 빠르거나 같습니다.");
 			}else if( checkOverlap(st, sm, et, em, radio) == false ){	//중복확인
 				alert("시간표가 중복 됩니다.");
@@ -158,7 +162,8 @@
                 type: "POST",
                 data: {
                 	id: '${userId}',
-                	scope: $('input[name="openScope"]:checked').val(),
+                	//scope: $('input[name="openScope"]:checked').val(),
+                	scope: 'public',
                 	main : $("#setMain").is(":checked"),
                 	semester: '${semester}'
                 },
@@ -269,7 +274,7 @@
 	}
 	
 	function showSet() {
-		$("input:radio[name='openScope']:input[value='${scope}']").attr("checked", true);
+		//$("input:radio[name='openScope']:input[value='${scope}']").attr("checked", true);
 		if('${setMain}' === 'true'){
 			$("input:checkbox[id='setMain']").attr('checked', true);
 		}
@@ -626,6 +631,7 @@ li{
 					</div>
 					<br><hr>
 					<form>
+						<!-- 
 						<label>공개범위: </label><br>
 						<div class="form-check-inline">
 							<label class="form-check-label">
@@ -643,6 +649,7 @@ li{
 							</label>
 						</div>
 						<hr>
+						 -->
 						<div class="form-check">
 							<label class="form-check-label">
 								<input type="checkbox" class="form-check-input" id="setMain">기본시간표 설정

@@ -20,6 +20,14 @@
 <script type="text/javascript">
 	$(function() {
 		$(".navdiv").show();
+		
+		function setSearch(){
+			if('${param.keyword}' != ''){
+				$("#searchType").val('${param.search_type}');
+				$("#keyword").val('${param.keyword}');
+			}
+		}
+		setSearch();
 	})
 </script>
 </head>
@@ -62,7 +70,7 @@
 			<div class="form-group">
 				<form>
 					<span>
-					<select class="form-control" name="search_type" style="width:150px">
+					<select class="form-control" name="search_type" id="searchType" style="width:150px">
 				    	<option value="all">제목+내용</option>
 				    	<option value="subject">글 제목</option>
 				    	<option value="content">글 내용</option>
@@ -70,7 +78,7 @@
 					</select>
 					</span>
 					<span>
-					<input type="text" name="keyword" class="form-control" placeholder="검색어를 입력하세요." style="width:200px">
+					<input type="text" name="keyword" class="form-control" id="keyword" placeholder="검색어를 입력하세요." style="width:200px">
 					</span>
 				</form>
 			</div>

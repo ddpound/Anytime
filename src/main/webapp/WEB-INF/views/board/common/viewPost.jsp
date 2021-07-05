@@ -91,8 +91,9 @@ $(function(){
 	// 대댓글 쓰기
 	function showReReply(data1, data2, data3){
 		var id = "#reReplyForm_"+data1;
+		var flag = ($(id).html() == "");
 		$(".reReplyForm").html("");
-		if($(id).html() == ""){
+		if(flag === true){
 			var make = "<div class='w3-border w3-padding'>";
 	    	make += "<span class='w3-left'><i class='fa fa-user w3-padding-16'></i>${userNickname }</span>";
 	    	make += "<form><span class='form-group form-check w3-right'><label class='form-check-label'>";
@@ -107,7 +108,7 @@ $(function(){
 	    	make += "<textarea rows='5' cols='20' class='w3-input w3-border' placeholder='댓글 작성' name='replyContent' id='reReplyContent'></textarea>";
 			make += "<input type='button' class='w3-button w3-border' onClick='reReReply_btn()' value='댓글 등록'></form></div>";
 			$(id).html(make);
-		}else{
+		}else if(flag === false){
 			$(id).html("");
 		}
 	}
@@ -220,11 +221,14 @@ $(function(){
 <h1 style="color:skyblue;">자유게시판 글 보기</h1><br>
 	<div class="w3-main w3-margin-bottom">
 		<div class="w3-bar">
+			<button type="button" class="w3-bar-item w3-button w3-border" onclick="history.back();">
+				<i class="fa fa-bars"></i> 뒤로
+			</button>
 			<button type="button" class="w3-bar-item w3-button w3-border" onclick="location.href='${contextPath }/list'">
 				<i class="fa fa-bars"></i> 글 목록
 			</button>
 			<!-- 로그인 하였을때 -->
-			<c:if test="${ userId != null }">
+			<c:if test="${ userId != null && loginuserAuth != 'admin' }">
 				<button type="button" class="w3-bar-item w3-button w3-border" onClick="location.href='${contextPath }/write'">
 					<i class="fa fa-pencil-square-o"></i> 새 글 쓰기
 				</button>
@@ -238,20 +242,25 @@ $(function(){
 					<i class="fa fa-remove"></i> 글 삭제
 				</button>
 			</c:if>
+			<c:if test="${loginuserAuth == 'admin' }">
+				<button type="button" class="w3-bar-item w3-button w3-border" onClick="location.href='${contextPath }/delete?no=${board.postNo}'">
+					<i class="fa fa-remove"></i> 글 삭제
+				</button>
+			</c:if>
 		</div>
 		<!-- 게시글 내용(작성자, 작성일, 조회수, 번호, 제목, 내용) -->
 		<div class="w3-article">
 			<div class="w3-border w3-padding">
 				No.${ board.postNo }&nbsp;&nbsp;<span class="w3-center w3-xlarge w3-text-blue">${ board.subject }</span>
 				<div class="w3-right">
-					<c:if test="${board.writerId != userId}">
+					<c:if test="${board.writerId != userId && loginuserAuth != 'admin'}">
 						<button class="w3-button">쪽지</button>
 						<button class="w3-button" id="like_update">
 							<i class="fa fa-heart" style="font-size:16px;color:red"></i>
 							&nbsp;<span class="like_count"></span>
 						</button>
 					</c:if>
-					<c:if test="${board.writerId == userId}">
+					<c:if test="${board.writerId == userId || loginuserAuth == 'admin'}">
 							<i class="fa fa-heart" style="font-size:16px;color:red"></i>
 							&nbsp;<span class="like_count"></span>
 					</c:if>
@@ -282,14 +291,19 @@ $(function(){
 					<c:if test="${list.writerId != board.writerId }">${list.nickname }</c:if>&nbsp;&nbsp;
 					<i class="fa fa-calendar">&nbsp;</i>${list.writeDate }
 					<div class="w3-right">
-						<input type="button" class="w3-button" onclick="showReReply(${list.replyNo}, ${list.parentNo }, ${list.depth+1 })" value="대댓글">
-						&nbsp;&nbsp;
+						<c:if test="${loginuserAuth == 'admin' }">
+							<input type="button" class="w3-button" onclick="deleteReply(${list.replyNo}, ${list.depth})" value="삭제">						
+						</c:if>
+						<c:if test="${loginuserAuth != 'admin' }">
+							<input type="button" class="w3-button" onclick="showReReply(${list.replyNo}, ${list.parentNo }, ${list.depth+1 })" value="대댓글">
+							&nbsp;&nbsp;						
+						</c:if>
 						<c:if test="${list.writerId == userId }">
 							<input type="button" class="w3-button" onclick="modifyReply(${list.replyNo}, '${list.replyContent}')" value="수정" id="modify">
 							&nbsp;&nbsp;
 							<input type="button" class="w3-button" onclick="deleteReply(${list.replyNo}, ${list.depth})" value="삭제">
 						</c:if>
-						<c:if test="${list.writerId != userId }">
+						<c:if test="${list.writerId != userId && loginuserAuth != 'admin'}">
 							&nbsp;&nbsp;<button class="w3-button">쪽지</button>
 						</c:if>
 					</div>
@@ -303,12 +317,15 @@ $(function(){
 						<c:if test="${list.writerId != board.writerId }">${list.nickname }</c:if>&nbsp;&nbsp;
 						<i class="fa fa-calendar">&nbsp;</i>${list.writeDate }
 						<div class="w3-right">
+							<c:if test="${loginuserAuth == 'admin' }">
+								<input type="button" class="w3-button" onclick="deleteReply(${list.replyNo}, ${list.depth})" value="삭제">						
+							</c:if>
 							<c:if test="${list.writerId == userId }">
 								<input type="button" class="w3-button" onclick="modifyReply(${list.replyNo}, '${list.replyContent}')" value="수정" id="modify">
 								&nbsp;&nbsp;
 								<input type="button" class="w3-button" onclick="deleteReply(${list.replyNo}, ${list.depth})" value="삭제">
 							</c:if>
-							<c:if test="${list.writerId != userId }">
+							<c:if test="${list.writerId != userId && loginuserAuth != 'admin'}">
 								&nbsp;&nbsp;<button class="w3-button">쪽지</button>
 							</c:if>
 						</div>
@@ -317,7 +334,9 @@ $(function(){
 				</c:if>
 			</div>
 		</c:forEach>
-		<div class="w3-border w3-padding" id="showReplyForm">댓글쓰기</div>
+		<c:if test="${loginuserAuth != 'admin' }">
+			<div class="w3-border w3-padding" id="showReplyForm">댓글쓰기</div>
+		</c:if>
 		<div class="w3-border w3-padding" id="replyForm">
 			<span class="w3-left"><i class="fa fa-user w3-padding-16"></i> ${userNickname }</span>
 			<form>
