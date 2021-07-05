@@ -57,7 +57,8 @@
 	</select>
 	<!-- 게시물 list 얻기 -->
 	<select id="getListLike" resultMap="likeBoard">
-		select B.* from(select rownum rn, A.* from 
+		select B.* from
+		(select rownum rn, A.* from 
 		(select c.*, l.good from cmn_board c left outer join 
 		(select post_no, count(post_no) as good from like_cmn_board group by post_no) l on(c.post_no = l.post_no) 
 		order by c.post_no desc)A)B where rn between #{start} and #{end}
