@@ -24,7 +24,8 @@
 			<c:choose>
 			<c:when test="${userId  != null}">
 			
-			<a class="btn sell" href="/root/bookShop/write"><label>책팔기</label> </a>
+			<a class="btn sell" href="${pageContext.request.contextPath }/bookShop/write"><label>책팔기</label> </a><br><br>
+			<a class="btn sell" href="${pageContext.request.contextPath }/bookShop/myboardLsit"><label>내가 쓴 글보기</label> </a>
 			</c:when>
 			<c:otherwise>
 			

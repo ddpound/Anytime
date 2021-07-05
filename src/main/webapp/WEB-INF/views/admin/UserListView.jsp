@@ -31,5 +31,7 @@
                 </c:forEach>
             </tbody>
         </table>
+        <br><br>
+        <a href="${pageContext.request.contextPath }/generalUser/logout">어드민로그아웃</a>
 </body>
 </html>

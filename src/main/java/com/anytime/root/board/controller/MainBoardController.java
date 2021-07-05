@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.anytime.root.board.service.MainBoardService;
+import com.anytime.root.bookshop.service.BookShopService;
 import com.anytime.root.common.session.SessionName;
 
 @Controller
@@ -19,6 +20,9 @@ public class MainBoardController {
 	public MainBoardController(MainBoardService boardService) {
 		this.boardService = boardService;
 	}
+	
+	@Autowired
+	public BookShopService BShopService;
 	
 	@RequestMapping("rule/servicerule")
 	public String servicerule() {
@@ -41,6 +45,11 @@ public class MainBoardController {
 		String schoolName = (String)session.getAttribute(SessionName.SCHOOL_NAME);
 		String school = (String)session.getAttribute(SessionName.SCHOOL);
 		boardService.getMain(id, schoolName, school);
+		
+		//추가(사진 미리보기 부분)		
+		model.addAttribute("previewBookShop", BShopService.preViewBookShop());
+		model.addAttribute("previewBookShopPhoto", BShopService.preViewBookShopPhoto());
+		
 		return "board/index";
 	}
 	

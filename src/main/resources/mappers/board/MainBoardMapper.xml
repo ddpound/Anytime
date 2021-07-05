@@ -35,6 +35,38 @@
 		<result property="writeDate" column="write_date"/>
 		<result property="school" column="school"/>
 	</resultMap>
+	<!--  북샵 미리보기 추가부분 -->
+	<resultMap type="com.anytime.root.bookshop.dto.BookShopDTO"
+		id="bookDto">
+		<result property="boardId" column="boardId" />
+		<result property="booktitle" column="booktitle" />
+		<result property="bookisbn" column="bookisbn" />
+		<result property="writer" column="writer" />
+		<result property="school" column="school" />
+		<result property="underline" column="underline" />
+		<result property="handwrite" column="handwrite" />
+		<result property="cover" column="cover" />
+		<result property="nameWrite" column="nameWrite" />
+		<result property="page" column="page" />
+		<result property="meansOftransaction"
+			column="meansOftransaction" />
+		<result property="price" column="price" />
+		<result property="SalesStatus" column="Sales_status" />
+		<result property="createdate" column="createdate" />
+	</resultMap>
+
+	<resultMap
+		type="com.anytime.root.bookshop.dto.BookShopPhotoDTO"
+		id="bookDtoPhoto">
+		<result property="id" column="id" />
+		<result property="photo1" column="photo1" />
+		<result property="photo2" column="photo2" />
+		<result property="photo3" column="photo3" />
+		<result property="photo4" column="photo4" />
+		<result property="photo5" column="photo5" />
+	</resultMap>
+	
+	
 	<select id="getCmnBoardByDate" resultMap="likecmnBoard">
 	<![CDATA[
 		select B.* from
@@ -102,6 +134,19 @@
 		select * from reply_cmn_board where writer_id = #{id}
 	]]>
 	</select>
+	
+	
+	<!--  y 추가부분 -->
+	<select id="PreViewBookShop" resultMap="bookDto">
+	select B.* from(select rownum rn, A.* from(select * from ANYTIMEBOARD order by BOARDID desc)A)B 
+		 where rn between 1 and 4
+	</select>
+	<select id="PreViewBookShopPhoto" resultMap="bookDtoPhoto">
+		select B.* from(select rownum rn, A.* from(select * from photoTable order by id desc)A)B 
+		 where rn between 1 and 4
+	</select>
+	
+	
 <!-- 
 	<select id="getCmnBoardForAdmin">
 	<![CDATA[

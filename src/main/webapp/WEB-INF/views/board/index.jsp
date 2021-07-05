@@ -123,6 +123,7 @@ input[type="button"],input[type="submit"],input[type="search"] {
     overflow: hidden;
     overflow-x: auto;
     font-size: 0;
+    word-break:break-all;
     }
     
     a.item{
@@ -328,29 +329,19 @@ input[type="button"],input[type="submit"],input[type="search"] {
 			</div>
 			
 			<hr>
-		<div class="bookstore">
-		<a class="item" href="">
-		 <div class="image" 
-		 style="background-image: url(&quot;https://cf-cii.everytime.kr/74cb395ea5407aba5c4a65ab0c71e616fe1eea3a19a8e97f6d1711e236364f8b/1623080331831_0_thumb.jpg&quot;);">
+		<div class="bookstore" >
+		<c:forEach var="list1" items="${previewBookShop}" varStatus="status">
+        <a class="item" href="/root/bookshop/1/${list1.boardId }">
+		 <div class="image" >
+		 <img src="${previewBookShopPhoto[status.index].photo1 }" width="125px" height="120px">
 		 </div>
-		<h6>일반화학(8판)</h6>
-		<span class="price">44,000원</span>
+		 <div style="word-break:break-all; text-overflow: ellipsis; width: 125px;">
+		 <label style="width: 125px; text-overflow: ellipsis;"><h6>${list1.booktitle}</h6></label>
+		 </div>
+		
+		<span class="price">${list1.price}</span>
 		</a>
-		<a class="item" href="">
-		 <div class="image" style="background-image: url(&quot;https://cf-cii.everytime.kr/265ce252bf2689b8ef4284ea2bc94cd5f4c130561742ac6becbda78926c456d5/1623080207350_0_thumb.jpg&quot;);"></div>
-		<h6>위험물기능사</h6>
-		<span class="price">25,000원</span>
-		</a>
-		<a class="item" href="">
-		 <div class="image" style="background-image: url(&quot;https://cf-cii.everytime.kr/ad2974f0e3fd1eeacfb1ed176db35feedd03f96bf5d54caa08889be27b8eef7b/1623046473727_0_thumb.jpg&quot;);"></div>
-		<h6>대학 글쓰기(신입생을 위한)</h6>
-		<span class="price">12,000원</span>
-		</a>
-		<a class="item" href="">
-		 <div class="image" style="background-image: url(&quot;https://cf-cii.everytime.kr/371c9c15b036ce527c132eac314e2efc7363b30e055088960d2a46de10042e47/1623046080121_0_thumb.jpg&quot;);"></div>
-		<h6>창의성 교육</h6>
-		<span class="price">18,000원</span>
-		</a>
+        </c:forEach>
 		</div>
 	</div>
 	<div class="div3">

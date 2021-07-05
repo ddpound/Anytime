@@ -48,5 +48,8 @@ public interface BookShopService {
 	// 글의 사진 수정
 	public int ModifyBookShopPhoto(ArrayList<String> photoList , int boardId);
 	
+	//미리보기 서비스
+	public ArrayList<BookShopDTO> preViewBookShop();
+	public ArrayList<BookShopPhotoDTO> preViewBookShopPhoto();
 	
 }

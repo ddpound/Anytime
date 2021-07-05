@@ -98,7 +98,7 @@ public class LoginController {
 		}else if (resultNum == -1) {
 			ScriptUtils.alertAndMovePage(response, "비밀번호가 틀렸습니다.", "/root/loginView");
 		}else if(resultNum == 7) {
-			ScriptUtils.alertAndMovePage(response, "안녕하세요 관리자님.", "/root");
+			ScriptUtils.alertAndMovePage(response, "안녕하세요 관리자님.", "/root/MemberManagement");
 		}
 
 		// 로그인 안됐을때 (alret 창 나중에 띄어주기)
