@@ -37,14 +37,20 @@
 	</resultMap>
 	<!-- paging을 위한 게시물 개수 -->
 	<select id="listCount" resultType="int">
-		select count(*) from school_board where section = #{section} and school = #{school}
+		select count(*) from school_board where section = #{section}
+		<if test="school != 'adminSchool'">
+			and school = #{school} 
+		</if>
 	</select>
 	<!-- 검색 결과 paging을 위한 게시물 개수 -->
 	<select id="tagListCount" resultType="int">
 		select count(*) from
 		(select post_no from tag_school_board where tag = #{keyword})A, 
-		(select post_no from school_board where section = #{section} and school = #{school})B 
-		where A.post_no = B.post_no
+		(select post_no from school_board where section = #{section}
+		<if test="school != 'adminSchool'">
+			and school = #{school} 
+		</if>
+		)B where A.post_no = B.post_no
 	</select>
 	<select id="searchListCount" resultType="int">
 		select count(*) from school_board
@@ -58,7 +64,10 @@
 			<if test="searchType=='content'">
 				content like '%' || #{keyword} || '%'
 			</if>
-			 and section = #{section} and school = #{school}
+			<if test="school != 'adminSchool'">
+				and school = #{school} 
+			</if>
+			 and section = #{section}
 		</where>
 	</select>
 	<!-- 게시물 list 얻기 -->
@@ -66,7 +75,11 @@
 		select B.* from(select rownum rn, A.* from 
 		(select c.*, l.good from school_board c left outer join 
 		(select post_no, count(post_no) as good from like_school_board group by post_no) l on(c.post_no = l.post_no) 
-		order by c.post_no desc)A)B where section = #{section} and school = #{school} and rn between #{start} and #{end}
+		order by c.post_no desc)A where section = #{section}
+		<if test="school != 'adminSchool'">
+			and school = #{school} 
+		</if>
+		)B where rn between #{start} and #{end}
 	</select>
 	<!-- 검색 결과 게시물 list 얻기 -->
 	<select id="getTagListLike" resultMap="likeBoard">
@@ -74,8 +87,11 @@
 		(select D.*, L.good from(select C.* from school_board C, 
 		(select post_no from tag_school_board where tag = #{keyword})T where C.post_no = T.post_no)D left outer join 
 		(select post_no, count(post_no) as good from like_school_board group by post_no)L 
-		on(D.post_no = L.post_no) order by D.post_no desc)A)B 
-		where section = #{section} and school = #{school} and rn between #{start} and #{end}
+		on(D.post_no = L.post_no) order by D.post_no desc)A where section = #{section} 
+		<if test="school != 'adminSchool'">
+			and school = #{school} 
+		</if>
+		)B where rn between #{start} and #{end}
 	</select>
 	<select id="getSearchListLike" resultMap="likeBoard">
 		select B.* from(select rownum rn, A.* from (select c.*, l.good 
@@ -92,8 +108,11 @@
 			</if>
 		</where>
 		 )C left outer join (select post_no, count(post_no) as good from like_school_board group by post_no)l 
-		 on(c.post_no = l.post_no) order by c.post_no desc)A)B 
-		 where section = #{section} and school = #{school} and rn between #{start} and #{end}
+		 on(c.post_no = l.post_no) order by c.post_no desc)A where section = #{section}
+		<if test="school != 'adminSchool'">
+			and school = #{school} 
+		</if>
+		  )B where rn between #{start} and #{end}
 	</select>
 	<insert id="writePost">
 		insert into school_board(writer_id, nickname, post_no, section, subject, content, school)
