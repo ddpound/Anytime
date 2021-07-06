@@ -25,6 +25,7 @@
 	
 		<mybatis-spring:scan base-package="com.anytime.root.user.dao"/>
 		<mybatis-spring:scan base-package="com.anytime.root.bookshop.dao"/>
+		<mybatis-spring:scan base-package="com.anytime.root.chat.dao"/>
 		<mybatis-spring:scan base-package="com.anytime.root.board.repository"/>
 		<mybatis-spring:scan base-package="com.anytime.root.individual.repository"/>
 	

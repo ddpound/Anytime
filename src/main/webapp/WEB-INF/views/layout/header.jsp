@@ -99,7 +99,7 @@ nav ul li a:hover {
 					<a href="${contextPath }/MemberManagement">
 				</c:if>
 				<c:if test="${loginuserAuth != 'admin' }">
-					<a href="${contextPath }/index">
+					<a href="/root/index">
 				</c:if>
 				<img src="${pageContext.request.contextPath }/resources/img/logo.jpg" width="30px" height="30px">
 				</a>
@@ -118,6 +118,7 @@ nav ul li a:hover {
 			<c:if test="${loginuserAuth != 'admin' }">
 				<li class="timetable"><a href="${contextPath}/timetable">시간표</a></li>
 				<li class="calculator"><a href="${contextPath}/score">성적계산기</a></li>
+				<li class="calculator"><a href="${contextPath}/chatView/${userId}">쪽지함</a></li>
 			</c:if>
 			<li class="book"><a href="/root/bookshop">책방</a></li>
 			</ul>

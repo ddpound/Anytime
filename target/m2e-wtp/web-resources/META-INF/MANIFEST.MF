@@ -1,5 +1,10 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Built-By: YSJ
 Build-Jdk: 14.0.2
+=======
+Built-By: dpoun
+Build-Jdk: 12.0.2
+>>>>>>> 54cddc7014dbb4f2d6a3da4b248d7e25df555c26
 Created-By: Maven Integration for Eclipse
 

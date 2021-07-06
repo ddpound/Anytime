@@ -18,6 +18,7 @@
 			<div id="BoardCard" class="BoardCard">
 			<!--  bookId로 삭제나 수정해야하니 숨겨놓음 -->
 			<input type="hidden" id="bookId" value="${ BookShop.boardId}">
+			
 			제목 : ${ BookShop.booktitle} <br>
 			bookisbn : ${ BookShop.bookisbn} <br>
 			
@@ -127,7 +128,14 @@
 			<button onclick="salesCompleted()">판매완료</button>
 			</c:if>
 			<c:if test="${BookShop.writer !=  userId}">
-			<button>판매자에게 쪽지보내기</button>
+			
+			<form action="/root/writeChatView" method="POST">
+			<input type="hidden" id="writer" name="writer" value="${ BookShop.writer}" >
+			<input type="submit" value="판매자에게 쪽지보내기">
+			</form>
+			
+			
+			
 			</c:if>
 			
 			</div>
