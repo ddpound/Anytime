@@ -36,13 +36,22 @@
 		<input type="text" id="parSchoolName"  name="parSchoolName"  placeholder="학교이름"><br>
 		<input type="text"  id="parSchooladd"  name="parSchooladd" placeholder="학교주소"><br><br>
 		 
-		<label>이메일 : </label> <input type="email" id="email" name="email" value="${email}"><br>
+		
 		<c:choose>
 		<c:when test="${UserJoinAuth != null}">
-		<input type="button" value="이메일인증"><br><br>
+		<form action="/root/member/signUp" method="get">
+		<input type="text"  id="generalEmail"  name="generalEmail"><br><br>
+		<input type="submit" value="메일 인증하기">
+		</form>
+		
 		<!-- 일반회원일때는 비밀번호를 받아야하니깐 -->
 		<label> 비밀번호 : </label> <input type="password" id="pwd" name="pwd"  placeholder="password"><br>
 		</c:when>
+		<c:otherwise>
+		<label>이메일 : </label> <input type="email" id="email" name="email" value="${email}"><br>
+		
+		
+		</c:otherwise>
 		</c:choose>
 		<label>이름 : </label> <input type="text" id="nickname" name="nickname" value="${nickname}"><br>
 		<label>나이 : </label> <input type="text"  id="age"  name="age"  placeholder="나이를 입력해주세요"><br>
