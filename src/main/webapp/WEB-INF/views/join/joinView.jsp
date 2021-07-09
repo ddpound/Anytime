@@ -15,7 +15,9 @@
 </head>
 <body>
 
+
 	<div style="margin-left: 30%" class="joinForm"  >
+	
 	<form id="joinfrm" >
 	<h1>애니타임 회원가입</h1>
 		<br>
@@ -38,11 +40,15 @@
 		 
 		
 		<c:choose>
-		<c:when test="${UserJoinAuth != null}">
-		<form action="/root/member/signUp" method="get">
+		<c:when test="${UserJoinAuth == 'general'}">
+		<c:if test="${ emailauth ==null}">
 		<input type="text"  id="generalEmail"  name="generalEmail"><br><br>
-		<input type="submit" value="메일 인증하기">
-		</form>
+		<input type="button" onclick="sendEmail()"  value="메일인증하기"><br><br>
+		</c:if>
+		<c:if test="${emailauth =='emailauth'}">
+		<input type="email"  id="email"  name="email" value="${OKemail }"><br><br>
+		</c:if>
+		
 		
 		<!-- 일반회원일때는 비밀번호를 받아야하니깐 -->
 		<label> 비밀번호 : </label> <input type="password" id="pwd" name="pwd"  placeholder="password"><br>
@@ -53,10 +59,11 @@
 		
 		</c:otherwise>
 		</c:choose>
+		
 		<label>이름 : </label> <input type="text" id="nickname" name="nickname" value="${nickname}"><br>
 		<label>나이 : </label> <input type="text"  id="age"  name="age"  placeholder="나이를 입력해주세요"><br>
 		<c:choose>
-		<c:when test="${UserJoinAuth != null}">
+		<c:when test="${UserJoinAuth == 'general'}">
 		<label>연령대 :</label>  <input type="text"  id="ageGroup"  name="ageGroup"  value="${agerange}" ><br>
 		</c:when>
 		<c:otherwise>
@@ -67,12 +74,31 @@
 		<input type="text"  id="UserJoinAuth"  name="UserJoinAuth"  value="${UserJoinAuth}" hidden="hidden"><br>
 		<br>
 		
-		<!--  임시방편 나중에 카카오 로그인 버튼으로 대체할생각 -->
-		<input type="button"  style="width: 300px; height: 80px;" value="회원가입하기" onclick="SaveUser()" ><br>
+		
+	<c:choose>
+	<c:when test="${UserJoinAuth == 'general'}">
+	<c:if test="${ emailauth != null}">
+	<!--  임시방편 나중에 카카오 로그인 버튼으로 대체할생각 -->
+		<input type="button"  style="width: 300px; height: 80px;" value="일반회원가입하기" onclick="SaveUser()" ><br>
+	</c:if>
+	</c:when>
+	
+	
+	<c:otherwise>
+	<!--  임시방편 나중에 카카오 로그인 버튼으로 대체할생각 -->
+	<c:if test="${UserJoinAuth == 'kakaoJoin' }">
+		<input type="button"  style="width: 300px; height: 80px;" value="카카오로회원가입하기" onclick="SaveUser()" ><br>
+	</c:if>
+	</c:otherwise>
+	
+	
+	</c:choose>
+	
+	
 	</form>
 		
 	</div>
-	
+
 </body>
 
 </html>

@@ -118,7 +118,6 @@ nav ul li a:hover {
 			<c:if test="${loginuserAuth != 'admin' }">
 				<li class="timetable"><a href="${contextPath}/timetable">시간표</a></li>
 				<li class="calculator"><a href="${contextPath}/score">성적계산기</a></li>
-				<li class="calculator"><a href="${contextPath}/chatView/${userId}">쪽지함</a></li>
 			</c:if>
 			<li class="book"><a href="/root/bookshop">책방</a></li>
 			</ul>

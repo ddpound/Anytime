@@ -30,7 +30,7 @@ public class JoinServiceImpl implements JoinService{
 	public int insertUser(Map<String, Object> user) {
 		UserDTO dto = new UserDTO();
 		String securePW =null ;
-		
+		String UserJoinAuth = (String)user.get("UserJoinAuth");
 		
 
 		dto.setEmail((String)user.get("email"));
@@ -40,8 +40,8 @@ public class JoinServiceImpl implements JoinService{
 		dto.setGrade(Integer.parseInt((String)user.get("grade"))); 
 		dto.setSchool((String)user.get("parSchoolName")+" : "+ (String)user.get("parSchooladd")); // 여기 주소값이랑 다담겨있음 . 을 구분으로 split하면될듯
 		dto.setAgeGroup((String)user.get("ageGroup"));
-		// 이게 null이 아니라 그냥 빈값임 아래처럼 해야함
-		if((String)user.get("UserJoinAuth") != "") {
+		
+		if( UserJoinAuth.equals("general")) {
 			//암호화 줄
 			securePW = encoder.encode((String)user.get("pwd"));
 			dto.setPassWord(securePW);

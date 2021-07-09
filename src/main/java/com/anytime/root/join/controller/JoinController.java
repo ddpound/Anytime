@@ -60,7 +60,7 @@ public class JoinController {
 		model.addAttribute("nickname", kakaoProfile.getProperties().getNickname());
 		model.addAttribute("agerange",kakaoProfile.getKakao_account().getAge_range());
 		
-		
+		model.addAttribute("UserJoinAuth","kakaoJoin");
 		// response.getBody(); // body형식의 데이터 타입으로 편하게 리턴할수 있다 
 		return "join/joinView";
 	}
